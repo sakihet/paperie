@@ -1,8 +1,14 @@
 <script setup lang="ts">
 const props = defineProps<{
-  id: number,
+  id: string,
   content: string
 }>()
+const emit = defineEmits<{
+  (e: 'change', value: string): void
+}>()
+const handleChange = (event: Event) => {
+  emit('change', (event.target as HTMLTextAreaElement).value)
+}
 </script>
 
 <template>
@@ -10,5 +16,6 @@ const props = defineProps<{
     rows="8"
     cols="40"
     class="p-4"
+    @change="handleChange"
   >{{ props.content }}</textarea>
 </template>

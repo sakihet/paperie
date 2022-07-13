@@ -1,12 +1,17 @@
 <script setup lang="ts">
+import { v4 as uuidv4 } from 'uuid'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
 import AppTextarea from '../components/AppTextarea.vue'
 
 const handleAdd = () => {
-  const id = store.notes.length + 1
+  const id = uuidv4()
   store.addNote({ id, content: "" })
 }
+const handleChange = (id: string, value: string) => {
+  store.updateNote(id, value)
+}
+store.init()
 </script>
 
 <template>
@@ -26,6 +31,7 @@ const handleAdd = () => {
         <AppTextarea
           :id="note.id"
           :content="note.content"
+          @change="handleChange(note.id, $event)"
         />
       </div>
       <AppButton
