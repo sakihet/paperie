@@ -23,29 +23,38 @@ store.init()
 </script>
 
 <template>
-  <div>
-    <h1>Home</h1>
-    <div>
+  <div class="layout-center">
+    <div class="text-center">
+      <h1 class="my-4">Home</h1>
+    </div>
+    <hr />
+    <div class="my-4">
       <AppButton
         @click="handleAdd"
         text="Add"
       />
     </div>
-    <div
-      v-for="note in store.notes"
-      :key="note.id"
-    >
-      <div>
-        <AppTextarea
-          :id="note.id"
-          :content="note.content"
-          @change="handleChange(note.id, $event)"
-        />
+    <div class="layout-stack-4 my-8">
+      <div
+        v-for="note in store.notes"
+        :key="note.id"
+      >
+        <div>
+          <div>
+            <AppTextarea
+              :id="note.id"
+              :content="note.content"
+              @change="handleChange(note.id, $event)"
+            />
+          </div>
+          <div class="">
+            <AppButton
+              @click="store.deleteNote(note.id)"
+              text="Delete"
+            />
+          </div>
+        </div>
       </div>
-      <AppButton
-        @click="store.deleteNote(note.id)"
-        text="Delete"
-      />
     </div>
   </div>
 </template>

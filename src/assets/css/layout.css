@@ -1,0 +1,18 @@
+.layout-stack-1 > * + * {
+  margin-top: 0.25rem;
+}
+.layout-stack-2 > * + * {
+  margin-top: 0.5rem;
+}
+.layout-stack-3 > * + * {
+  margin-top: 0.75rem;
+}
+.layout-stack-4 > * + * {
+  margin-top: 1rem;
+}
+.layout-center {
+  box-sizing: content-box;
+  max-width: 60ch;
+  margin-left: auto;
+  margin-right: auto;
+}
