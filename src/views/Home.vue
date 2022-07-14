@@ -3,10 +3,18 @@ import { v4 as uuidv4 } from 'uuid'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
 import AppTextarea from '../components/AppTextarea.vue'
+import { Note } from '../entities/note';
 
 const handleAdd = () => {
   const id = uuidv4()
-  store.addNote({ id, content: "" })
+  const date = new Date()
+  const note: Note = {
+    id: id,
+    content: "",
+    createdAt: date,
+    updatedAt: date
+  }
+  store.addNote(note)
 }
 const handleChange = (id: string, value: string) => {
   store.updateNote(id, value)

@@ -1,4 +1,4 @@
-import { reactive } from 'vue'
+import { computed, ComputedRef, reactive } from 'vue'
 import { connect } from '../db'
 import { NoteApplicationService } from '../applications/noteApplicationService'
 import { NoteRepository } from '../repositories/noteRepository'
@@ -8,14 +8,16 @@ const noteApplicationService = new NoteApplicationService(
   new NoteRepository()
 )
 
-export const store: {
+interface Store {
   notes: Array<Note>,
   init: () => void,
   load: () => Promise<void>,
-  addNote: ({}) => void,
+  addNote: (note: Note) => void,
   deleteNote: (id: string) => void,
   updateNote: (id: string, content: string) => void
-} = reactive({
+}
+
+export const store: Store = reactive<Store>({
   notes: [],
   init () {
     console.log('init')
@@ -27,12 +29,12 @@ export const store: {
   async load () {
     console.log('load')
     const result = await noteApplicationService.getAll()
-    this.notes = result
+    this.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime())
   },
-  addNote (obj) {
+  addNote (note: Note) {
     const handler = async () => {
-      await noteApplicationService.add(obj)
-      this.notes.push(obj)
+      await noteApplicationService.add(note)
+      this.notes.unshift(note)
     }
     handler()
   },
@@ -46,9 +48,18 @@ export const store: {
   },
   updateNote (id, content) {
     const handler = async () => {
-      await noteApplicationService.put({id: id, content: content})
       const idx = this.notes.findIndex((x) => x.id === id)
+      const note: Note = this.notes[idx]
+      const updated: Note = {
+        id: note.id,
+        content: content,
+        createdAt: note.createdAt,
+        updatedAt: new Date()
+      }
+      await noteApplicationService.put(updated)
       this.notes[idx].content = content
+      this.notes[idx].updatedAt = updated.updatedAt
+      this.notes = this.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime())
     }
     handler()
   }
