@@ -10,6 +10,14 @@
   --color-gray-800: #424242;
   --color-gray-900: #212121;
 }
+body,
+h1,
+h2,
+h3,
+h4,
+p {
+  margin: 0;
+}
 body {
   background-color: var(--color-gray-50);
   color: var(--color-gray-900)

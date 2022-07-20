@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { v4 as uuidv4 } from 'uuid'
+import { name, version } from '../../package.json'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
 import AppTextarea from '../components/AppTextarea.vue'
@@ -24,8 +25,14 @@ store.init()
 
 <template>
   <div class="layout-center">
-    <div class="text-center">
-      <h1 class="my-4">Home</h1>
+    <div class="flex-row">
+      <div class="f-1">
+        <code>v{{ version }}</code>
+      </div>
+      <div class="f-1 text-center">
+        <h1 class="">{{ name }}</h1>
+      </div>
+      <div class="f-1"></div>
     </div>
     <hr />
     <div class="my-4">
