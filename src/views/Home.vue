@@ -4,7 +4,7 @@ import { name, version } from '../../package.json'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
 import AppTextarea from '../components/AppTextarea.vue'
-import { Note } from '../entities/note';
+import { Note } from '../entities/note'
 
 const handleAdd = () => {
   const id = uuidv4()
@@ -12,6 +12,7 @@ const handleAdd = () => {
   const note: Note = {
     id: id,
     content: "",
+    isPinned: false,
     createdAt: date,
     updatedAt: date
   }
@@ -19,6 +20,9 @@ const handleAdd = () => {
 }
 const handleChange = (id: string, value: string) => {
   store.updateNote(id, value)
+}
+const handleToggleIsPinned = (id: string) => {
+  store.toggleNoteIsPinned(id)
 }
 store.init()
 </script>
@@ -47,6 +51,9 @@ store.init()
         :key="note.id"
       >
         <div>
+          <div class="">
+            <span v-if="note.isPinned">📌</span>
+          </div>
           <div>
             <AppTextarea
               :id="note.id"
@@ -58,6 +65,16 @@ store.init()
             <AppButton
               @click="store.deleteNote(note.id)"
               text="Delete"
+            />
+            <AppButton
+              v-if="note.isPinned"
+              text="Unpin"
+              @click="handleToggleIsPinned(note.id)"
+            />
+            <AppButton
+              v-else
+              text="Pin"
+              @click="handleToggleIsPinned(note.id)"
             />
           </div>
         </div>
