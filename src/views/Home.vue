@@ -1,25 +1,42 @@
 <script setup lang="ts">
 import { v4 as uuidv4 } from 'uuid'
+import { ref, nextTick } from 'vue'
 import { name, version } from '../../package.json'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
 import AppTextarea from '../components/AppTextarea.vue'
 import { Note } from '../entities/note'
 
-const handleAdd = () => {
+const dialogOpen = ref(false)
+const noteContent = ref("")
+const refAdd = ref(null)
+
+const handleAdd = async () => {
+  dialogOpen.value = true
+  await nextTick()
+  refAdd.value.focus()
+}
+const handleCancel = () => {
+  dialogOpen.value = false
+}
+const handleChange = (id: string, value: string) => {
+  store.updateNote(id, value)
+}
+const handleClose = () => {
+  dialogOpen.value = false
+}
+const handleConfirm = () => {
   const id = uuidv4()
   const date = new Date()
   const note: Note = {
     id: id,
-    content: "",
+    content: noteContent.value,
     isPinned: false,
     createdAt: date,
     updatedAt: date
   }
   store.addNote(note)
-}
-const handleChange = (id: string, value: string) => {
-  store.updateNote(id, value)
+  dialogOpen.value = false
 }
 const handleToggleIsPinned = (id: string) => {
   store.toggleNoteIsPinned(id)
@@ -44,6 +61,30 @@ store.init()
         @click="handleAdd"
         text="Add"
       />
+    </div>
+    <div>
+      <dialog
+        :open="dialogOpen"
+        @close="handleClose"
+      >
+        <textarea
+          rows="8"
+          cols="40"
+          class="p-2"
+          v-model="noteContent"
+          ref="refAdd"
+        ></textarea>
+        <div>
+          <AppButton
+            @click="handleCancel"
+            text="Cancel"
+          />
+          <AppButton
+            @click="handleConfirm"
+            text="Confirm"
+          />
+        </div>
+      </dialog>
     </div>
     <div class="layout-stack-4 my-8">
       <div

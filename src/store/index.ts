@@ -35,7 +35,8 @@ export const store: Store = reactive<Store>({
   addNote (note: Note) {
     const handler = async () => {
       await noteApplicationService.add(note)
-      this.notes.unshift(note)
+      const result = await noteApplicationService.getAll()
+      this.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
     }
     handler()
   },
