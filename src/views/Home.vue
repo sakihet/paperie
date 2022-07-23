@@ -9,12 +9,12 @@ import { Note } from '../entities/note'
 
 const dialogOpen = ref(false)
 const noteContent = ref("")
-const refAdd = ref(null)
+const refAdd = ref<HTMLElement | null>(null)
 
 const handleAdd = async () => {
   dialogOpen.value = true
   await nextTick()
-  refAdd.value.focus()
+  refAdd.value?.focus()
 }
 const handleCancel = () => {
   dialogOpen.value = false
