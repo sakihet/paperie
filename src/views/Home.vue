@@ -21,6 +21,7 @@ const handleAdd = async () => {
   refAdd.value?.focus()
 }
 const handleCancel = () => {
+  noteContent.value = ''
   isAdding.value = false
   isEditing.value = false
   dialogOpen.value = false
