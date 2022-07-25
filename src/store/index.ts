@@ -10,6 +10,7 @@ const noteApplicationService = new NoteApplicationService(
 
 interface Store {
   notes: Array<Note>,
+  notesLayout: string,
   init: () => void,
   load: () => Promise<void>,
   addNote: (note: Note) => void,
@@ -20,6 +21,7 @@ interface Store {
 
 export const store: Store = reactive<Store>({
   notes: [],
+  notesLayout: 'list',
   init () {
     console.log('init')
     const connectHandler = async () => await connect()

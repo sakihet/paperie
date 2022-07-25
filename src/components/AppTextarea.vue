@@ -14,7 +14,7 @@ const handleChange = (event: Event) => {
 <template>
   <textarea
     rows="8"
-    cols="40"
+    cols="30"
     class="p-2"
     @change="handleChange"
   >{{ props.content }}</textarea>

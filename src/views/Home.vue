@@ -29,6 +29,9 @@ const handleCancel = () => {
 const handleChange = (id: string, value: string) => {
   store.updateNote(id, value)
 }
+const handleChangeLayout = (e: Event) => {
+  console.log('change layout', e, (e.target as HTMLInputElement).value)
+}
 const handleClose = () => {
   isAdding.value = false
   isEditing.value = false
@@ -86,10 +89,22 @@ store.init()
     </div>
     <hr />
     <div class="my-4">
-      <AppButton
-        @click="handleAdd"
-        text="Add"
-      />
+      <div class="">
+        <AppButton
+          @click="handleAdd"
+          text="Add"
+        />
+      </div>
+    </div>
+    <div class="my-4">
+      <div class="text-right">
+        <label>
+          <input type="radio" name="layout" value="list" @change="handleChangeLayout" v-model="store.notesLayout">List
+        </label>
+        <label>
+          <input type="radio" name="layout" value="grid" @change="handleChangeLayout" v-model="store.notesLayout">Grid
+        </label>
+      </div>
     </div>
     <div>
       <dialog
@@ -121,7 +136,7 @@ store.init()
         </div>
       </dialog>
     </div>
-    <div class="layout-stack-4 my-8">
+    <div :class="{ 'layout-cluster': store.notesLayout === 'grid', 'layout-stack-4': store.notesLayout === 'list', 'my-8': true }">
       <div
         v-for="note in store.notes"
         :key="note.id"
