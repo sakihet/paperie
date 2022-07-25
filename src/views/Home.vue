@@ -7,25 +7,33 @@ import AppButton from '../components/AppButton.vue'
 import AppTextarea from '../components/AppTextarea.vue'
 import { Note } from '../entities/note'
 
+const isAdding = ref(false)
+const isEditing = ref(false)
+const editingNoteId = ref<string | null>(null)
 const dialogOpen = ref(false)
 const noteContent = ref("")
 const refAdd = ref<HTMLElement | null>(null)
 
 const handleAdd = async () => {
+  isAdding.value = true
   dialogOpen.value = true
   await nextTick()
   refAdd.value?.focus()
 }
 const handleCancel = () => {
+  isAdding.value = false
+  isEditing.value = false
   dialogOpen.value = false
 }
 const handleChange = (id: string, value: string) => {
   store.updateNote(id, value)
 }
 const handleClose = () => {
+  isAdding.value = false
+  isEditing.value = false
   dialogOpen.value = false
 }
-const handleConfirm = () => {
+const handleAddConfirm = () => {
   const id = uuidv4()
   const date = new Date()
   const note: Note = {
@@ -37,6 +45,26 @@ const handleConfirm = () => {
   }
   store.addNote(note)
   dialogOpen.value = false
+  isAdding.value = false
+  isEditing.value = false
+}
+const handleEdit = async (note: Note) => {
+  isEditing.value = true
+  dialogOpen.value = true
+  editingNoteId.value = note.id
+  noteContent.value = note.content
+  await nextTick()
+  refAdd.value?.focus() // TODO
+}
+const handleEditConfirm = () => {
+  const id = editingNoteId.value
+  if (id) {
+    store.updateNote(id, noteContent.value)
+  }
+  editingNoteId.value = null
+  noteContent.value = ''
+  dialogOpen.value = false
+  isEditing.value = false
 }
 const handleToggleIsPinned = (id: string) => {
   store.toggleNoteIsPinned(id)
@@ -68,7 +96,7 @@ store.init()
         @close="handleClose"
       >
         <textarea
-          rows="8"
+          rows="16"
           cols="40"
           class="p-2"
           v-model="noteContent"
@@ -80,8 +108,14 @@ store.init()
             text="Cancel"
           />
           <AppButton
-            @click="handleConfirm"
+            v-if="isAdding"
+            @click="handleAddConfirm"
             text="Confirm"
+          />
+          <AppButton
+            v-if="isEditing"
+            @click="handleEditConfirm"
+            text="Update"
           />
         </div>
       </dialog>
@@ -100,6 +134,7 @@ store.init()
               :id="note.id"
               :content="note.content"
               @change="handleChange(note.id, $event)"
+              @click="handleEdit(note)"
             />
           </div>
           <div class="">
