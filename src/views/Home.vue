@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { v4 as uuidv4 } from 'uuid'
 import { ref, nextTick } from 'vue'
-import { name, version } from '../../package.json'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
 import AppTextarea from '../components/AppTextarea.vue'
@@ -25,9 +24,6 @@ const handleCancel = () => {
   isAdding.value = false
   isEditing.value = false
   dialogOpen.value = false
-}
-const handleChange = (id: string, value: string) => {
-  store.updateNote(id, value)
 }
 const handleChangeLayout = (e: Event) => {
   console.log('change layout', e, (e.target as HTMLInputElement).value)
@@ -131,8 +127,9 @@ store.init()
       <div
         v-for="note in store.notes"
         :key="note.id"
+        class=""
       >
-        <div>
+        <div class="border-solid border-color-default border-1">
           <div class="">
             <span v-if="note.isPinned">📌</span>
           </div>

@@ -115,6 +115,9 @@
 .h-12 {
   height: 3rem;
 }
+.w-100 {
+  width: 100%;
+}
 .text-medium {
   font-size: 1rem;
   line-height: 1.5rem;
@@ -139,4 +142,7 @@
 }
 .border-solid {
   border-style: solid;
+}
+.border-none {
+  border-style: none;
 }
