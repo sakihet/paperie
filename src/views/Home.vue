@@ -19,20 +19,6 @@ const handleAdd = async () => {
   await nextTick()
   refAdd.value?.focus()
 }
-const handleCancel = () => {
-  noteContent.value = ''
-  isAdding.value = false
-  isEditing.value = false
-  dialogOpen.value = false
-}
-const handleChangeLayout = (e: Event) => {
-  console.log('change layout', e, (e.target as HTMLInputElement).value)
-}
-const handleClose = () => {
-  isAdding.value = false
-  isEditing.value = false
-  dialogOpen.value = false
-}
 const handleAddConfirm = () => {
   const id = uuidv4()
   const date = new Date()
@@ -47,6 +33,24 @@ const handleAddConfirm = () => {
   dialogOpen.value = false
   isAdding.value = false
   isEditing.value = false
+}
+const handleCancel = () => {
+  noteContent.value = ''
+  isAdding.value = false
+  isEditing.value = false
+  dialogOpen.value = false
+}
+const handleChangeLayout = (e: Event) => {
+  console.log('change layout', e, (e.target as HTMLInputElement).value)
+}
+const handleClose = () => {
+  isAdding.value = false
+  isEditing.value = false
+  dialogOpen.value = false
+}
+const handleDelete = (e: Event, noteId: string) => {
+  e.stopPropagation()
+  store.deleteNote(noteId)
 }
 const handleEdit = async (note: Note) => {
   isEditing.value = true
@@ -66,7 +70,8 @@ const handleEditConfirm = () => {
   dialogOpen.value = false
   isEditing.value = false
 }
-const handleToggleIsPinned = (id: string) => {
+const handleToggleIsPinned = (e: Event, id: string) => {
+  e.stopPropagation()
   store.toggleNoteIsPinned(id)
 }
 store.init()
@@ -146,18 +151,18 @@ store.init()
           </div>
           <div class="">
             <AppButton
-              @click="store.deleteNote(note.id)"
+              @click="handleDelete($event, note.id)"
               text="Delete"
             />
             <AppButton
               v-if="note.isPinned"
               text="Unpin"
-              @click="handleToggleIsPinned(note.id)"
+              @click="handleToggleIsPinned($event, note.id)"
             />
             <AppButton
               v-else
               text="Pin"
-              @click="handleToggleIsPinned(note.id)"
+              @click="handleToggleIsPinned($event, note.id)"
             />
           </div>
         </div>
