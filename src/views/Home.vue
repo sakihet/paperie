@@ -78,16 +78,6 @@ store.init()
 
 <template>
   <div class="layout-center">
-    <div class="flex-row">
-      <div class="f-1">
-        <code>v{{ version }}</code>
-      </div>
-      <div class="f-1 text-center">
-        <h1 class="">{{ name }}</h1>
-      </div>
-      <div class="f-1"></div>
-    </div>
-    <hr />
     <div class="my-4">
       <div class="">
         <AppButton
