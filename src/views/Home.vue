@@ -149,7 +149,8 @@ store.init()
             <AppTextarea
               :id="note.id"
               :content="note.content"
-              @change="handleChange(note.id, $event)"
+              :rows="store.notesLayout === 'list' ? 5 : 10"
+              :cols="store.notesLayout === 'list' ? 60 : 20"
               @click="handleEdit(note)"
             />
           </div>
