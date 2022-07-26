@@ -17,7 +17,7 @@ const handleChange = (event: Event) => {
   <textarea
     :rows="props.rows"
     :cols="props.cols"
-    class="p-2"
+    class="p-2 border-color-default"
     @change="handleChange"
   >{{ props.content }}</textarea>
 </template>

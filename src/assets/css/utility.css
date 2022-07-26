@@ -125,13 +125,16 @@
 .text-right {
   text-align: right;
 }
+.border-1 {
+  border-width: 1px;
+}
 .border-b-1 {
   border-top-width: 0;
   border-bottom-width: 1px;
   border-left-width: 0;
   border-right-width: 0;
 }
-.border-gray-300 {
+.border-color-default {
   border-color: var(--color-gray-300);
 }
 .border-solid {

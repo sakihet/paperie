@@ -77,7 +77,7 @@ store.init()
 </script>
 
 <template>
-  <div class="layout-center">
+  <div class="layout-center px-4">
     <div class="my-4">
       <div class="">
         <AppButton
@@ -100,11 +100,12 @@ store.init()
       <dialog
         :open="dialogOpen"
         @close="handleClose"
+        class="border-1 border-color-default"
       >
         <textarea
           rows="16"
-          cols="40"
-          class="p-2"
+          cols="60"
+          class="p-2 border-color-default"
           v-model="noteContent"
           ref="refAdd"
         ></textarea>

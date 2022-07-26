@@ -3,7 +3,7 @@ import { name, version } from '../../package.json'
 </script>
 
 <template>
-  <div class="flex-row h-12 border-solid border-gray-300 border-b-1 px-4">
+  <div class="flex-row h-12 border-solid border-color-default border-b-1 px-4">
     <div class="f-1 py-4">{{ version }}</div>
     <div class="f-1 text-center py-4">
       <router-link to="/">
