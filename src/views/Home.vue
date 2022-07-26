@@ -127,9 +127,12 @@ store.init()
       <div
         v-for="note in store.notes"
         :key="note.id"
-        class=""
+        class="bg-white"
       >
-        <div class="border-solid border-color-default border-1">
+        <div
+          class="border-solid border-color-default border-1"
+          @click="handleEdit(note)"
+        >
           <div class="">
             <span v-if="note.isPinned">📌</span>
           </div>
@@ -139,7 +142,6 @@ store.init()
               :content="note.content"
               :rows="store.notesLayout === 'list' ? 5 : 10"
               :cols="store.notesLayout === 'list' ? 60 : 20"
-              @click="handleEdit(note)"
             />
           </div>
           <div class="">
