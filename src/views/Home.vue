@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { v4 as uuidv4 } from 'uuid'
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
@@ -88,6 +88,16 @@ if (route.query.view === 'grid') {
 } else {
   store.notesLayout = 'list'
 }
+watch(
+  () => route.query,
+  async () => {
+    if (route.query.view === 'grid') {
+      store.notesLayout = 'grid'
+    } else {
+      store.notesLayout = 'list'
+    }
+  }
+)
 </script>
 
 <template>
