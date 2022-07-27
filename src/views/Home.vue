@@ -14,13 +14,13 @@ const isEditing = ref(false)
 const editingNoteId = ref<string | null>(null)
 const dialogOpen = ref(false)
 const noteContent = ref("")
-const refAdd = ref<HTMLElement | null>(null)
+const refEditor = ref<HTMLElement | null>(null)
 
 const handleAdd = async () => {
   isAdding.value = true
   dialogOpen.value = true
   await nextTick()
-  refAdd.value?.focus()
+  refEditor.value?.focus()
 }
 const handleAddConfirm = () => {
   const id = uuidv4()
@@ -67,7 +67,7 @@ const handleEdit = async (note: Note) => {
   editingNoteId.value = note.id
   noteContent.value = note.content
   await nextTick()
-  refAdd.value?.focus() // TODO
+  refEditor.value?.focus() // TODO
 }
 const handleEditConfirm = () => {
   const id = editingNoteId.value
@@ -105,57 +105,71 @@ watch(
     <div class="my-4">
       <div class="">
         <AppButton
-          @click="handleAdd"
           text="Add"
+          @click="handleAdd"
         />
       </div>
     </div>
     <div class="my-4">
       <div class="text-right">
         <label>
-          <input type="radio" name="layout" value="list" @change="handleChangeLayout" v-model="store.notesLayout">List
+          <input
+            type="radio"
+            name="layout"
+            value="list"
+            @change="handleChangeLayout"
+            v-model="store.notesLayout"
+          >
+            List
         </label>
         <label>
-          <input type="radio" name="layout" value="grid" @change="handleChangeLayout" v-model="store.notesLayout">Grid
+          <input
+            type="radio"
+            name="layout"
+            value="grid"
+            @change="handleChangeLayout"
+            v-model="store.notesLayout"
+          >
+            Grid
         </label>
       </div>
     </div>
     <div>
       <dialog
+        class="border-1 border-color-default"
         :open="dialogOpen"
         @close="handleClose"
-        class="border-1 border-color-default"
       >
         <textarea
+          class="p-2 border-color-default"
           rows="16"
           cols="60"
-          class="p-2 border-color-default"
           v-model="noteContent"
-          ref="refAdd"
+          ref="refEditor"
         ></textarea>
         <div>
           <AppButton
-            @click="handleCancel"
             text="Cancel"
+            @click="handleCancel"
           />
           <AppButton
             v-if="isAdding"
-            @click="handleAddConfirm"
             text="Confirm"
+            @click="handleAddConfirm"
           />
           <AppButton
             v-if="isEditing"
-            @click="handleEditConfirm"
             text="Update"
+            @click="handleEditConfirm"
           />
         </div>
       </dialog>
     </div>
     <div :class="{ 'layout-cluster': store.notesLayout === 'grid', 'layout-stack-4': store.notesLayout === 'list', 'my-8': true }">
       <div
+        class="bg-white"
         v-for="note in store.notes"
         :key="note.id"
-        class="bg-white"
       >
         <NoteItem
           :note="note"
