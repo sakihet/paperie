@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { v4 as uuidv4 } from 'uuid'
 import { ref, nextTick } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
 import AppTextarea from '../components/AppTextarea.vue'
 import { Note } from '../entities/note'
 
+const route = useRoute()
+const router = useRouter()
 const isAdding = ref(false)
 const isEditing = ref(false)
 const editingNoteId = ref<string | null>(null)
@@ -41,7 +44,12 @@ const handleCancel = () => {
   dialogOpen.value = false
 }
 const handleChangeLayout = (e: Event) => {
-  console.log('change layout', e, (e.target as HTMLInputElement).value)
+  const value = (e.target as HTMLInputElement).value
+  if (value === 'grid') {
+    router.push({ path: '/', query: { view: 'grid' }})
+  } else {
+    router.push({ path: '/' })
+  }
 }
 const handleClose = () => {
   isAdding.value = false
@@ -75,6 +83,11 @@ const handleToggleIsPinned = (e: Event, id: string) => {
   store.toggleNoteIsPinned(id)
 }
 store.init()
+if (route.query.view === 'grid') {
+  store.notesLayout = 'grid'
+} else {
+  store.notesLayout = 'list'
+}
 </script>
 
 <template>
