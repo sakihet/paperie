@@ -58,7 +58,9 @@ const handleClose = () => {
 }
 const handleDelete = (e: Event, noteId: string) => {
   e.stopPropagation()
-  store.deleteNote(noteId)
+  if (window.confirm("Do you really want to delete?")) {
+    store.deleteNote(noteId)
+  }
 }
 const handleEdit = async (note: Note) => {
   isEditing.value = true
