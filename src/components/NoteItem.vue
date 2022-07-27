@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { ref } from 'vue'
 import AppButton from '../components/AppButton.vue'
 import AppTextarea from '../components/AppTextarea.vue'
 import { Note } from '../entities/note'
@@ -14,15 +15,20 @@ const emit = defineEmits<{
   (e: 'toggleIsPinned', noteId: string): void
 }>()
 
+const isHovered = ref(false)
+
 const handleEdit = (note: Note) => {
+  isHovered.value = false
   emit('edit', note)
 }
 const handleDelete = (e: Event, noteId: string) => {
   e.stopPropagation()
+  isHovered.value = false
   emit('delete', noteId)
 }
 const handleToggleIsPinned = (e: Event, noteId: string) => {
   e.stopPropagation()
+  isHovered.value = false
   emit('toggleIsPinned', noteId)
 }
 </script>
@@ -31,6 +37,8 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
   <div
     class="border-solid border-color-default border-1"
     @click="handleEdit(note)"
+    @mouseover="isHovered = true"
+    @mouseleave="isHovered = false"
   >
     <div class="">
       <span v-if="note.isPinned">📌</span>
@@ -43,20 +51,23 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
         :cols="props.layout === 'list' ? 60 : 20"
       />
     </div>
-    <div class="">
+    <div class="h-8">
       <AppButton
         @click="handleDelete($event, note.id)"
         text="Delete"
+        :hidden="!isHovered"
       />
       <AppButton
         v-if="props.note.isPinned"
         text="Unpin"
         @click="handleToggleIsPinned($event, note.id)"
+        :hidden="!isHovered"
       />
       <AppButton
         v-else
         text="Pin"
         @click="handleToggleIsPinned($event, note.id)"
+        :hidden="!isHovered"
       />
     </div>
   </div>
