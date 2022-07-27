@@ -4,7 +4,7 @@ import { ref, nextTick, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
-import AppTextarea from '../components/AppTextarea.vue'
+import NoteItem from '../components/NoteItem.vue'
 import { Note } from '../entities/note'
 
 const route = useRoute()
@@ -56,8 +56,7 @@ const handleClose = () => {
   isEditing.value = false
   dialogOpen.value = false
 }
-const handleDelete = (e: Event, noteId: string) => {
-  e.stopPropagation()
+const handleDelete = (noteId: string) => {
   if (window.confirm("Do you really want to delete?")) {
     store.deleteNote(noteId)
   }
@@ -80,9 +79,8 @@ const handleEditConfirm = () => {
   dialogOpen.value = false
   isEditing.value = false
 }
-const handleToggleIsPinned = (e: Event, id: string) => {
-  e.stopPropagation()
-  store.toggleNoteIsPinned(id)
+const handleToggleIsPinned = (noteId: string) => {
+  store.toggleNoteIsPinned(noteId)
 }
 store.init()
 if (route.query.view === 'grid') {
@@ -159,38 +157,13 @@ watch(
         :key="note.id"
         class="bg-white"
       >
-        <div
-          class="border-solid border-color-default border-1"
-          @click="handleEdit(note)"
-        >
-          <div class="">
-            <span v-if="note.isPinned">📌</span>
-          </div>
-          <div>
-            <AppTextarea
-              :id="note.id"
-              :content="note.content"
-              :rows="store.notesLayout === 'list' ? 5 : 10"
-              :cols="store.notesLayout === 'list' ? 60 : 20"
-            />
-          </div>
-          <div class="">
-            <AppButton
-              @click="handleDelete($event, note.id)"
-              text="Delete"
-            />
-            <AppButton
-              v-if="note.isPinned"
-              text="Unpin"
-              @click="handleToggleIsPinned($event, note.id)"
-            />
-            <AppButton
-              v-else
-              text="Pin"
-              @click="handleToggleIsPinned($event, note.id)"
-            />
-          </div>
-        </div>
+        <NoteItem
+          :note="note"
+          :layout="store.notesLayout"
+          @delete="handleDelete"
+          @edit="handleEdit"
+          @toggleIsPinned="handleToggleIsPinned"
+        />
       </div>
     </div>
   </div>
