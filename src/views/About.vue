@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div>
+  <div class="layout-center px-4 py-4">
     <h1>About</h1>
     <p></p>
   </div>

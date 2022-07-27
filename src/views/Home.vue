@@ -147,7 +147,7 @@ watch(
           v-model="noteContent"
           ref="refEditor"
         ></textarea>
-        <div>
+        <div class="h-8 text-right">
           <AppButton
             text="Cancel"
             @click="handleCancel"

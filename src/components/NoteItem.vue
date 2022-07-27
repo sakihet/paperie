@@ -51,7 +51,7 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
         :cols="props.layout === 'list' ? 60 : 20"
       />
     </div>
-    <div class="h-8">
+    <div class="h-8 text-right px-4">
       <AppButton
         @click="handleDelete($event, note.id)"
         text="Delete"
