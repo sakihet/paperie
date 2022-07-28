@@ -36,13 +36,11 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
 <template>
   <div
     class="border-solid border-color-default border-1"
+    :class="{ 'border-t-2 border-color-blue': note.isPinned }"
     @click="handleEdit(note)"
     @mouseover="isHovered = true"
     @mouseleave="isHovered = false"
   >
-    <div class="">
-      <span v-if="note.isPinned">📌</span>
-    </div>
     <div>
       <AppTextarea
         :id="note.id"

@@ -141,7 +141,7 @@ watch(
         @close="handleClose"
       >
         <textarea
-          class="p-2 border-color-default focus:outline-default text-medium"
+          class="p-2 border-color-default focus:outline-none text-medium border-none"
           rows="16"
           cols="60"
           v-model="noteContent"

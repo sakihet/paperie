@@ -144,6 +144,12 @@
   border-left-width: 0;
   border-right-width: 0;
 }
+.border-t-2 {
+  border-top-width: 2px;
+  border-bottom-width: 0;
+  border-left-width: 0;
+  border-right-width: 0;
+}
 .border-b-1 {
   border-top-width: 0;
   border-bottom-width: 1px;
@@ -152,6 +158,12 @@
 }
 .border-color-default {
   border-color: var(--color-gray-300);
+}
+.border-color-blue {
+  border-color: blue;
+}
+.border-color-red {
+  border-color: red;
 }
 .border-solid {
   border-style: solid;
