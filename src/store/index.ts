@@ -1,4 +1,4 @@
-import { computed, ComputedRef, reactive } from 'vue'
+import { reactive } from 'vue'
 import { connect } from '../db'
 import { NoteApplicationService } from '../applications/noteApplicationService'
 import { NoteRepository } from '../repositories/noteRepository'
@@ -16,7 +16,7 @@ interface Store {
   addNote: (note: Note) => void,
   deleteNote: (id: string) => void,
   toggleNoteIsPinned: (id: string) => void
-  updateNote: (id: string, content: string) => void
+  updateNote: (id: string, title: string, content: string) => void
 }
 
 export const store: Store = reactive<Store>({
@@ -56,6 +56,7 @@ export const store: Store = reactive<Store>({
       const note: Note = this.notes[idx]
       const updated: Note = {
         id: note.id,
+        title: note.title,
         content: note.content,
         isPinned: !note.isPinned,
         createdAt: note.createdAt,
@@ -68,18 +69,20 @@ export const store: Store = reactive<Store>({
     }
     handler()
   },
-  updateNote (id: string, content) {
+  updateNote (id: string, title: string, content: string) {
     const handler = async () => {
       const idx = this.notes.findIndex((x) => x.id === id)
       const note: Note = this.notes[idx]
       const updated: Note = {
         id: note.id,
+        title: title,
         content: content,
         isPinned: note.isPinned,
         createdAt: note.createdAt,
         updatedAt: new Date()
       }
       await noteApplicationService.put(updated)
+      this.notes[idx].title = title
       this.notes[idx].content = content
       this.notes[idx].updatedAt = updated.updatedAt
       this.notes = this.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)

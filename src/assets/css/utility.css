@@ -135,6 +135,12 @@
 .text-right {
   text-align: right;
 }
+.font-semibold {
+  font-weight: 600;
+}
+.font-bold {
+  font-weight: 700;
+}
 .border-1 {
   border-width: 1px;
 }

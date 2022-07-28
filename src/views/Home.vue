@@ -14,19 +14,22 @@ const isEditing = ref(false)
 const editingNoteId = ref<string | null>(null)
 const dialogOpen = ref(false)
 const noteContent = ref("")
+const noteTitle = ref("")
 const refEditor = ref<HTMLElement | null>(null)
+const refEditorTitle = ref<HTMLElement | null>(null)
 
 const handleAdd = async () => {
   isAdding.value = true
   dialogOpen.value = true
   await nextTick()
-  refEditor.value?.focus()
+  refEditorTitle.value?.focus()
 }
 const handleAddConfirm = () => {
   const id = uuidv4()
   const date = new Date()
   const note: Note = {
     id: id,
+    title: noteTitle.value,
     content: noteContent.value,
     isPinned: false,
     createdAt: date,
@@ -65,6 +68,7 @@ const handleEdit = async (note: Note) => {
   isEditing.value = true
   dialogOpen.value = true
   editingNoteId.value = note.id
+  noteTitle.value = note.title
   noteContent.value = note.content
   await nextTick()
   refEditor.value?.focus() // TODO
@@ -72,7 +76,7 @@ const handleEdit = async (note: Note) => {
 const handleEditConfirm = () => {
   const id = editingNoteId.value
   if (id) {
-    store.updateNote(id, noteContent.value)
+    store.updateNote(id, noteTitle.value, noteContent.value)
   }
   editingNoteId.value = null
   noteContent.value = ''
@@ -140,8 +144,16 @@ watch(
         :open="dialogOpen"
         @close="handleClose"
       >
+        <div>
+          <input
+            type="text"
+            class="p-2 w-100 h-8 border-none focus:outline-none text-medium font-bold"
+            ref="refEditorTitle"
+            v-model="noteTitle"
+          />
+        </div>
         <textarea
-          class="p-2 border-color-default focus:outline-none text-medium border-none"
+          class="px-2 border-color-default focus:outline-none text-medium border-none"
           rows="16"
           cols="60"
           v-model="noteContent"
