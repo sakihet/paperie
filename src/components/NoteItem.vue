@@ -41,12 +41,12 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
     @mouseover="isHovered = true"
     @mouseleave="isHovered = false"
   >
-    <div class="font-bold p-1">{{ note.title }}</div>
+    <div class="font-semibold p-2">{{ note.title }}</div>
     <div>
       <AppTextarea
         :id="note.id"
         :content="note.content"
-        :rows="props.layout === 'list' ? 5 : 10"
+        :rows="props.layout === 'list' ? 5 : 8"
         :cols="props.layout === 'list' ? 60 : 20"
       />
     </div>

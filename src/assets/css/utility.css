@@ -135,6 +135,9 @@
 .text-right {
   text-align: right;
 }
+.font-medium {
+  font-weight: 500;
+}
 .font-semibold {
   font-weight: 600;
 }
