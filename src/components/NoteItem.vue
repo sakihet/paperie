@@ -36,12 +36,14 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
 <template>
   <div
     class="border-solid border-color-default border-1"
-    :class="{ 'border-t-2 border-color-blue': note.isPinned }"
+    :class="{ 'border-t-2 border-color-blue': note.isPinned, 'w-48': props.layout !== 'list' }"
     @click="handleEdit(note)"
     @mouseover="isHovered = true"
     @mouseleave="isHovered = false"
   >
-    <div class="font-semibold p-2">{{ note.title }}</div>
+    <div class="font-semibold p-2 overflow-hidden h-8">
+      <span class="">{{ note.title }}</span>
+    </div>
     <div>
       <AppTextarea
         :id="note.id"

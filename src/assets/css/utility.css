@@ -118,6 +118,15 @@
 .h-12 {
   height: 3rem;
 }
+.w-32 {
+  width: 8rem;
+}
+.w-48 {
+  width: 12rem;
+}
+.w-64 {
+  width: 16rem;
+}
 .w-100 {
   width: 100%;
 }
@@ -191,4 +200,10 @@
 }
 .focus\:outline-default:focus {
   outline: 1px solid var(--color-gray-300);
+}
+.overflow-hidden {
+  overflow: hidden;
+}
+.text-overflow-ellipsis {
+  text-overflow: ellipsis;
 }
