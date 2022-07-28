@@ -6,9 +6,11 @@ import TheNavBar from './components/TheNavBar.vue'
 </script>
 
 <template>
-  <div>
+  <div id="app" class="flex-column">
     <TheNavBar />
-    <router-view />
+    <div class="f-1">
+      <router-view />
+    </div>
     <TheFooter />
   </div>
 </template>

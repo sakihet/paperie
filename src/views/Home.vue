@@ -141,13 +141,13 @@ watch(
         @close="handleClose"
       >
         <textarea
-          class="p-2 border-color-default"
+          class="p-2 border-color-default focus:outline-default text-medium"
           rows="16"
           cols="60"
           v-model="noteContent"
           ref="refEditor"
         ></textarea>
-        <div class="h-8 text-right">
+        <div class="h-6 text-right my-1">
           <AppButton
             text="Cancel"
             @click="handleCancel"
