@@ -39,6 +39,8 @@ const handleAddConfirm = () => {
   dialogOpen.value = false
   isAdding.value = false
   isEditing.value = false
+  noteContent.value = ''
+  noteTitle.value = ''
 }
 const handleCancel = () => {
   noteContent.value = ''
