@@ -42,6 +42,7 @@ const handleAddConfirm = () => {
 }
 const handleCancel = () => {
   noteContent.value = ''
+  noteTitle.value = ''
   isAdding.value = false
   isEditing.value = false
   dialogOpen.value = false
@@ -80,6 +81,7 @@ const handleEditConfirm = () => {
   }
   editingNoteId.value = null
   noteContent.value = ''
+  noteTitle.value = ''
   dialogOpen.value = false
   isEditing.value = false
 }
