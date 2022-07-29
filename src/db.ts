@@ -1,6 +1,7 @@
 import { openDB } from 'idb'
+import { name } from '../package.json'
 
-export const DB_NAME = 'n1'
+export const DB_NAME = name
 export const DB_VERSION = 1
 
 export const connect = async () => {

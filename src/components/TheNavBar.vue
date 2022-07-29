@@ -1,5 +1,9 @@
 <script setup lang="ts">
 import { name, version } from '../../package.json'
+
+const capitalize = (str: string) => {
+  return str[0].toUpperCase() + str.slice(1)
+}
 </script>
 
 <template>
@@ -7,7 +11,7 @@ import { name, version } from '../../package.json'
     <div class="f-1 py-4">{{ version }}</div>
     <div class="f-1 text-center py-4">
       <router-link to="/">
-        {{ name }}
+        {{ capitalize(name) }}
       </router-link>
     </div>
     <div class="f-1 text-right py-4">
