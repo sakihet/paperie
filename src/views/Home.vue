@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { v4 as uuidv4 } from 'uuid'
-import { ref, nextTick, watch } from 'vue'
+import { ref, nextTick } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
@@ -51,11 +51,9 @@ const handleCancel = () => {
 }
 const handleChangeLayout = (e: Event) => {
   const value = (e.target as HTMLInputElement).value
-  if (value === 'grid') {
-    router.push({ path: '/', query: { view: 'grid' }})
-  } else {
-    router.push({ path: '/' })
-  }
+  const nextLayout = (value === 'grid' ? 'grid' : 'list')
+  store.notesLayout = nextLayout
+  store.saveLayout()
 }
 const handleClose = () => {
   isAdding.value = false
@@ -91,21 +89,6 @@ const handleToggleIsPinned = (noteId: string) => {
   store.toggleNoteIsPinned(noteId)
 }
 store.init()
-if (route.query.view === 'grid') {
-  store.notesLayout = 'grid'
-} else {
-  store.notesLayout = 'list'
-}
-watch(
-  () => route.query,
-  async () => {
-    if (route.query.view === 'grid') {
-      store.notesLayout = 'grid'
-    } else {
-      store.notesLayout = 'list'
-    }
-  }
-)
 </script>
 
 <template>

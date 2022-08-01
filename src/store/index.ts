@@ -8,6 +8,12 @@ const noteApplicationService = new NoteApplicationService(
   new NoteRepository()
 )
 
+const storageKey = 'layout'
+const getLayout = (): string => {
+  const currentLayout = localStorage.getItem(storageKey)
+  return currentLayout ? currentLayout : 'list'
+}
+
 interface Store {
   notes: Array<Note>,
   notesLayout: string,
@@ -15,15 +21,17 @@ interface Store {
   load: () => Promise<void>,
   addNote: (note: Note) => void,
   deleteNote: (id: string) => void,
-  toggleNoteIsPinned: (id: string) => void
+  toggleNoteIsPinned: (id: string) => void,
+  saveLayout: () => void,
   updateNote: (id: string, title: string, content: string) => void
 }
 
 export const store: Store = reactive<Store>({
   notes: [],
-  notesLayout: 'list',
+  notesLayout: '',
   init () {
     console.log('init')
+    this.notesLayout = getLayout()
     const connectHandler = async () => await connect()
     const loadHandler = async () => await this.load()
     connectHandler()
@@ -68,6 +76,9 @@ export const store: Store = reactive<Store>({
       this.notes = this.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
     }
     handler()
+  },
+  saveLayout () {
+    localStorage.setItem(storageKey, this.notesLayout)
   },
   updateNote (id: string, title: string, content: string) {
     const handler = async () => {
