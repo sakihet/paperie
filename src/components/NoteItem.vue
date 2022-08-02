@@ -48,8 +48,8 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
       <AppTextarea
         :id="note.id"
         :content="note.content"
-        :rows="props.layout === 'list' ? 5 : 8"
-        :cols="props.layout === 'list' ? 60 : 20"
+        :rows="props.layout === 'list' ? 3 : 8"
+        :cols="props.layout === 'list' ? 60 : 16"
       />
     </div>
     <div class="h-8 text-right px-4 py-1">
