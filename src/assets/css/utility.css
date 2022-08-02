@@ -190,6 +190,9 @@
   font-size: 1.25rem;
   line-height: 1.75rem;
 }
+.text-secondary {
+  color: var(--color-gray-600);
+}
 .text-center {
   text-align: center;
 }

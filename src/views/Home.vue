@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { v4 as uuidv4 } from 'uuid'
-import { ref, nextTick } from 'vue'
+import { ref, nextTick, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
@@ -90,6 +90,13 @@ const handleKeyDownOnContent = (e: KeyboardEvent) => {
   const target = (e.target as HTMLTextAreaElement)
   if (e.key === 'ArrowUp' && !composing.value && target.selectionStart === 0) {
     refEditorTitle.value?.focus()
+  } else if (e.key === 'Escape' && !composing.value) {
+    if (isAdding.value) {
+      handleAddConfirm()
+    } else if (isEditing.value) {
+      handleEditConfirm()
+    } else {
+    }
   }
 }
 const handleKeyDownOnTitle = (e: KeyboardEvent) => {
@@ -97,6 +104,15 @@ const handleKeyDownOnTitle = (e: KeyboardEvent) => {
     setTimeout(() => {
       refEditor.value?.focus()
     }, 100)
+  } else if (e.key === 'Escape' && !composing.value) {
+    if (noteTitle.value.length === 0) {
+      handleCancel()
+    } else if (isAdding.value) {
+      handleAddConfirm()
+    } else if (isEditing.value) {
+      handleEditConfirm()
+    } else {
+    }
   }
 }
 const handleToggleIsPinned = (noteId: string) => {
@@ -109,11 +125,22 @@ const handleComposingEnd = () => {
   composing.value = false
 }
 store.init()
+onMounted(() => {
+  document.onkeydown = (e: KeyboardEvent) => {
+    if (!isAdding.value && !isEditing.value && e.key === '+') {
+      isAdding.value = true
+      dialogOpen.value = true
+      setTimeout(() => {
+        refEditorTitle.value?.focus()
+      }, 100)
+    }
+  }
+})
 </script>
 
 <template>
   <div class="layout-center px-4">
-    <div class="my-4">
+    <div class="h-8 my-2">
       <div class="">
         <AppButton
           text="Add"
@@ -121,7 +148,7 @@ store.init()
         />
       </div>
     </div>
-    <div class="my-4">
+    <div class="h-8 my-2">
       <div class="text-right">
         <label>
           <input
@@ -144,6 +171,12 @@ store.init()
             Grid
         </label>
       </div>
+    </div>
+    <div class="text-secondary">
+      <small>
+        <p>Keyboard shortcuts (experimental):</p>
+        <p>+: Add a new note, esc: Save the note</p>
+      </small>
     </div>
     <div>
       <dialog
