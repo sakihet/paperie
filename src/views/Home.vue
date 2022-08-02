@@ -17,6 +17,7 @@ const noteContent = ref("")
 const noteTitle = ref("")
 const refEditor = ref<HTMLElement | null>(null)
 const refEditorTitle = ref<HTMLElement | null>(null)
+const composing = ref(false)
 
 const handleAdd = async () => {
   isAdding.value = true
@@ -85,8 +86,27 @@ const handleEditConfirm = () => {
   dialogOpen.value = false
   isEditing.value = false
 }
+const handleKeyDownOnContent = (e: KeyboardEvent) => {
+  const target = (e.target as HTMLTextAreaElement)
+  if (e.key === 'ArrowUp' && !composing.value && target.selectionStart === 0) {
+    refEditorTitle.value?.focus()
+  }
+}
+const handleKeyDownOnTitle = (e: KeyboardEvent) => {
+  if ((e.key === 'ArrowDown' || e.key === 'Enter') && !composing.value) {
+    setTimeout(() => {
+      refEditor.value?.focus()
+    }, 100)
+  }
+}
 const handleToggleIsPinned = (noteId: string) => {
   store.toggleNoteIsPinned(noteId)
+}
+const handleComposingStart = () => {
+  composing.value = true
+}
+const handleComposingEnd = () => {
+  composing.value = false
 }
 store.init()
 </script>
@@ -137,6 +157,9 @@ store.init()
             class="p-2 w-100 h-8 border-none focus:outline-none text-medium font-bold"
             ref="refEditorTitle"
             v-model="noteTitle"
+            @keydown="handleKeyDownOnTitle"
+            @compositionstart="handleComposingStart"
+            @compositionend="handleComposingEnd"
           />
         </div>
         <textarea
@@ -145,6 +168,9 @@ store.init()
           cols="60"
           v-model="noteContent"
           ref="refEditor"
+          @keydown="handleKeyDownOnContent"
+          @compositionstart="handleComposingStart"
+          @compositionend="handleComposingEnd"
         ></textarea>
         <div class="h-6 text-right my-1">
           <AppButton
