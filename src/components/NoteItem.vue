@@ -36,7 +36,7 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
 <template>
   <div
     class="border-solid border-color-default border-1"
-    :class="{ 'border-t-2 border-color-blue': note.isPinned, 'w-48': props.layout !== 'list' }"
+    :class="{ 'border-t-2 border-color-blue': note.isPinned, 'w-48': props.layout !== 'list', 'h-48' : props.layout !== 'list' }"
     @click="handleEdit(note)"
     @mouseover="isHovered = true"
     @mouseleave="isHovered = false"
