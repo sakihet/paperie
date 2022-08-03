@@ -12,16 +12,16 @@ const router = useRouter()
 const isAdding = ref(false)
 const isEditing = ref(false)
 const editingNoteId = ref<string | null>(null)
-const dialogOpen = ref(false)
+const editorDialogOpen = ref(false)
 const noteContent = ref("")
 const noteTitle = ref("")
-const refEditor = ref<HTMLElement | null>(null)
+const refEditorContent = ref<HTMLElement | null>(null)
 const refEditorTitle = ref<HTMLElement | null>(null)
 const composing = ref(false)
 
 const handleAdd = async () => {
   isAdding.value = true
-  dialogOpen.value = true
+  editorDialogOpen.value = true
   await nextTick()
   refEditorTitle.value?.focus()
 }
@@ -37,7 +37,7 @@ const handleAddConfirm = () => {
     updatedAt: date
   }
   store.addNote(note)
-  dialogOpen.value = false
+  editorDialogOpen.value = false
   isAdding.value = false
   isEditing.value = false
   noteContent.value = ''
@@ -49,7 +49,7 @@ const handleCancel = () => {
   noteTitle.value = ''
   isAdding.value = false
   isEditing.value = false
-  dialogOpen.value = false
+  editorDialogOpen.value = false
 }
 const handleChangeLayout = (e: Event) => {
   const value = (e.target as HTMLInputElement).value
@@ -60,33 +60,29 @@ const handleChangeLayout = (e: Event) => {
 const handleClose = () => {
   isAdding.value = false
   isEditing.value = false
-  dialogOpen.value = false
+  editorDialogOpen.value = false
 }
 const handleDelete = (noteId: string) => {
-  if (window.confirm("Do you really want to delete?")) {
-    store.deleteNote(noteId)
-  }
+  if (window.confirm("Do you really want to delete?")) store.deleteNote(noteId)
 }
 const handleEdit = async (note: Note) => {
   router.push({query: {'noteId': `${note.id}`}})
   isEditing.value = true
-  dialogOpen.value = true
+  editorDialogOpen.value = true
   editingNoteId.value = note.id
   noteTitle.value = note.title
   noteContent.value = note.content
   await nextTick()
-  refEditor.value?.focus() // TODO
+  refEditorContent.value?.focus() // TODO
 }
 const handleEditConfirm = () => {
   router.push({})
   const id = editingNoteId.value
-  if (id) {
-    store.updateNote(id, noteTitle.value, noteContent.value)
-  }
+  if (id) store.updateNote(id, noteTitle.value, noteContent.value)
   editingNoteId.value = null
   noteContent.value = ''
   noteTitle.value = ''
-  dialogOpen.value = false
+  editorDialogOpen.value = false
   isEditing.value = false
 }
 const handleKeyDownOnContent = (e: KeyboardEvent) => {
@@ -104,9 +100,7 @@ const handleKeyDownOnContent = (e: KeyboardEvent) => {
 }
 const handleKeyDownOnTitle = (e: KeyboardEvent) => {
   if ((e.key === 'ArrowDown' || e.key === 'Enter') && !composing.value) {
-    setTimeout(() => {
-      refEditor.value?.focus()
-    }, 100)
+    setTimeout(() => refEditorContent.value?.focus(), 100)
   } else if (e.key === 'Escape' && !composing.value) {
     if (noteTitle.value.length === 0) {
       handleCancel()
@@ -118,30 +112,23 @@ const handleKeyDownOnTitle = (e: KeyboardEvent) => {
     }
   }
 }
-const handleToggleIsPinned = (noteId: string) => {
-  store.toggleNoteIsPinned(noteId)
-}
-const handleComposingStart = () => {
-  composing.value = true
-}
-const handleComposingEnd = () => {
-  composing.value = false
-}
+const handleToggleIsPinned = (noteId: string) => store.toggleNoteIsPinned(noteId)
+const handleComposingStart = () => composing.value = true
+const handleComposingEnd = () => composing.value = false
 store.init() // TODO: fix
+
 onMounted(async () => {
   document.onkeydown = (e: KeyboardEvent) => {
     if (!isAdding.value && !isEditing.value && e.key === '+') {
       isAdding.value = true
-      dialogOpen.value = true
-      setTimeout(() => {
-        refEditorTitle.value?.focus()
-      }, 100)
+      editorDialogOpen.value = true
+      setTimeout(() => refEditorTitle.value?.focus(), 100)
     }
   }
   await store.load()
   const noteId = route.query.noteId?.toString()
   if (noteId) {
-    dialogOpen.value = true
+    editorDialogOpen.value = true
     isEditing.value = true
     editingNoteId.value = noteId
     const note = store.notes.find(x => x.id === noteId)
@@ -154,9 +141,7 @@ onMounted(async () => {
     }
   }
 })
-watch (
-  () => {}, async () => {}
-)
+watch (() => {}, async () => {})
 </script>
 
 <template>
@@ -202,7 +187,7 @@ watch (
     <div>
       <dialog
         class="border-1 border-color-default"
-        :open="dialogOpen"
+        :open="editorDialogOpen"
         @close="handleClose"
       >
         <div>
@@ -221,7 +206,7 @@ watch (
           rows="16"
           cols="60"
           v-model="noteContent"
-          ref="refEditor"
+          ref="refEditorContent"
           @keydown="handleKeyDownOnContent"
           @compositionstart="handleComposingStart"
           @compositionend="handleComposingEnd"
