@@ -30,7 +30,6 @@ export const store: Store = reactive<Store>({
   notes: [],
   notesLayout: '',
   init () {
-    console.log('init')
     this.notesLayout = getLayout()
     const connectHandler = async () => await connect()
     const loadHandler = async () => await this.load()
@@ -38,7 +37,6 @@ export const store: Store = reactive<Store>({
     loadHandler()
   },
   async load () {
-    console.log('load')
     const result = await noteApplicationService.getAll()
     this.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
   },

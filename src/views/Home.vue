@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { v4 as uuidv4 } from 'uuid'
-import { ref, nextTick, onMounted } from 'vue'
+import { ref, nextTick, onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
@@ -44,6 +44,7 @@ const handleAddConfirm = () => {
   noteTitle.value = ''
 }
 const handleCancel = () => {
+  router.push({})
   noteContent.value = ''
   noteTitle.value = ''
   isAdding.value = false
@@ -67,6 +68,7 @@ const handleDelete = (noteId: string) => {
   }
 }
 const handleEdit = async (note: Note) => {
+  router.push({query: {'noteId': `${note.id}`}})
   isEditing.value = true
   dialogOpen.value = true
   editingNoteId.value = note.id
@@ -76,6 +78,7 @@ const handleEdit = async (note: Note) => {
   refEditor.value?.focus() // TODO
 }
 const handleEditConfirm = () => {
+  router.push({})
   const id = editingNoteId.value
   if (id) {
     store.updateNote(id, noteTitle.value, noteContent.value)
@@ -124,8 +127,8 @@ const handleComposingStart = () => {
 const handleComposingEnd = () => {
   composing.value = false
 }
-store.init()
-onMounted(() => {
+store.init() // TODO: fix
+onMounted(async () => {
   document.onkeydown = (e: KeyboardEvent) => {
     if (!isAdding.value && !isEditing.value && e.key === '+') {
       isAdding.value = true
@@ -135,7 +138,25 @@ onMounted(() => {
       }, 100)
     }
   }
+  await store.load()
+  const noteId = route.query.noteId?.toString()
+  if (noteId) {
+    dialogOpen.value = true
+    isEditing.value = true
+    editingNoteId.value = noteId
+    const note = store.notes.find(x => x.id === noteId)
+    if (note) {
+      noteTitle.value = note.title
+      noteContent.value = note.content
+    } else {
+      console.log('not found')
+      router.push({})
+    }
+  }
 })
+watch (
+  () => {}, async () => {}
+)
 </script>
 
 <template>
