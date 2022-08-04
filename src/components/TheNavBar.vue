@@ -15,9 +15,18 @@ const capitalize = (str: string) => {
       </router-link>
     </div>
     <div class="f-1 text-right py-4">
-      <router-link to="/about" class="text-decoration-none">
+      <router-link
+        to="/about"
+        class="text-decoration-none hover:text-decoration-underline mx-1"
+      >
         About
       </router-link>
+      <a
+        class="p-1 text-decoration-none hover:text-decoration-underline mx-1"
+        href="https://github.com/sakihet/papyls"
+      >
+        GitHub
+      </a>
     </div>
   </div>
 </template>

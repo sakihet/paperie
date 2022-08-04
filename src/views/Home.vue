@@ -190,21 +190,21 @@ watch (() => route.query.noteId, async (queryNoteId) => {
           <input
             type="radio"
             name="layout"
-            value="list"
-            @change="handleChangeLayout"
-            v-model="store.notesLayout"
-          >
-            List
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="layout"
             value="grid"
             @change="handleChangeLayout"
             v-model="store.notesLayout"
           >
             Grid
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="layout"
+            value="list"
+            @change="handleChangeLayout"
+            v-model="store.notesLayout"
+          >
+            List
         </label>
       </div>
     </div>
@@ -308,7 +308,7 @@ watch (() => route.query.noteId, async (queryNoteId) => {
         </div>
       </dialog>
     </div>
-    <div :class="{ 'layout-cluster': store.notesLayout === 'grid', 'layout-stack-4': store.notesLayout === 'list', 'my-8': true }">
+    <div :class="{ 'layout-cluster': store.notesLayout === 'grid', 'layout-stack-4': store.notesLayout === 'list', 'my-6': true }">
       <div
         class="bg-white"
         v-for="note in store.notes"

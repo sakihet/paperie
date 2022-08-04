@@ -1,0 +1,8 @@
+.pattern-scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+  background-color: var(--color-gray-200);
+}
+.pattern-scrollbar-thin::-webkit-scrollbar-thumb {
+  background-color: var(--color-gray-400);
+}

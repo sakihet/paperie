@@ -30,6 +30,22 @@
 .m-4 {
   margin: 1rem;
 }
+.mx-1 {
+  margin-left: 0.25rem;
+  margin-right: 0.25rem;
+}
+.mx-2 {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+}
+.mx-3 {
+  margin-left: 0.75rem;
+  margin-right: 0.75rem;
+}
+.mx-4 {
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
 .my-0 {
   margin-top: 0;
   margin-bottom: 0;
@@ -273,4 +289,7 @@
 }
 .text-decoration-none {
   text-decoration: none;
+}
+.hover\:text-decoration-underline:hover {
+  text-decoration: underline;
 }
