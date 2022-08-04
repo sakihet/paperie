@@ -13,11 +13,14 @@ const isAdding = ref(false)
 const isEditing = ref(false)
 const editingNoteId = ref<string | null>(null)
 const editorDialogOpen = ref(false)
+const commandMenuDialogOpen = ref(false)
+const refCommandMenuInput = ref<HTMLElement | null>(null)
 const noteContent = ref("")
 const noteTitle = ref("")
 const refEditorContent = ref<HTMLElement | null>(null)
 const refEditorTitle = ref<HTMLElement | null>(null)
 const composing = ref(false)
+const pressingMeta = ref(false)
 
 const handleAdd = async () => {
   isAdding.value = true
@@ -89,27 +92,11 @@ const handleKeyDownOnContent = (e: KeyboardEvent) => {
   const target = (e.target as HTMLTextAreaElement)
   if (e.key === 'ArrowUp' && !composing.value && target.selectionStart === 0) {
     refEditorTitle.value?.focus()
-  } else if (e.key === 'Escape' && !composing.value) {
-    if (isAdding.value) {
-      handleAddConfirm()
-    } else if (isEditing.value) {
-      handleEditConfirm()
-    } else {
-    }
   }
 }
 const handleKeyDownOnTitle = (e: KeyboardEvent) => {
   if ((e.key === 'ArrowDown' || e.key === 'Enter') && !composing.value) {
     setTimeout(() => refEditorContent.value?.focus(), 100)
-  } else if (e.key === 'Escape' && !composing.value) {
-    if (noteTitle.value.length === 0) {
-      handleCancel()
-    } else if (isAdding.value) {
-      handleAddConfirm()
-    } else if (isEditing.value) {
-      handleEditConfirm()
-    } else {
-    }
   }
 }
 const handleToggleIsPinned = (noteId: string) => store.toggleNoteIsPinned(noteId)
@@ -118,12 +105,30 @@ const handleComposingEnd = () => composing.value = false
 store.init() // TODO: fix
 
 onMounted(async () => {
-  document.onkeydown = (e: KeyboardEvent) => {
+  document.onkeydown = async (e: KeyboardEvent) => {
     if (!isAdding.value && !isEditing.value && e.key === '+') {
       isAdding.value = true
       editorDialogOpen.value = true
       setTimeout(() => refEditorTitle.value?.focus(), 100)
+    } else if (e.key === 'Meta') {
+      pressingMeta.value = true
+    } else if (e.key === 'Escape' && !composing.value) {
+      if (noteTitle.value.length === 0) {
+        handleCancel()
+      } else if (isAdding.value) {
+        handleAddConfirm()
+      } else if (isEditing.value) {
+        handleEditConfirm()
+      } else {
+      }
+    } else if (e.key === 'k' && !composing.value) {
+      commandMenuDialogOpen.value = !commandMenuDialogOpen.value
+      await nextTick()
+      refCommandMenuInput.value?.focus()
     }
+  }
+  document.onkeyup = (e: KeyboardEvent) => {
+    if (e.key === 'Meta') pressingMeta.value = false
   }
   await store.load()
   const noteId = route.query.noteId?.toString()
@@ -141,7 +146,26 @@ onMounted(async () => {
     }
   }
 })
-watch (() => {}, async () => {})
+watch (() => route.query.noteId, async (queryNoteId) => {
+  if (commandMenuDialogOpen.value) commandMenuDialogOpen.value = false
+  const noteId = queryNoteId?.toString()
+  if (noteId) {
+    commandMenuDialogOpen.value = false
+    editorDialogOpen.value = true
+    isEditing.value = true
+    editingNoteId.value = noteId
+    const note = store.notes.find(x => x.id === noteId)
+    if (note) {
+      noteTitle.value = note.title
+      noteContent.value = note.content
+      await nextTick()
+      refEditorContent.value?.focus() // TODO
+    } else {
+      console.log('not found')
+      router.push({})
+    }
+  }
+})
 </script>
 
 <template>
@@ -181,7 +205,7 @@ watch (() => {}, async () => {})
     <div class="text-secondary">
       <small>
         <p>Keyboard shortcuts (experimental):</p>
-        <p>+: Add a new note, esc: Save the note</p>
+        <p>+: Add a new note, esc: Save the note, command + k: Open the command menu</p>
       </small>
     </div>
     <div>
@@ -211,21 +235,54 @@ watch (() => {}, async () => {})
           @compositionstart="handleComposingStart"
           @compositionend="handleComposingEnd"
         ></textarea>
-        <div class="h-6 text-right my-1">
-          <AppButton
-            text="Cancel"
-            @click="handleCancel"
-          />
-          <AppButton
-            v-if="isAdding"
-            text="Confirm"
-            @click="handleAddConfirm"
-          />
-          <AppButton
-            v-if="isEditing"
-            text="Update"
-            @click="handleEditConfirm"
-          />
+        <div class="flex-row">
+          <div class="f-1 text-secondary">
+            <small>
+              <p>Esc: Save the note</p>
+            </small>
+          </div>
+          <div class="h-6 text-right my-1">
+            <AppButton
+              text="Cancel"
+              @click="handleCancel"
+            />
+            <AppButton
+              v-if="isAdding"
+              text="Confirm"
+              @click="handleAddConfirm"
+            />
+            <AppButton
+              v-if="isEditing"
+              text="Update"
+              @click="handleEditConfirm"
+            />
+          </div>
+        </div>
+      </dialog>
+    </div>
+    <div>
+      <dialog
+        class="border-color-default"
+        :open="commandMenuDialogOpen"
+      >
+        <div>
+          <div>
+            <input type="text" ref="refCommandMenuInput" placeholder="Under constrcution..."/>
+          </div>
+          <div>
+            <ul>
+              <li v-for="note in store.notes" :key="note.id">
+                <router-link :to="{ path: '/', query: { noteId: note.id} }">{{ note.title }}</router-link>
+              </li>
+            </ul>
+          </div>
+          <div>
+            <div class="f-1 text-secondary">
+              <small>
+                <p>command + k: Close the command menu</p>
+              </small>
+            </div>
+          </div>
         </div>
       </dialog>
     </div>
