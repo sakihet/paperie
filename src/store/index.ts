@@ -11,7 +11,7 @@ const noteApplicationService = new NoteApplicationService(
 const storageKey = 'layout'
 const getLayout = (): string => {
   const currentLayout = localStorage.getItem(storageKey)
-  return currentLayout ? currentLayout : 'list'
+  return currentLayout ? currentLayout : 'grid'
 }
 
 interface Store {

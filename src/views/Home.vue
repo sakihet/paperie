@@ -25,6 +25,7 @@ const pressingMeta = ref(false)
 const handleAdd = async () => {
   isAdding.value = true
   editorDialogOpen.value = true
+  commandMenuDialogOpen.value = false
   await nextTick()
   refEditorTitle.value?.focus()
 }
@@ -76,7 +77,7 @@ const handleEdit = async (note: Note) => {
   noteTitle.value = note.title
   noteContent.value = note.content
   await nextTick()
-  refEditorContent.value?.focus() // TODO
+  refEditorContent.value?.focus()
 }
 const handleEditConfirm = () => {
   router.push({})
@@ -102,16 +103,16 @@ const handleKeyDownOnTitle = (e: KeyboardEvent) => {
 const handleToggleIsPinned = (noteId: string) => store.toggleNoteIsPinned(noteId)
 const handleComposingStart = () => composing.value = true
 const handleComposingEnd = () => composing.value = false
-store.init() // TODO: fix
+store.init() // TODO: fix double load
 
 onMounted(async () => {
   document.onkeydown = async (e: KeyboardEvent) => {
     if (!isAdding.value && !isEditing.value && e.key === '+') {
       isAdding.value = true
       editorDialogOpen.value = true
+      commandMenuDialogOpen.value = false
+      pressingMeta.value = false
       setTimeout(() => refEditorTitle.value?.focus(), 100)
-    } else if (e.key === 'Meta') {
-      pressingMeta.value = true
     } else if (e.key === 'Escape' && !composing.value) {
       if (noteTitle.value.length === 0) {
         handleCancel()
@@ -121,10 +122,15 @@ onMounted(async () => {
         handleEditConfirm()
       } else {
       }
-    } else if (e.key === 'k' && !composing.value) {
+    } else if (e.key === 'Meta' && !composing.value) {
+      pressingMeta.value = true
+    } else if (e.key === 'k' && !composing.value && pressingMeta.value) {
       commandMenuDialogOpen.value = !commandMenuDialogOpen.value
-      await nextTick()
-      refCommandMenuInput.value?.focus()
+      if (commandMenuDialogOpen.value) {
+        await nextTick()
+        refCommandMenuInput.value?.focus()
+      }
+      pressingMeta.value = false
     }
   }
   document.onkeyup = (e: KeyboardEvent) => {
@@ -159,7 +165,7 @@ watch (() => route.query.noteId, async (queryNoteId) => {
       noteTitle.value = note.title
       noteContent.value = note.content
       await nextTick()
-      refEditorContent.value?.focus() // TODO
+      refEditorContent.value?.focus()
     } else {
       console.log('not found')
       router.push({})
@@ -216,8 +222,8 @@ watch (() => route.query.noteId, async (queryNoteId) => {
       >
         <div>
           <input
-            type="text"
             class="p-2 w-100 h-8 border-none focus:outline-none text-medium font-bold"
+            type="text"
             ref="refEditorTitle"
             v-model="noteTitle"
             @keydown="handleKeyDownOnTitle"
@@ -260,21 +266,37 @@ watch (() => route.query.noteId, async (queryNoteId) => {
         </div>
       </dialog>
     </div>
-    <div>
+    <div class="">
       <dialog
         class="border-color-default"
         :open="commandMenuDialogOpen"
       >
         <div>
-          <div>
-            <input type="text" ref="refCommandMenuInput" placeholder="Under constrcution..."/>
+          <div class="h-8">
+            <input
+              class="w-full border-color-default"
+              type="text"
+              placeholder="Under constrcution..."
+              ref="refCommandMenuInput"
+            />
           </div>
           <div>
-            <ul>
-              <li v-for="note in store.notes" :key="note.id">
-                <router-link :to="{ path: '/', query: { noteId: note.id} }">{{ note.title }}</router-link>
+            <hr />
+            <ul class="list-style-none pl-0 my-2">
+              <li
+                class="h-8"
+                v-for="note in store.notes"
+                :key="note.id"
+              >
+                <router-link
+                  class="text-decoration-none"
+                  :to="{ path: '/', query: { noteId: note.id} }"
+                >
+                  {{ note.title }}
+                </router-link>
               </li>
             </ul>
+            <hr />
           </div>
           <div>
             <div class="f-1 text-secondary">
