@@ -15,6 +15,7 @@ const getLayout = (): string => {
 }
 
 interface Store {
+  commandMenuDialogOpen: boolean,
   notes: Array<Note>,
   notesLayout: string,
   init: () => void,
@@ -27,6 +28,7 @@ interface Store {
 }
 
 export const store: Store = reactive<Store>({
+  commandMenuDialogOpen: false,
   notes: [],
   notesLayout: '',
   init () {

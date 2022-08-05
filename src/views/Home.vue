@@ -13,8 +13,6 @@ const isAdding = ref(false)
 const isEditing = ref(false)
 const editingNoteId = ref<string | null>(null)
 const editorDialogOpen = ref(false)
-const commandMenuDialogOpen = ref(false)
-const refCommandMenuInput = ref<HTMLElement | null>(null)
 const noteContent = ref("")
 const noteTitle = ref("")
 const refEditorContent = ref<HTMLElement | null>(null)
@@ -25,7 +23,7 @@ const pressingMeta = ref(false)
 const handleAdd = async () => {
   isAdding.value = true
   editorDialogOpen.value = true
-  commandMenuDialogOpen.value = false
+  store.commandMenuDialogOpen = false
   await nextTick()
   refEditorTitle.value?.focus()
 }
@@ -119,7 +117,7 @@ onMounted(async () => {
     if (!isAdding.value && !isEditing.value && e.key === '+') {
       isAdding.value = true
       editorDialogOpen.value = true
-      commandMenuDialogOpen.value = false
+      store.commandMenuDialogOpen = false
       pressingMeta.value = false
       setTimeout(() => refEditorTitle.value?.focus(), 100)
     } else if (e.key === 'Escape' && !composing.value) {
@@ -134,11 +132,7 @@ onMounted(async () => {
     } else if (e.key === 'Meta' && !composing.value) {
       pressingMeta.value = true
     } else if (e.key === 'k' && !composing.value && pressingMeta.value) {
-      commandMenuDialogOpen.value = !commandMenuDialogOpen.value
-      if (commandMenuDialogOpen.value) {
-        await nextTick()
-        refCommandMenuInput.value?.focus()
-      }
+      store.commandMenuDialogOpen = !store.commandMenuDialogOpen
       pressingMeta.value = false
     }
   }
@@ -162,10 +156,10 @@ onMounted(async () => {
   }
 })
 watch (() => route.query.noteId, async (queryNoteId) => {
-  if (commandMenuDialogOpen.value) commandMenuDialogOpen.value = false
+  if (store.commandMenuDialogOpen) store.commandMenuDialogOpen = false
   const noteId = queryNoteId?.toString()
   if (noteId) {
-    commandMenuDialogOpen.value = false
+    store.commandMenuDialogOpen = false
     editorDialogOpen.value = true
     isEditing.value = true
     editingNoteId.value = noteId
@@ -260,48 +254,6 @@ watch (() => route.query.noteId, async (queryNoteId) => {
             <small>
               <p>Esc: Save and close the dialog</p>
             </small>
-          </div>
-        </div>
-      </dialog>
-    </div>
-    <div class="">
-      <dialog
-        class="border-color-default"
-        :open="commandMenuDialogOpen"
-      >
-        <div>
-          <div class="h-8">
-            <input
-              class="w-full border-color-default"
-              type="text"
-              placeholder="Under constrcution..."
-              ref="refCommandMenuInput"
-            />
-          </div>
-          <div>
-            <hr />
-            <ul class="list-style-none pl-0 my-2">
-              <li
-                class="h-8"
-                v-for="note in store.notes"
-                :key="note.id"
-              >
-                <router-link
-                  class="text-decoration-none"
-                  :to="{ path: '/', query: { noteId: note.id} }"
-                >
-                  {{ note.title }}
-                </router-link>
-              </li>
-            </ul>
-            <hr />
-          </div>
-          <div>
-            <div class="f-1 text-secondary">
-              <small>
-                <p>command + k: Close the command menu</p>
-              </small>
-            </div>
           </div>
         </div>
       </dialog>
