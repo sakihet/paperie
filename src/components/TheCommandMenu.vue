@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onUnmounted, onUpdated, ref } from 'vue'
+import { onUpdated, ref } from 'vue'
 import { store } from '../store'
 
 const refCommandMenuInput = ref<HTMLElement | null>(null)
@@ -13,6 +13,11 @@ onUpdated(() => {
 
 <template>
   <div>
+    <div
+      class="pattern-mask"
+      v-if="store.commandMenuDialogOpen"
+      @click="store.commandMenuDialogOpen = false"
+    />
     <dialog
       class="border-color-default"
       :open="store.commandMenuDialogOpen"
