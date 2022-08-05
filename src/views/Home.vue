@@ -66,6 +66,15 @@ const handleClose = () => {
   isEditing.value = false
   editorDialogOpen.value = false
 }
+const handleCloseEditorDialog = () => {
+  if (isEditing.value) {
+    handleEditConfirm()
+  } else if (isAdding.value) {
+    handleAddConfirm()
+  } else {
+    console.log('error')
+  }
+}
 const handleDelete = (noteId: string) => {
   if (window.confirm("Do you really want to delete?")) store.deleteNote(noteId)
 }
@@ -215,6 +224,11 @@ watch (() => route.query.noteId, async (queryNoteId) => {
       </small>
     </div>
     <div>
+      <div
+        class="pattern-mask"
+        v-if="editorDialogOpen"
+        @click="handleCloseEditorDialog"
+      ></div>
       <dialog
         class="border-1 border-color-default"
         :open="editorDialogOpen"
@@ -244,24 +258,8 @@ watch (() => route.query.noteId, async (queryNoteId) => {
         <div class="flex-row">
           <div class="f-1 text-secondary">
             <small>
-              <p>Esc: Save the note</p>
+              <p>Esc: Save and close the dialog</p>
             </small>
-          </div>
-          <div class="h-6 text-right my-1">
-            <AppButton
-              text="Cancel"
-              @click="handleCancel"
-            />
-            <AppButton
-              v-if="isAdding"
-              text="Confirm"
-              @click="handleAddConfirm"
-            />
-            <AppButton
-              v-if="isEditing"
-              text="Update"
-              @click="handleEditConfirm"
-            />
           </div>
         </div>
       </dialog>
