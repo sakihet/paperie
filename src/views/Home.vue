@@ -1,6 +1,5 @@
 <script setup lang="ts">
-import { v4 as uuidv4 } from 'uuid'
-import { ref, nextTick, onMounted, watch } from 'vue'
+import { ref, nextTick, onMounted, watch, onUpdated } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
@@ -9,49 +8,16 @@ import { Note } from '../entities/note'
 
 const route = useRoute()
 const router = useRouter()
-const isAdding = ref(false)
-const isEditing = ref(false)
-const editingNoteId = ref<string | null>(null)
-const editorDialogOpen = ref(false)
-const noteContent = ref("")
-const noteTitle = ref("")
 const refEditorContent = ref<HTMLElement | null>(null)
 const refEditorTitle = ref<HTMLElement | null>(null)
-const composing = ref(false)
-const pressingMeta = ref(false)
 
 const handleAdd = async () => {
-  isAdding.value = true
-  editorDialogOpen.value = true
-  store.commandMenuDialogOpen = false
+  store.openEditorForAdd()
   await nextTick()
   refEditorTitle.value?.focus()
 }
 const handleAddConfirm = () => {
-  const id = uuidv4()
-  const date = new Date()
-  const note: Note = {
-    id: id,
-    title: noteTitle.value,
-    content: noteContent.value,
-    isPinned: false,
-    createdAt: date,
-    updatedAt: date
-  }
-  store.addNote(note)
-  editorDialogOpen.value = false
-  isAdding.value = false
-  isEditing.value = false
-  noteContent.value = ''
-  noteTitle.value = ''
-}
-const handleCancel = () => {
-  router.push({})
-  noteContent.value = ''
-  noteTitle.value = ''
-  isAdding.value = false
-  isEditing.value = false
-  editorDialogOpen.value = false
+  store.addConfirm()
 }
 const handleChangeLayout = (e: Event) => {
   const value = (e.target as HTMLInputElement).value
@@ -60,14 +26,14 @@ const handleChangeLayout = (e: Event) => {
   store.saveLayout()
 }
 const handleClose = () => {
-  isAdding.value = false
-  isEditing.value = false
-  editorDialogOpen.value = false
+  store.isAdding = false
+  store.isEditing = false
+  store.editorDialogOpen = false
 }
 const handleCloseEditorDialog = () => {
-  if (isEditing.value) {
+  if (store.isEditing) {
     handleEditConfirm()
-  } else if (isAdding.value) {
+  } else if (store.isAdding) {
     handleAddConfirm()
   } else {
     console.log('error')
@@ -78,81 +44,47 @@ const handleDelete = (noteId: string) => {
 }
 const handleEdit = async (note: Note) => {
   router.push({query: {'noteId': `${note.id}`}})
-  isEditing.value = true
-  editorDialogOpen.value = true
-  editingNoteId.value = note.id
-  noteTitle.value = note.title
-  noteContent.value = note.content
+  store.openEditorForEdit(note)
   await nextTick()
   refEditorContent.value?.focus()
 }
 const handleEditConfirm = () => {
   router.push({})
-  const id = editingNoteId.value
-  if (id) store.updateNote(id, noteTitle.value, noteContent.value)
-  editingNoteId.value = null
-  noteContent.value = ''
-  noteTitle.value = ''
-  editorDialogOpen.value = false
-  isEditing.value = false
+  store.editConfirm()
 }
 const handleKeyDownOnContent = (e: KeyboardEvent) => {
   const target = (e.target as HTMLTextAreaElement)
-  if (e.key === 'ArrowUp' && !composing.value && target.selectionStart === 0) {
+  if (e.key === 'ArrowUp' && !store.composing && target.selectionStart === 0) {
     refEditorTitle.value?.focus()
   }
 }
 const handleKeyDownOnTitle = (e: KeyboardEvent) => {
-  if ((e.key === 'ArrowDown' || e.key === 'Enter') && !composing.value) {
+  if ((e.key === 'ArrowDown' || e.key === 'Enter') && !store.composing) {
     setTimeout(() => refEditorContent.value?.focus(), 100)
   }
 }
 const handleToggleIsPinned = (noteId: string) => store.toggleNoteIsPinned(noteId)
-const handleComposingStart = () => composing.value = true
-const handleComposingEnd = () => composing.value = false
-store.init() // TODO: fix double load
+const handleComposingStart = () => store.composing = true
+const handleComposingEnd = () => store.composing = false
 
 onMounted(async () => {
-  document.onkeydown = async (e: KeyboardEvent) => {
-    if (!isAdding.value && !isEditing.value && e.key === '+') {
-      isAdding.value = true
-      editorDialogOpen.value = true
-      store.commandMenuDialogOpen = false
-      pressingMeta.value = false
-      setTimeout(() => refEditorTitle.value?.focus(), 100)
-    } else if (e.key === 'Escape' && !composing.value) {
-      if (noteTitle.value.length === 0) {
-        handleCancel()
-      } else if (isAdding.value) {
-        handleAddConfirm()
-      } else if (isEditing.value) {
-        handleEditConfirm()
-      } else {
-      }
-    } else if (e.key === 'Meta' && !composing.value) {
-      pressingMeta.value = true
-    } else if (e.key === 'k' && !composing.value && pressingMeta.value) {
-      store.commandMenuDialogOpen = !store.commandMenuDialogOpen
-      pressingMeta.value = false
-    }
-  }
-  document.onkeyup = (e: KeyboardEvent) => {
-    if (e.key === 'Meta') pressingMeta.value = false
-  }
-  await store.load()
   const noteId = route.query.noteId?.toString()
   if (noteId) {
-    editorDialogOpen.value = true
-    isEditing.value = true
-    editingNoteId.value = noteId
+    store.editorDialogOpen = true
+    store.isEditing = true
     const note = store.notes.find(x => x.id === noteId)
     if (note) {
-      noteTitle.value = note.title
-      noteContent.value = note.content
+      store.editorNoteTitle = note.title
+      store.editorNoteContent = note.content
     } else {
       console.log('not found')
       router.push({})
     }
+  }
+})
+onUpdated(async () => {
+  if (store.isAdding && !store.editorDialogOpen) {
+    setTimeout(() => refEditorTitle.value?.focus(), 100)
   }
 })
 watch (() => route.query.noteId, async (queryNoteId) => {
@@ -160,13 +92,13 @@ watch (() => route.query.noteId, async (queryNoteId) => {
   const noteId = queryNoteId?.toString()
   if (noteId) {
     store.commandMenuDialogOpen = false
-    editorDialogOpen.value = true
-    isEditing.value = true
-    editingNoteId.value = noteId
+    store.editorDialogOpen = true
+    store.isEditing = true
     const note = store.notes.find(x => x.id === noteId)
     if (note) {
-      noteTitle.value = note.title
-      noteContent.value = note.content
+      store.editorNoteContent = note.content
+      store.editorNoteId = note.id
+      store.editorNoteTitle = note.title
       await nextTick()
       refEditorContent.value?.focus()
     } else {
@@ -220,12 +152,12 @@ watch (() => route.query.noteId, async (queryNoteId) => {
     <div>
       <div
         class="pattern-mask"
-        v-if="editorDialogOpen"
+        v-if="store.editorDialogOpen"
         @click="handleCloseEditorDialog"
       ></div>
       <dialog
         class="border-1 border-color-default"
-        :open="editorDialogOpen"
+        :open="store.editorDialogOpen"
         @close="handleClose"
       >
         <div>
@@ -233,7 +165,7 @@ watch (() => route.query.noteId, async (queryNoteId) => {
             class="p-2 w-100 h-8 border-none focus:outline-none text-medium font-bold"
             type="text"
             ref="refEditorTitle"
-            v-model="noteTitle"
+            v-model="store.editorNoteTitle"
             @keydown="handleKeyDownOnTitle"
             @compositionstart="handleComposingStart"
             @compositionend="handleComposingEnd"
@@ -243,7 +175,7 @@ watch (() => route.query.noteId, async (queryNoteId) => {
           class="px-2 border-color-default focus:outline-none text-medium border-none"
           rows="16"
           cols="60"
-          v-model="noteContent"
+          v-model="store.editorNoteContent"
           ref="refEditorContent"
           @keydown="handleKeyDownOnContent"
           @compositionstart="handleComposingStart"

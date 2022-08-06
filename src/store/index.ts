@@ -1,3 +1,4 @@
+import { v4 } from 'uuid'
 import { reactive } from 'vue'
 import { connect } from '../db'
 import { NoteApplicationService } from '../applications/noteApplicationService'
@@ -16,21 +17,42 @@ const getLayout = (): string => {
 
 interface Store {
   commandMenuDialogOpen: boolean,
+  editorDialogOpen: boolean,
   notes: Array<Note>,
   notesLayout: string,
+  editorNoteContent: string,
+  editorNoteId: string,
+  editorNoteTitle: string,
+  pressingModifier: boolean,
+  composing: boolean,
+  isAdding: boolean,
+  isEditing: boolean,
   init: () => void,
   load: () => Promise<void>,
+  addConfirm: () => void,
   addNote: (note: Note) => void,
   deleteNote: (id: string) => void,
+  editConfirm: () => void,
+  escape: () => void,
   toggleNoteIsPinned: (id: string) => void,
+  openEditorForAdd: () => void,
+  openEditorForEdit: (note: Note) => void,
   saveLayout: () => void,
   updateNote: (id: string, title: string, content: string) => void
 }
 
 export const store: Store = reactive<Store>({
   commandMenuDialogOpen: false,
+  editorDialogOpen: false,
   notes: [],
   notesLayout: '',
+  editorNoteContent: '',
+  editorNoteId: '',
+  editorNoteTitle: '',
+  pressingModifier: false,
+  composing: false,
+  isAdding: false,
+  isEditing: false,
   init () {
     this.notesLayout = getLayout()
     const connectHandler = async () => await connect()
@@ -41,6 +63,23 @@ export const store: Store = reactive<Store>({
   async load () {
     const result = await noteApplicationService.getAll()
     this.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
+  },
+  addConfirm () {
+    const id = v4()
+    const date = new Date()
+    const note: Note = {
+      id: id,
+      title: store.editorNoteTitle,
+      content: store.editorNoteContent,
+      isPinned: false,
+      createdAt: date,
+      updatedAt: date
+    }
+    this.addNote(note)
+    this.editorDialogOpen = false
+    this.isAdding = false
+    this.editorNoteContent = ''
+    this.editorNoteTitle = ''
   },
   addNote (note: Note) {
     const handler = async () => {
@@ -57,6 +96,26 @@ export const store: Store = reactive<Store>({
       this.notes.splice(idx, 1)
     }
     handler()
+  },
+  editConfirm () {
+    this.updateNote(
+      this.editorNoteId,
+      this.editorNoteTitle,
+      this.editorNoteContent
+    )
+    this.editorNoteContent = ''
+    this.editorNoteId = '',
+    this.editorNoteTitle = ''
+    this.editorDialogOpen = false
+    this.isEditing = false
+  },
+  escape () {
+    if (this.isAdding) {
+      this.addConfirm()
+    } else if (this.isEditing) {
+      this.editConfirm()
+    }
+    this.editorDialogOpen = false
   },
   toggleNoteIsPinned (id: string) {
     const handler = async () => {
@@ -76,6 +135,19 @@ export const store: Store = reactive<Store>({
       this.notes = this.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
     }
     handler()
+  },
+  openEditorForAdd () {
+    store.isAdding = true
+    store.editorDialogOpen = true
+    store.commandMenuDialogOpen = false
+  },
+  openEditorForEdit (note: Note) {
+    store.isEditing = true
+    store.editorDialogOpen = true
+    store.commandMenuDialogOpen = false
+    store.editorNoteId = note.id
+    store.editorNoteTitle = note.title
+    store.editorNoteContent = note.content
   },
   saveLayout () {
     localStorage.setItem(storageKey, this.notesLayout)
