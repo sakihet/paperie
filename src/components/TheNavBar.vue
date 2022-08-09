@@ -7,7 +7,7 @@ const capitalize = (str: string) => {
 </script>
 
 <template>
-  <div class="flex-row h-12 border-solid border-color-default border-b-1 px-4">
+  <div class="flex-row h-12 border-b-1 px-4 shadow">
     <div class="f-1 py-4">v{{ version }}</div>
     <div class="f-1 text-center py-2">
       <router-link to="/" class="text-decoration-none text-large">

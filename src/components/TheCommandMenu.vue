@@ -19,7 +19,7 @@ onUpdated(() => {
       @click="store.commandMenuDialogOpen = false"
     />
     <dialog
-      class="border-color-default"
+      class="border-none shadow rounded"
       :open="store.commandMenuDialogOpen"
     >
       <div>

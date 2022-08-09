@@ -156,7 +156,7 @@ watch (() => route.query.noteId, async (queryNoteId) => {
         @click="handleCloseEditorDialog"
       ></div>
       <dialog
-        class="border-1 border-color-default"
+        class="border-1 border-color-default shadow"
         :open="store.editorDialogOpen"
         @close="handleClose"
       >
