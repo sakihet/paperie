@@ -65,17 +65,20 @@ export const store: Store = reactive<Store>({
     this.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
   },
   addConfirm () {
-    const id = v4()
-    const date = new Date()
-    const note: Note = {
-      id: id,
-      title: store.editorNoteTitle,
-      content: store.editorNoteContent,
-      isPinned: false,
-      createdAt: date,
-      updatedAt: date
+    if (this.editorNoteContent.length === 0 && this.editorNoteTitle.length === 0) {
+    } else {
+      const id = v4()
+      const date = new Date()
+      const note: Note = {
+        id: id,
+        title: store.editorNoteTitle,
+        content: store.editorNoteContent,
+        isPinned: false,
+        createdAt: date,
+        updatedAt: date
+      }
+      this.addNote(note)
     }
-    this.addNote(note)
     this.editorDialogOpen = false
     this.isAdding = false
     this.editorNoteContent = ''
