@@ -12,9 +12,7 @@ onMounted(async () => {
   await store.load()
   document.onkeydown = (e: KeyboardEvent) => {
     if (!store.isAdding && !store.isEditing && e.key === '+') {
-      store.isAdding = true
-      store.editorDialogOpen = true
-      store.commandMenuDialogOpen = false
+      store.openEditorForAdd()
       store.pressingModifier = false
     } else if (e.key === 'Escape' && !store.composing) {
       store.escape()
