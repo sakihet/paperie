@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, nextTick, onMounted, watch, onUpdated } from 'vue'
+import { ref, nextTick, onMounted, watch, onUpdated, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
@@ -11,10 +11,8 @@ const router = useRouter()
 const refEditorContent = ref<HTMLElement | null>(null)
 const refEditorTitle = ref<HTMLElement | null>(null)
 
-const handleAdd = async () => {
+const handleAdd = () => {
   store.openEditorForAdd()
-  await nextTick()
-  refEditorTitle.value?.focus()
 }
 const handleAddConfirm = () => {
   store.addConfirm()
@@ -42,11 +40,9 @@ const handleCloseEditorDialog = () => {
 const handleDelete = (noteId: string) => {
   if (window.confirm("Do you really want to delete?")) store.deleteNote(noteId)
 }
-const handleEdit = async (note: Note) => {
+const handleEdit = (note: Note) => {
   router.push({query: {'noteId': `${note.id}`}})
   store.openEditorForEdit(note)
-  await nextTick()
-  refEditorContent.value?.focus()
 }
 const handleEditConfirm = () => {
   router.push({})
@@ -55,12 +51,12 @@ const handleEditConfirm = () => {
 const handleKeyDownOnContent = (e: KeyboardEvent) => {
   const target = (e.target as HTMLTextAreaElement)
   if (e.key === 'ArrowUp' && !store.composing && target.selectionStart === 0) {
-    refEditorTitle.value?.focus()
+    setTimeout(() => focusEditorTitle(), 100)
   }
 }
 const handleKeyDownOnTitle = (e: KeyboardEvent) => {
   if ((e.key === 'ArrowDown' || e.key === 'Enter') && !store.composing) {
-    setTimeout(() => refEditorContent.value?.focus(), 100)
+    setTimeout(() => focusEditorContent(), 100)
   }
 }
 const handleToggleIsPinned = (noteId: string) => store.toggleNoteIsPinned(noteId)
@@ -82,11 +78,6 @@ onMounted(async () => {
     }
   }
 })
-onUpdated(async () => {
-  if (store.isAdding && !store.editorDialogOpen) {
-    setTimeout(() => refEditorTitle.value?.focus(), 100)
-  }
-})
 watch (() => route.query.noteId, async (queryNoteId) => {
   if (store.commandMenuDialogOpen) store.commandMenuDialogOpen = false
   const noteId = queryNoteId?.toString()
@@ -99,14 +90,25 @@ watch (() => route.query.noteId, async (queryNoteId) => {
       store.editorNoteContent = note.content
       store.editorNoteId = note.id
       store.editorNoteTitle = note.title
-      await nextTick()
-      refEditorContent.value?.focus()
     } else {
       console.log('not found')
       router.push({})
     }
   }
 })
+watchEffect(() => {
+  if (store.isAdding) {
+    setTimeout(() => focusEditorTitle(), 100)
+  } else if (store.isEditing) {
+    setTimeout(() => focusEditorContent(), 100)
+  }
+})
+const focusEditorContent = () => {
+  refEditorContent.value?.focus()
+}
+const focusEditorTitle = () => {
+  refEditorTitle.value?.focus()
+}
 </script>
 
 <template>
