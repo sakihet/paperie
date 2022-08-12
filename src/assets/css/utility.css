@@ -1,4 +1,10 @@
 /* display */
+.inline {
+  display: inline;
+}
+.inline-block {
+  display: inline-block;
+}
 .flex-column {
   display: flex;
   flex-direction: column;
@@ -217,6 +223,9 @@
   line-height: 1.75rem;
 }
 /* text color */
+.text-primary {
+  color: var(--color-gray-900);
+}
 .text-secondary {
   color: var(--color-gray-600);
 }
@@ -296,6 +305,9 @@
 /* hover */
 .hover\:text-decoration-underline:hover {
   text-decoration: underline;
+}
+.hover:hover {
+  background-color: var(--color-gray-200);
 }
 /* overflow */
 .overflow-hidden {

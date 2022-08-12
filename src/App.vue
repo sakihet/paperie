@@ -36,7 +36,7 @@ onMounted(async () => {
   <div id="app" class="flex-column">
     <TheNavBar />
     <TheCommandMenu />
-    <div class="f-1">
+    <div class="f-1 m-4">
       <router-view />
     </div>
     <TheFooter />

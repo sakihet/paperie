@@ -7,25 +7,36 @@ const capitalize = (str: string) => {
 </script>
 
 <template>
-  <div class="flex-row h-12 border-b-1 px-4 shadow">
-    <div class="f-1 py-4">v{{ version }}</div>
-    <div class="f-1 text-center py-2">
-      <router-link to="/" class="text-decoration-none text-large">
-        {{ capitalize(name) }}
+  <div class="flex-row h-12 border-b-1 shadow">
+    <div class="f-1 m-2">
+      <router-link
+        to="/"
+        class="inline-block px-4 text-decoration-none text-large text-primary hover"
+      >
+        <div class="py-1">
+          <span class="font-bold">
+            {{ capitalize(name) }}
+          </span>
+          <span class="mx-2 text-small">v{{ version }}</span>
+        </div>
       </router-link>
     </div>
-    <div class="f-1 text-right py-4">
+    <div class="f-1 text-right m-2">
       <router-link
         to="/about"
-        class="text-decoration-none hover:text-decoration-underline mx-1"
+        class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover"
       >
-        About
+        <div class="inline-block py-2 px-2 font-medium">
+          About
+        </div>
       </router-link>
       <a
-        class="p-1 text-decoration-none hover:text-decoration-underline mx-1"
+        class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover"
         href="https://github.com/sakihet/papyls"
       >
-        GitHub
+        <div class="inline-block py-2 px-2 font-medium">
+          GitHub
+        </div>
       </a>
     </div>
   </div>
