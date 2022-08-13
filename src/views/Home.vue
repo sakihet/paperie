@@ -158,13 +158,13 @@ const focusEditorTitle = () => {
         @click="handleCloseEditorDialog"
       ></div>
       <dialog
-        class="border-1 border-color-default shadow"
+        class="border-1 border-color-default shadow rounded layout-stack-1"
         :open="store.editorDialogOpen"
         @close="handleClose"
       >
         <div>
           <input
-            class="p-2 w-100 h-8 border-none focus:outline-none text-medium font-bold"
+            class="p-2 w-full h-8 border-none focus:outline-none text-large font-bold"
             type="text"
             ref="refEditorTitle"
             v-model="store.editorNoteTitle"
@@ -174,7 +174,7 @@ const focusEditorTitle = () => {
           />
         </div>
         <textarea
-          class="px-2 border-color-default focus:outline-none text-medium border-none"
+          class="px-2 border-color-default focus:outline-none text-medium border-none font-sans"
           rows="16"
           cols="60"
           v-model="store.editorNoteContent"

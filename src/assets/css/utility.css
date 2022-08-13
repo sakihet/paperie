@@ -246,6 +246,16 @@
 .text-right {
   text-align: right;
 }
+/* font family */
+.font-sans {
+  font-family: sans-serif;
+}
+.font-serif {
+  font-family: serif;
+}
+.font-mono {
+  font-family: monospace;
+}
 /* decoration */
 .text-decoration-none {
   text-decoration: none;
