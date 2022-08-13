@@ -28,7 +28,7 @@ export class NoteApplicationService {
   async put (note: Note): Promise<Note | undefined> {
     const currentNote = await this.noteRepository.get(note.id)
     if (currentNote) {
-      if (currentNote.title === note.title && currentNote.content === note.content) {
+      if (currentNote.title === note.title && currentNote.content === note.content && currentNote.isPinned === note.isPinned) {
         return await this.noteRepository.get(note.id)
       } else {
         await this.noteRepository.put(note)
