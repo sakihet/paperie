@@ -10,6 +10,7 @@ const route = useRoute()
 const router = useRouter()
 const refEditorContent = ref<HTMLElement | null>(null)
 const refEditorTitle = ref<HTMLElement | null>(null)
+const pressingControlKey = ref(false)
 
 const handleAdd = () => {
   store.openEditorForAdd()
@@ -50,13 +51,42 @@ const handleEditConfirm = () => {
 }
 const handleKeyDownOnContent = (e: KeyboardEvent) => {
   const target = (e.target as HTMLTextAreaElement)
-  if (e.key === 'ArrowUp' && !store.composing && target.selectionStart === 0) {
-    setTimeout(() => focusEditorTitle(), 100)
+  if (!store.composing) {
+    if (e.key === 'ArrowUp' && target.selectionStart === 0) {
+      setTimeout(() => focusEditorTitle(), 100)
+    }
+    if (e.key === 'Control' ) {
+      pressingControlKey.value = true
+    }
+    if (e.key === 'Backspace') {
+      setTimeout(() => focusEditorTitle(), 100)
+    }
+    if (e.key === 'p' && pressingControlKey && target.selectionStart === 0) {
+      setTimeout(() => focusEditorTitle(), 100)
+    }
+  }
+}
+const handleKeyUpOnContent = (e: KeyboardEvent) => {
+  if (e.key === 'Control' && !store.composing) {
+    pressingControlKey.value = false
   }
 }
 const handleKeyDownOnTitle = (e: KeyboardEvent) => {
-  if ((e.key === 'ArrowDown' || e.key === 'Enter') && !store.composing) {
-    setTimeout(() => focusEditorContent(), 100)
+  if (!store.composing) {
+    if (e.key === 'ArrowDown' || e.key === 'Enter') {
+      setTimeout(() => focusEditorContent(), 100)
+    }
+    if (e.key === 'Control') {
+      pressingControlKey.value = true
+    }
+    if (e.key === 'n' && pressingControlKey) {
+      setTimeout(() => focusEditorContent(), 100)
+    }
+  }
+}
+const handleKeyUpOnTitle = (e: KeyboardEvent) => {
+  if (e.key === 'Control' && !store.composing) {
+    pressingControlKey.value = false
   }
 }
 const handleToggleIsPinned = (noteId: string) => store.toggleNoteIsPinned(noteId)
@@ -169,6 +199,7 @@ const focusEditorTitle = () => {
             ref="refEditorTitle"
             v-model="store.editorNoteTitle"
             @keydown="handleKeyDownOnTitle"
+            @keyup="handleKeyUpOnTitle"
             @compositionstart="handleComposingStart"
             @compositionend="handleComposingEnd"
           />
@@ -180,6 +211,7 @@ const focusEditorTitle = () => {
           v-model="store.editorNoteContent"
           ref="refEditorContent"
           @keydown="handleKeyDownOnContent"
+          @keyup="handleKeyUpOnContent"
           @compositionstart="handleComposingStart"
           @compositionend="handleComposingEnd"
         ></textarea>
