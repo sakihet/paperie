@@ -25,7 +25,17 @@ export class NoteApplicationService {
   async getAll (): Promise<Note[]> {
     return await this.noteRepository.getAll()
   }
-  async put (note: Note): Promise<string> {
-    return await this.noteRepository.put(note)
+  async put (note: Note): Promise<Note | undefined> {
+    const currentNote = await this.noteRepository.get(note.id)
+    if (currentNote) {
+      if (currentNote.title === note.title && currentNote.content === note.content) {
+        return await this.noteRepository.get(note.id)
+      } else {
+        await this.noteRepository.put(note)
+        return await this.noteRepository.get(note.id)
+      }
+    } else {
+      return await this.noteRepository.get(note.id)
+    }
   }
 }

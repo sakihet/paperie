@@ -124,7 +124,7 @@ export const store: Store = reactive<Store>({
     const handler = async () => {
       const idx = this.notes.findIndex((x) => x.id === id)
       const note: Note = this.notes[idx]
-      const updated: Note = {
+      const n: Note = {
         id: note.id,
         title: note.title,
         content: note.content,
@@ -132,10 +132,12 @@ export const store: Store = reactive<Store>({
         createdAt: note.createdAt,
         updatedAt: new Date()
       }
-      await noteApplicationService.put(updated)
-      this.notes[idx].isPinned = updated.isPinned
-      this.notes[idx].updatedAt = updated.updatedAt
-      this.notes = this.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
+      const updated = await noteApplicationService.put(n)
+      if (updated) {
+        this.notes[idx].isPinned = updated.isPinned
+        this.notes[idx].updatedAt = updated.updatedAt
+        this.notes = this.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
+      }
     }
     handler()
   },
@@ -159,7 +161,7 @@ export const store: Store = reactive<Store>({
     const handler = async () => {
       const idx = this.notes.findIndex((x) => x.id === id)
       const note: Note = this.notes[idx]
-      const updated: Note = {
+      const n: Note = {
         id: note.id,
         title: title,
         content: content,
@@ -167,11 +169,13 @@ export const store: Store = reactive<Store>({
         createdAt: note.createdAt,
         updatedAt: new Date()
       }
-      await noteApplicationService.put(updated)
-      this.notes[idx].title = title
-      this.notes[idx].content = content
-      this.notes[idx].updatedAt = updated.updatedAt
-      this.notes = this.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
+      const updated = await noteApplicationService.put(n)
+      if (updated) {
+        this.notes[idx].title = updated.title
+        this.notes[idx].content = updated.content
+        this.notes[idx].updatedAt = updated.updatedAt
+        this.notes = this.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
+      }
     }
     handler()
   }
