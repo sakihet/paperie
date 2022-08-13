@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
+import { useRouter } from 'vue-router';
 import TheCommandMenu from './components/TheCommandMenu.vue'
 import TheFooter from './components/TheFooter.vue'
 import TheNavBar from './components/TheNavBar.vue'
 import { store } from './store';
 
 const CommandMenuModifier = 'Meta' // TODO: consider the other OS
+const router = useRouter()
 store.init()
 
 onMounted(async () => {
@@ -16,6 +18,7 @@ onMounted(async () => {
       store.pressingModifier = false
     } else if (e.key === 'Escape' && !store.composing) {
       store.escape()
+      router.push({})
     } else if (e.key === CommandMenuModifier && !store.composing) {
       store.pressingModifier = true
     } else if (e.key === 'k' && !store.composing && store.pressingModifier) {
