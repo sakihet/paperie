@@ -10,28 +10,22 @@ export class NoteApplicationService {
     this.noteRepository = noteRepository
   }
 
-  async add (note: Note) {
-    const result = await this.noteRepository.add(note)
-    return result
+  async add (note: Note): Promise<string> {
+    return await this.noteRepository.add(note)
   }
-  async clear () {
-    const result = await this.noteRepository.clear()
-    return result
+  async clear (): Promise<void> {
+    return await this.noteRepository.clear()
   }
-  async delete (id: string) {
-    const result = await this.noteRepository.delete(id)
-    return result
+  async delete (id: string): Promise<void> {
+    return await this.noteRepository.delete(id)
   }
-  async get (id: string) {
-    const result = await this.noteRepository.get(id)
-    return result
+  async get (id: string): Promise<Note | undefined> {
+    return await this.noteRepository.get(id)
   }
   async getAll (): Promise<Note[]> {
-    const result = await this.noteRepository.getAll()
-    return result
+    return await this.noteRepository.getAll()
   }
-  async put (note: Note) {
-    const result = await this.noteRepository.put(note)
-    return result
+  async put (note: Note): Promise<string> {
+    return await this.noteRepository.put(note)
   }
 }
