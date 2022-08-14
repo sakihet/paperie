@@ -218,7 +218,7 @@ const focusEditorTitle = () => {
         <div class="flex-row">
           <div class="f-1 text-secondary">
             <small>
-              <p>Esc: Save and close the dialog</p>
+              <p>`Command + Enter` or `Esc`: Save and close the dialog</p>
             </small>
           </div>
         </div>

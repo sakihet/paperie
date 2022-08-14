@@ -13,18 +13,25 @@ store.init()
 onMounted(async () => {
   await store.load()
   document.onkeydown = (e: KeyboardEvent) => {
-    if (!store.isAdding && !store.isEditing && e.key === '+') {
-      store.openEditorForAdd()
-      store.pressingModifier = false
-    } else if (e.key === 'Escape' && !store.composing) {
-      store.escape()
-      router.push({})
-    } else if (e.key === CommandMenuModifier && !store.composing) {
-      store.pressingModifier = true
-    } else if (e.key === 'k' && !store.composing && store.pressingModifier) {
-      store.editorDialogOpen = false
-      store.commandMenuDialogOpen = !store.commandMenuDialogOpen
-      store.pressingModifier = false
+    if (!store.composing) {
+      if (!store.isAdding && !store.isEditing && e.key === '+') {
+        store.openEditorForAdd()
+        store.pressingModifier = false
+      } else if (e.key === 'Escape') {
+        store.escape()
+        router.push({})
+      } else if (e.key === CommandMenuModifier) {
+        store.pressingModifier = true
+      } else if (store.pressingModifier){
+        if (e.key === 'k') {
+          store.editorDialogOpen = false
+          store.commandMenuDialogOpen = !store.commandMenuDialogOpen
+          store.pressingModifier = false
+        } else if (e.key === 'Enter') {
+          store.escape()
+          router.push({})
+        }
+      }
     }
   }
   document.onkeyup = (e: KeyboardEvent) => {
