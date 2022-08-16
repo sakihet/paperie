@@ -59,7 +59,7 @@ const handleKeyDownOnContent = (e: KeyboardEvent) => {
       if (e.key === 'Backspace') {
         setTimeout(() => focusEditorTitle(), 100)
       }
-      if (e.key === 'p' && pressingControlKey) {
+      if (e.key === 'p' && pressingControlKey.value) {
         setTimeout(() => focusEditorTitle(), 100)
       }
     }
@@ -81,7 +81,7 @@ const handleKeyDownOnTitle = (e: KeyboardEvent) => {
     if (e.key === 'Control') {
       pressingControlKey.value = true
     }
-    if (e.key === 'n' && pressingControlKey) {
+    if (e.key === 'n' && pressingControlKey.value) {
       setTimeout(() => focusEditorContent(), 100)
     }
   }
