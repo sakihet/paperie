@@ -227,7 +227,7 @@
   color: var(--color-gray-900);
 }
 .text-secondary {
-  color: var(--color-gray-600);
+  color: var(--color-gray-700);
 }
 /* text weight */
 .font-medium {
@@ -341,4 +341,7 @@
 /* background */
 .bg-transparent {
   background-color: transparent;
+}
+.bg-code {
+  background-color: var(--color-blue-50);
 }

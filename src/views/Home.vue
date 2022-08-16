@@ -5,6 +5,7 @@ import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
 import NoteItem from '../components/NoteItem.vue'
 import { Note } from '../entities/note'
+import AppCode from '../components/AppCode.vue'
 
 const route = useRoute()
 const router = useRouter()
@@ -178,10 +179,8 @@ const focusEditorTitle = () => {
       </div>
     </div>
     <div class="text-secondary">
-      <small>
-        <p>Keyboard shortcuts (experimental):</p>
-        <p>+: Add a new note, esc: Save the note, command + k: Open the command menu</p>
-      </small>
+      <p>Keyboard shortcuts:</p>
+      <p><AppCode>+</AppCode>: Add a new note, <AppCode>Command + k</AppCode>: Open the command menu</p>
     </div>
     <div>
       <div
@@ -220,7 +219,8 @@ const focusEditorTitle = () => {
         <div class="flex-row">
           <div class="f-1 text-secondary">
             <small>
-              <p>`Command + Enter` or `Esc`: Save and close the dialog</p>
+              <p><AppCode>Command + Enter</AppCode> or <AppCode>Esc</AppCode>: Save</p>
+              <p><AppCode>Command + Delete</AppCode>: Delete</p>
             </small>
           </div>
         </div>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { onUpdated, ref } from 'vue'
 import { store } from '../store'
+import AppCode from './AppCode.vue'
 
 const refCommandMenuInput = ref<HTMLElement | null>(null)
 
@@ -76,7 +77,7 @@ onUpdated(() => {
         <div>
           <div class="f-1 text-secondary">
             <small>
-              <p>command + k: Close the command menu</p>
+              <p><AppCode>Command + k</AppCode>: Close the command menu</p>
             </small>
           </div>
         </div>
