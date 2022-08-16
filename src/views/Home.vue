@@ -52,17 +52,19 @@ const handleEditConfirm = () => {
 const handleKeyDownOnContent = (e: KeyboardEvent) => {
   const target = (e.target as HTMLTextAreaElement)
   if (!store.composing) {
-    if (e.key === 'ArrowUp' && target.selectionStart === 0) {
-      setTimeout(() => focusEditorTitle(), 100)
+    if (target.selectionStart === 0) {
+      if (e.key === 'ArrowUp') {
+        setTimeout(() => focusEditorTitle(), 100)
+      }
+      if (e.key === 'Backspace') {
+        setTimeout(() => focusEditorTitle(), 100)
+      }
+      if (e.key === 'p' && pressingControlKey) {
+        setTimeout(() => focusEditorTitle(), 100)
+      }
     }
     if (e.key === 'Control' ) {
       pressingControlKey.value = true
-    }
-    if (e.key === 'Backspace') {
-      setTimeout(() => focusEditorTitle(), 100)
-    }
-    if (e.key === 'p' && pressingControlKey && target.selectionStart === 0) {
-      setTimeout(() => focusEditorTitle(), 100)
     }
   }
 }
