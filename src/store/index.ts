@@ -97,6 +97,10 @@ export const store: Store = reactive<Store>({
       await noteApplicationService.delete(id)
       const idx = this.notes.findIndex((x) => x.id === id)
       this.notes.splice(idx, 1)
+      this.editorNoteTitle = ''
+      this.editorNoteContent = ''
+      this.isEditing = false
+      this.editorDialogOpen = false
     }
     handler()
   },

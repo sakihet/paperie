@@ -1,12 +1,13 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import TheCommandMenu from './components/TheCommandMenu.vue'
 import TheFooter from './components/TheFooter.vue'
 import TheNavBar from './components/TheNavBar.vue'
 import { store } from './store';
 
 const CommandMenuModifier = 'Meta' // TODO: consider the other OS
+const route = useRoute()
 const router = useRouter()
 store.init()
 
@@ -30,6 +31,14 @@ onMounted(async () => {
         } else if (e.key === 'Enter') {
           store.escape()
           router.push({})
+        } else if (e.key === 'Delete') {
+          const noteId = route.query.noteId?.toString()
+          if (noteId) {
+            if (window.confirm("Do you really want to delete?")) {
+              store.deleteNote(noteId)
+              router.push({})
+            }
+          }
         }
       }
     }
