@@ -179,8 +179,7 @@ const focusEditorTitle = () => {
       </div>
     </div>
     <div class="text-secondary">
-      <p>Keyboard shortcuts:</p>
-      <p><AppCode>+</AppCode>: Add a new note, <AppCode>Command + k</AppCode>: Open the command menu</p>
+      <p>Keyboard shortcuts: <AppCode>+</AppCode>: Add a new note, <AppCode>Command + k</AppCode>: Open the command menu</p>
     </div>
     <div>
       <div

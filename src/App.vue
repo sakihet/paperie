@@ -50,10 +50,10 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="app" class="flex-column">
+  <div id="app-page" class="flex-column">
     <TheNavBar />
     <TheCommandMenu />
-    <div class="f-1 m-4">
+    <div class="f-1 mx-4 my-2">
       <router-view />
     </div>
     <TheFooter />
