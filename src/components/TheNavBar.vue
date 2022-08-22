@@ -32,7 +32,7 @@ const capitalize = (str: string) => {
       </router-link>
       <a
         class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover"
-        href="https://github.com/sakihet/papyls"
+        href="https://github.com/sakihet/paperie"
       >
         <div class="inline-block py-2 px-2 font-medium">
           GitHub

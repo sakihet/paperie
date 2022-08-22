@@ -1,4 +1,4 @@
-# Papyls
+# Paperie
 
 An experimental note-taking app.
 
@@ -9,7 +9,7 @@ An experimental note-taking app.
 
 ## Try it now
 
-[Papyls](https://papyls.vercel.app/)
+[Paperie](https://paperie.vercel.app/)
 
 ## Development
 
