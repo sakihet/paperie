@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import AppButton from '../components/AppButton.vue'
 import AppTextarea from '../components/AppTextarea.vue'
 import { Note } from '../entities/note'
 
@@ -16,7 +15,13 @@ const emit = defineEmits<{
 }>()
 
 const isHovered = ref(false)
+const isDropdownOpen = ref(false)
 
+const handleClickDropdown = (e: Event) => {
+  e.preventDefault()
+  e.stopPropagation()
+  isDropdownOpen.value = !(isDropdownOpen.value)
+}
 const handleEdit = (note: Note) => {
   isHovered.value = false
   emit('edit', note)
@@ -25,11 +30,13 @@ const handleDelete = (e: Event, noteId: string) => {
   e.stopPropagation()
   isHovered.value = false
   emit('delete', noteId)
+  isDropdownOpen.value = false
 }
 const handleToggleIsPinned = (e: Event, noteId: string) => {
   e.stopPropagation()
   isHovered.value = false
   emit('toggleIsPinned', noteId)
+  isDropdownOpen.value = false
 }
 </script>
 
@@ -52,24 +59,40 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
         :cols="props.layout === 'list' ? 60 : 16"
       />
     </div>
-    <div class="h-8 text-right px-4 py-1">
-      <AppButton
-        @click="handleDelete($event, note.id)"
-        text="Delete"
-        :hidden="!isHovered"
-      />
-      <AppButton
-        v-if="props.note.isPinned"
-        text="Unpin"
-        @click="handleToggleIsPinned($event, note.id)"
-        :hidden="!isHovered"
-      />
-      <AppButton
-        v-else
-        text="Pin"
-        @click="handleToggleIsPinned($event, note.id)"
-        :hidden="!isHovered"
-      />
+    <div class="h-8 flex-row">
+      <div class="f-1"></div>
+      <div class="w-8">
+        <details
+          class="pattern-dropdown"
+          @click="handleClickDropdown($event)"
+          :open="isDropdownOpen"
+        >
+          <summary>
+            <div class="h-8 w-8 py-1 cursor-pointer user-select-none font-bold text-center">
+              <span class="">⋮</span>
+            </div>
+          </summary>
+          <div class="w-24">
+            <ul class="list-style-none border-solid border-color-default border-1 pl-0 user-select-none cursor-pointer my-1 shadow">
+              <li class="h-8 hover">
+                <div class="p-2" @click="handleDelete($event, note.id)">
+                  <span>Delete</span>
+                </div>
+              </li>
+              <li class="h-8 hover" v-if="props.note.isPinned">
+                <div class="p-2" @click="handleToggleIsPinned($event, note.id)">
+                  <span>Unpin</span>
+                </div>
+              </li>
+              <li class="h-8 hover" v-else>
+                <div class="p-2" @click="handleToggleIsPinned($event, note.id)">
+                  <span>Pin</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </details>
+      </div>
     </div>
   </div>
 </template>

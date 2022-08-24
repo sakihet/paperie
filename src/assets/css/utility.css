@@ -90,6 +90,9 @@
   margin-top: 2rem;
   margin-bottom: 2rem;
 }
+.ml-0 {
+  margin-left: 0;
+}
 .p-1 {
   padding: 0.25rem;
 }
@@ -187,6 +190,9 @@
 }
 .h-64 {
   height: 16rem;
+}
+.w-8 {
+  width: 2rem;
 }
 .w-24 {
   width: 6rem;
@@ -344,4 +350,10 @@
 }
 .bg-code {
   background-color: var(--color-blue-50);
+}
+.user-select-none {
+  user-select: none;
+}
+.cursor-pointer {
+  cursor: pointer;
 }
