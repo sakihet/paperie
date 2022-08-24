@@ -170,6 +170,12 @@
 .h-8 {
   height: 2rem;
 }
+.h-9 {
+  height: 2.25rem;
+}
+.h-10 {
+  height: 2.5rem;
+}
 .h-12 {
   height: 3rem;
 }
@@ -344,7 +350,19 @@
 .rounded {
   border-radius: 0.25rem;
 }
+.rounded-2 {
+  border-radius: 0.5rem;
+}
+.rounded-4 {
+  border-radius: 1rem;
+}
+.rounded-8 {
+  border-radius: 2rem;
+}
 /* background */
+.bg-dropdown {
+  background-color: var(--color-white);
+}
 .bg-transparent {
   background-color: transparent;
 }
