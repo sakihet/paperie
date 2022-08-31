@@ -6,6 +6,12 @@ import AppButton from '../components/AppButton.vue'
 const capitalize = (str: string) => {
   return str[0].toUpperCase() + str.slice(1)
 }
+const handleChangeLayout = (e: Event) => {
+  const value = (e.target as HTMLInputElement).value
+  const nextLayout = (value === 'grid' ? 'grid' : 'list')
+  store.notesLayout = nextLayout
+  store.saveLayout()
+}
 </script>
 
 <template>
@@ -30,6 +36,28 @@ const capitalize = (str: string) => {
       />
     </div>
     <div class="f-1 text-right m-2">
+      <div class="inline-block">
+        <label>
+          <input
+            type="radio"
+            name="layout"
+            value="grid"
+            @change="handleChangeLayout"
+            v-model="store.notesLayout"
+          >
+            Grid
+        </label>
+        <label>
+          <input
+            type="radio"
+            name="layout"
+            value="list"
+            @change="handleChangeLayout"
+            v-model="store.notesLayout"
+          >
+            List
+        </label>
+      </div>
       <button
         class="mx-4"
         @click="store.dialogKeyboardShortcutsOpen = true"

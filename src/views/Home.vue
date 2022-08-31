@@ -15,12 +15,6 @@ const pressingControlKey = ref(false)
 const handleAddConfirm = () => {
   store.addConfirm()
 }
-const handleChangeLayout = (e: Event) => {
-  const value = (e.target as HTMLInputElement).value
-  const nextLayout = (value === 'grid' ? 'grid' : 'list')
-  store.notesLayout = nextLayout
-  store.saveLayout()
-}
 const handleClose = () => {
   store.isAdding = false
   store.isEditing = false
@@ -142,30 +136,6 @@ const focusEditorTitle = () => {
 
 <template>
   <div class="layout-center px-4">
-    <div class="h-8 my-2">
-      <div class="text-right">
-        <label>
-          <input
-            type="radio"
-            name="layout"
-            value="grid"
-            @change="handleChangeLayout"
-            v-model="store.notesLayout"
-          >
-            Grid
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="layout"
-            value="list"
-            @change="handleChangeLayout"
-            v-model="store.notesLayout"
-          >
-            List
-        </label>
-      </div>
-    </div>
     <div>
       <div
         class="pattern-mask"
