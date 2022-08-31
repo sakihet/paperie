@@ -2,7 +2,6 @@
 import { ref, nextTick, onMounted, watch, onUpdated, watchEffect } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { store } from '../store'
-import AppButton from '../components/AppButton.vue'
 import NoteItem from '../components/NoteItem.vue'
 import { Note } from '../entities/note'
 import AppCode from '../components/AppCode.vue'
@@ -13,9 +12,6 @@ const refEditorContent = ref<HTMLElement | null>(null)
 const refEditorTitle = ref<HTMLElement | null>(null)
 const pressingControlKey = ref(false)
 
-const handleAdd = () => {
-  store.openEditorForAdd()
-}
 const handleAddConfirm = () => {
   store.addConfirm()
 }
@@ -147,14 +143,6 @@ const focusEditorTitle = () => {
 <template>
   <div class="layout-center px-4">
     <div class="h-8 my-2">
-      <div class="">
-        <AppButton
-          text="Add"
-          @click="handleAdd"
-        />
-      </div>
-    </div>
-    <div class="h-8 my-2">
       <div class="text-right">
         <label>
           <input
@@ -247,7 +235,7 @@ const focusEditorTitle = () => {
         </div>
       </dialog>
     </div>
-    <div :class="{ 'layout-cluster': store.notesLayout === 'grid', 'layout-stack-4': store.notesLayout === 'list', 'my-6': true }">
+    <div :class="{ 'layout-cluster': store.notesLayout === 'grid', 'layout-stack-4': store.notesLayout === 'list', 'my-4': true }">
       <div
         class="bg-white"
         v-for="note in store.notes"
