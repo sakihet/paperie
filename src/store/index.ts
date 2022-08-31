@@ -18,6 +18,7 @@ const getLayout = (): string => {
 interface Store {
   commandMenuDialogOpen: boolean,
   editorDialogOpen: boolean,
+  dialogKeyboardShortcutsOpen: boolean,
   notes: Array<Note>,
   notesLayout: string,
   editorNoteContent: string,
@@ -44,6 +45,7 @@ interface Store {
 export const store: Store = reactive<Store>({
   commandMenuDialogOpen: false,
   editorDialogOpen: false,
+  dialogKeyboardShortcutsOpen: false,
   notes: [],
   notesLayout: '',
   editorNoteContent: '',

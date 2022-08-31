@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { name, version } from '../../package.json'
+import { store } from '../store'
 
 const capitalize = (str: string) => {
   return str[0].toUpperCase() + str.slice(1)
@@ -22,6 +23,12 @@ const capitalize = (str: string) => {
       </router-link>
     </div>
     <div class="f-1 text-right m-2">
+      <button
+        class="mx-4"
+        @click="store.dialogKeyboardShortcutsOpen = true"
+      >
+        ?
+      </button>
       <router-link
         to="/about"
         class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover"
