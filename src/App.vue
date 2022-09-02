@@ -3,6 +3,7 @@ import { onMounted, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import TheCommandMenu from './components/TheCommandMenu.vue'
 import TheFooter from './components/TheFooter.vue'
+import TheDialogKeyboardShortcuts from './components/TheDialogKeyboardShortcuts.vue'
 import TheNavBar from './components/TheNavBar.vue'
 import { store } from './store';
 
@@ -53,6 +54,7 @@ onMounted(async () => {
   <div id="app-page" class="flex-column">
     <TheNavBar />
     <TheCommandMenu />
+    <TheDialogKeyboardShortcuts />
     <div class="f-1 mx-4 my-2">
       <router-view />
     </div>
