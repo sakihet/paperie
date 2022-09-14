@@ -25,6 +25,10 @@
 .f-4 {
   flex: 4;
 }
+/* overflow */
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
 /* spacing */
 .m-1 {
   margin: 0.25rem;
@@ -197,6 +201,9 @@
 .h-64 {
   height: 16rem;
 }
+.h-full {
+  height: 100%;
+}
 .w-8 {
   width: 2rem;
 }
@@ -298,6 +305,12 @@
   border-top-width: 0;
   border-bottom-width: 1px;
   border-left-width: 0;
+  border-right-width: 0;
+}
+.border-l-2 {
+  border-top-width: 0;
+  border-bottom-width: 0;
+  border-left-width: 2px;
   border-right-width: 0;
 }
 .border-color-default {

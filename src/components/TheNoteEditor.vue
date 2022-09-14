@@ -70,28 +70,64 @@ const focusEditorTitle = () => {
 
 <template>
   <div>
-    <div>
-      <input
-        class="p-2 w-full h-8 border-none focus:outline-none text-large font-bold"
-        type="text"
-        ref="refEditorTitle"
-        v-model="store.editorNoteTitle"
-        @keydown="handleKeyDownOnTitle"
-        @keyup="handleKeyUpOnTitle"
+    <div v-if="store.notesLayout === 'grid'">
+      <div>
+        <input
+          class="p-2 w-full h-8 border-none focus:outline-none text-large font-bold"
+          type="text"
+          ref="refEditorTitle"
+          v-model="store.editorNoteTitle"
+          @keydown="handleKeyDownOnTitle"
+          @keyup="handleKeyUpOnTitle"
+          @compositionstart="handleComposingStart"
+          @compositionend="handleComposingEnd"
+        />
+      </div>
+      <textarea
+        class="px-2 border-color-default focus:outline-none text-medium border-none font-sans"
+        rows="16"
+        cols="60"
+        v-model="store.editorNoteContent"
+        ref="refEditorContent"
+        @keydown="handleKeyDownOnContent"
+        @keyup="handleKeyUpOnContent"
         @compositionstart="handleComposingStart"
         @compositionend="handleComposingEnd"
-      />
+      ></textarea>
     </div>
-    <textarea
-      class="px-2 border-color-default focus:outline-none text-medium border-none font-sans"
-      rows="16"
-      cols="60"
-      v-model="store.editorNoteContent"
-      ref="refEditorContent"
-      @keydown="handleKeyDownOnContent"
-      @keyup="handleKeyUpOnContent"
-      @compositionstart="handleComposingStart"
-      @compositionend="handleComposingEnd"
-    ></textarea>
+    <div
+      v-else-if="store.notesLayout === 'list'"
+      class="flex-column"
+    >
+      <div class="f-1 flex-column">
+        <div class="">
+          <input
+            class="p-4 w-full h-12 border-none focus:outline-none text-large font-bold"
+            type="text"
+            ref="refEditorTitle"
+            v-model="store.editorNoteTitle"
+            @keydown="handleKeyDownOnTitle"
+            @keyup="handleKeyUpOnTitle"
+            @compositionstart="handleComposingStart"
+            @compositionend="handleComposingEnd"
+          />
+        </div>
+        <div class="f-1">
+          <textarea
+            class="px-4 border-color-default focus:outline-none text-medium border-none font-sans w-full"
+            style="height: calc(100vh - 10rem)"
+            v-model="store.editorNoteContent"
+            ref="refEditorContent"
+            @keydown="handleKeyDownOnContent"
+            @keyup="handleKeyUpOnContent"
+            @compositionstart="handleComposingStart"
+            @compositionend="handleComposingEnd"
+          ></textarea>
+        </div>
+        <div class="text-secondary px-2 h-6">
+          <p><AppCode>Command + Enter</AppCode> or <AppCode>Esc</AppCode>: Save</p>
+        </div>
+      </div>
+    </div>
   </div>
 </template>

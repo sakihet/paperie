@@ -76,42 +76,68 @@ watch (() => route.query.noteId, async (queryNoteId) => {
 </script>
 
 <template>
-  <div class="layout-center px-4">
-    <div>
-      <div
-        class="pattern-mask"
-        v-if="store.editorDialogOpen"
-        @click="handleCloseEditorDialog"
-      ></div>
-      <dialog
-        class="border-1 border-color-default shadow rounded layout-stack-1"
-        :open="store.editorDialogOpen"
-        @close="handleClose"
-      >
-        <TheNoteEditor v-if="store.isAdding || store.isEditing" />
-        <div class="flex-row">
-          <div class="f-1 text-secondary">
-            <small>
-              <p><AppCode>Command + Enter</AppCode> or <AppCode>Esc</AppCode>: Save</p>
-              <p><AppCode>Command + Delete</AppCode>: Delete</p>
-            </small>
+  <div class="px-4">
+    <div v-if="store.notesLayout === 'grid'">
+      <div class="layout-center">
+        <div
+          class="pattern-mask"
+          v-if="store.editorDialogOpen"
+          @click="handleCloseEditorDialog"
+        ></div>
+        <dialog
+          class="border-1 border-color-default shadow rounded layout-stack-1"
+          :open="store.editorDialogOpen"
+          @close="handleClose"
+        >
+          <TheNoteEditor v-if="store.isAdding || store.isEditing" />
+          <div class="flex-row">
+            <div class="f-1 text-secondary">
+              <small>
+                <p><AppCode>Command + Enter</AppCode> or <AppCode>Esc</AppCode>: Save</p>
+                <p><AppCode>Command + Delete</AppCode>: Delete</p>
+              </small>
+            </div>
+          </div>
+        </dialog>
+      </div>
+      <div :class="{ 'layout-cluster': true, 'my-4': true }">
+        <div
+          class="bg-white"
+          v-for="note in store.notes"
+          :key="note.id"
+        >
+          <NoteItem
+            :note="note"
+            :layout="store.notesLayout"
+            @delete="handleDelete"
+            @edit="handleEdit"
+            @toggleIsPinned="handleToggleIsPinned"
+          />
+        </div>
+      </div>
+    </div>
+    <div v-else-if="store.notesLayout === 'list'">
+      <div class="flex-row">
+        <div
+          class="f-1 overflow-y-scroll pattern-scrollbar-thin"
+          style="max-height: calc(100vh - 6rem)"
+        >
+          <div
+            v-for="note in store.notes"
+            :key="note.id"
+          >
+            <NoteItem
+              :note="note"
+              :layout="store.notesLayout"
+              @delete="handleDelete"
+              @edit="handleEdit"
+              @toggleIsPinned="handleToggleIsPinned"
+            />
           </div>
         </div>
-      </dialog>
-    </div>
-    <div :class="{ 'layout-cluster': store.notesLayout === 'grid', 'layout-stack-4': store.notesLayout === 'list', 'my-4': true }">
-      <div
-        class="bg-white"
-        v-for="note in store.notes"
-        :key="note.id"
-      >
-        <NoteItem
-          :note="note"
-          :layout="store.notesLayout"
-          @delete="handleDelete"
-          @edit="handleEdit"
-          @toggleIsPinned="handleToggleIsPinned"
-        />
+        <div class="f-3">
+          <TheNoteEditor v-if="store.isAdding || store.isEditing"/>
+        </div>
       </div>
     </div>
   </div>
