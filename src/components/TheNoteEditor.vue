@@ -1,10 +1,20 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, onUnmounted, onUpdated, ref } from 'vue'
 import { store } from '../store'
 
 const refEditorContent = ref<HTMLElement | null>(null)
 const refEditorTitle = ref<HTMLElement | null>(null)
 const pressingControlKey = ref(false)
+
+onMounted(() => {
+  if (store.isAdding) {
+    focusEditorTitle()
+  } else if (store.isEditing) {
+    focusEditorContent()
+  }
+})
+onUpdated(() => {})
+onUnmounted(() => {})
 
 const handleComposingStart = () => store.composing = true
 const handleComposingEnd = () => store.composing = false
