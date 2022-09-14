@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { onMounted, onUnmounted, onUpdated, ref } from 'vue'
+import AppCode from '../components/AppCode.vue'
 import { store } from '../store'
 
 const refEditorContent = ref<HTMLElement | null>(null)
