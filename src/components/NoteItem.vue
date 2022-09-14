@@ -74,11 +74,6 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
           </summary>
           <div class="w-24">
             <ul class="list-style-none border-solid border-color-default border-1 pl-0 user-select-none cursor-pointer my-1 shadow bg-dropdown rounded text-secondary">
-              <li class="h-8 hover">
-                <div class="py-2 px-4" @click="handleDelete($event, note.id)">
-                  <span>Delete</span>
-                </div>
-              </li>
               <li class="h-8 hover" v-if="props.note.isPinned">
                 <div class="py-2 px-4" @click="handleToggleIsPinned($event, note.id)">
                   <span>Unpin</span>
@@ -87,6 +82,11 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
               <li class="h-8 hover" v-else>
                 <div class="py-2 px-4" @click="handleToggleIsPinned($event, note.id)">
                   <span>Pin</span>
+                </div>
+              </li>
+              <li class="h-8 hover">
+                <div class="py-2 px-4" @click="handleDelete($event, note.id)">
+                  <span>Delete</span>
                 </div>
               </li>
             </ul>
