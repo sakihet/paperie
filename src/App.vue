@@ -55,7 +55,7 @@ onMounted(async () => {
     <TheNavBar />
     <TheCommandMenu />
     <TheDialogKeyboardShortcuts />
-    <div class="f-1 mx-4 my-2">
+    <div class="f-1 mx-4">
       <router-view />
     </div>
     <TheFooter />

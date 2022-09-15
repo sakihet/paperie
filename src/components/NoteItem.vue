@@ -100,7 +100,7 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
     </div>
     <div
       v-else-if="props.layout === 'list'"
-      class="border-solid border-color-default border-1 bg-white"
+      class="bg-white h-28"
       :class="{ 'border-l-2 border-color-blue': note.isPinned}"
     >
       <div class="p-2 overflow-hidden h-10 flex-row">
@@ -142,13 +142,8 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
           </div>
         </div>
       </div>
-      <div class="f-1">
-        <AppTextarea
-          :id="note.id"
-          :content="note.content"
-          :rows="3"
-          :cols="60"
-        />
+      <div class="h-18 overflow-hidden">
+        <div class="p-2 text-small">{{ note.content }}</div>
       </div>
     </div>
   </div>

@@ -76,8 +76,8 @@ watch (() => route.query.noteId, async (queryNoteId) => {
 </script>
 
 <template>
-  <div class="px-4">
-    <div v-if="store.notesLayout === 'grid'">
+  <div class="">
+    <div v-if="store.notesLayout === 'grid'" class="px-4">
       <div class="layout-center">
         <div
           class="pattern-mask"
@@ -116,15 +116,16 @@ watch (() => route.query.noteId, async (queryNoteId) => {
         </div>
       </div>
     </div>
-    <div v-else-if="store.notesLayout === 'list'">
+    <div v-else-if="store.notesLayout === 'list'" style="height: calc(100vh - 4.5rem);">
       <div class="flex-row">
         <div
-          class="f-1 overflow-y-scroll pattern-scrollbar-thin"
-          style="max-height: calc(100vh - 6rem)"
+          class="f-1 overflow-y-scroll pattern-scrollbar-thin divide-solid divide-color-secondary divide-y-2 p-4"
+          style="max-height: calc(100vh - 4.5rem)"
         >
           <div
             v-for="note in store.notes"
             :key="note.id"
+            class=""
           >
             <NoteItem
               :note="note"
@@ -135,7 +136,7 @@ watch (() => route.query.noteId, async (queryNoteId) => {
             />
           </div>
         </div>
-        <div class="f-3">
+        <div class="f-3 p-4">
           <TheNoteEditor v-if="store.isAdding || store.isEditing"/>
         </div>
       </div>

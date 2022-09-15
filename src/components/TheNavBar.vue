@@ -2,6 +2,9 @@
 import { name, version } from '../../package.json'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
+import { useRouter } from 'vue-router';
+
+const router = useRouter()
 
 const capitalize = (str: string) => {
   return str[0].toUpperCase() + str.slice(1)
@@ -11,6 +14,12 @@ const handleChangeLayout = (e: Event) => {
   const nextLayout = (value === 'grid' ? 'grid' : 'list')
   store.notesLayout = nextLayout
   store.saveLayout()
+}
+const handleAdd = (e: Event) => {
+  router.push({})
+  store.editorNoteTitle = ''
+  store.editorNoteContent = ''
+  store.openEditorForAdd()
 }
 </script>
 
@@ -32,7 +41,7 @@ const handleChangeLayout = (e: Event) => {
     <div class="my-3">
       <AppButton
           text="Add"
-          @click="store.openEditorForAdd()"
+          @click="handleAdd"
       />
     </div>
     <div class="f-1 text-right m-2">
