@@ -15,6 +15,23 @@ const getLayout = (): string => {
   return currentLayout ? currentLayout : 'grid'
 }
 
+const getTheme = () => {
+  const key = 'theme'
+  if (localStorage.getItem(key)) {
+    return localStorage.getItem(key)
+  } else {
+    return window.matchMedia('(preferes-color-scheme: dark)').matches ? 'dark' : 'light'
+  }
+}
+
+const applyTheme = (theme: string) => {
+  if (theme === 'dark') {
+    document.firstElementChild?.classList.add('dark')
+  } else {
+    document.firstElementChild?.classList.remove('dark')
+  }
+}
+
 interface Store {
   commandMenuDialogOpen: boolean,
   editorDialogOpen: boolean,
@@ -28,6 +45,7 @@ interface Store {
   composing: boolean,
   isAdding: boolean,
   isEditing: boolean,
+  theme: string,
   init: () => void,
   load: () => Promise<void>,
   addConfirm: () => void,
@@ -39,7 +57,8 @@ interface Store {
   openEditorForAdd: () => void,
   openEditorForEdit: (note: Note) => void,
   saveLayout: () => void,
-  updateNote: (id: string, title: string, content: string) => void
+  updateNote: (id: string, title: string, content: string) => void,
+  toggleTheme: () => void
 }
 
 export const store: Store = reactive<Store>({
@@ -55,12 +74,18 @@ export const store: Store = reactive<Store>({
   composing: false,
   isAdding: false,
   isEditing: false,
+  theme: 'light',
   init () {
     this.notesLayout = getLayout()
     const connectHandler = async () => await connect()
     const loadHandler = async () => await this.load()
     connectHandler()
     loadHandler()
+    const theme = getTheme()
+    if (theme) {
+      this.theme = theme
+      applyTheme(theme)
+    }
   },
   async load () {
     const result = await noteApplicationService.getAll()
@@ -184,5 +209,14 @@ export const store: Store = reactive<Store>({
       }
     }
     handler()
+  },
+  toggleTheme () {
+    if (this.theme === 'light') {
+      this.theme = 'dark'
+    } else if (this.theme === 'dark') {
+      this.theme = 'light'
+    }
+    applyTheme(this.theme)
+    localStorage.setItem('theme', this.theme)
   }
 })

@@ -35,6 +35,7 @@ p {
 
 body {
   --color-background: var(--color-gray-50);
+  --color-background-secondary: var(--color-gray-100);
   --color-code-background: var(--color-blue-50);
   --color-text-primary: var(--color-gray-900);
   --color-text-secondary: var(--color-gray-600);
@@ -42,12 +43,30 @@ body {
   --color-border-default: var(--color-gray-300);
   --color-border-blue: var(--color-blue-500);
   --color-button-border: var(--color-gray-400);
+  --color-border-divider: var(--color-gray-200);
   --color-hover: var(--color-gray-200);
-}
-body {
   background-color: var(--color-background);
   color: var(--color-text-primary);
 }
+
+@media (prefers-color-scheme: dark) {
+}
+
+.dark > * {
+  color-scheme: dark;
+  --color-background: var(--color-gray-900);
+  --color-background-secondary: var(--color-gray-800);
+  --color-code-background: var(--color-blue-700);
+  --color-text-primary: var(--color-white);
+  --color-text-secondary: var(--color-gray-300);
+  --color-border-default: var(--color-gray-700);
+  --color-button-border: var(--color-gray-700);
+  --color-border-divider: var(--color-gray-700);
+  --color-hover: var(--color-gray-700);
+  background-color: var(--color-background);
+  color: var(--color-text-primary);
+}
+
 a {
   color: var(--color-link);
 }

@@ -67,6 +67,22 @@ const handleAdd = (e: Event) => {
             List
         </label>
       </div>
+      <div class="inline-block mx-2">
+        <button
+          class=""
+          v-if="store.theme === 'light'"
+          @click="store.toggleTheme()"
+        >
+          Dark
+        </button>
+        <button
+          class=""
+          v-else
+          @click="store.toggleTheme()"
+        >
+          Light
+        </button>
+      </div>
       <button
         class="mx-4 px-2 py-1 border-1 border-solid border-button-default rounded bg-transparent"
         @click="store.dialogKeyboardShortcutsOpen = true"

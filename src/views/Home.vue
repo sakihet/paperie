@@ -102,7 +102,7 @@ watch (() => route.query.noteId, async (queryNoteId) => {
       </div>
       <div :class="{ 'layout-cluster': true, 'my-4': true }">
         <div
-          class="bg-white"
+          class="bg-primary"
           v-for="note in store.notes"
           :key="note.id"
         >
