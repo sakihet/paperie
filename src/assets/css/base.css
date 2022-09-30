@@ -35,12 +35,13 @@ p {
 
 body {
   --color-background: var(--color-gray-50);
+  --color-code-background: var(--color-blue-50);
   --color-text-primary: var(--color-gray-900);
   --color-text-secondary: var(--color-gray-600);
   --color-link: var(--color-blue-500);
   --color-border-default: var(--color-gray-300);
   --color-border-blue: var(--color-blue-500);
-  --color-button-border: var(--color-gray-300);
+  --color-button-border: var(--color-gray-400);
   --color-hover: var(--color-gray-200);
 }
 body {
@@ -48,7 +49,7 @@ body {
   color: var(--color-text-primary);
 }
 a {
-  color: var(--color-blue-700);
+  color: var(--color-link);
 }
 input {
   color: var(--color-text-primary)

@@ -28,7 +28,7 @@ const handleAdd = (e: Event) => {
     <div class="m-2">
       <router-link
         to="/"
-        class="inline-block px-4 text-decoration-none text-large text-primary hover"
+        class="inline-block px-4 text-decoration-none text-large text-primary hover rounded"
       >
         <div class="py-1">
           <span class="font-bold">
@@ -68,21 +68,21 @@ const handleAdd = (e: Event) => {
         </label>
       </div>
       <button
-        class="mx-4"
+        class="mx-4 px-2 py-1 border-1 border-solid border-button-default rounded bg-transparent"
         @click="store.dialogKeyboardShortcutsOpen = true"
       >
         ?
       </button>
       <router-link
         to="/about"
-        class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover"
+        class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover rounded"
       >
         <div class="inline-block py-2 px-2 font-medium">
           About
         </div>
       </router-link>
       <a
-        class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover"
+        class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover rounded"
         href="https://github.com/sakihet/paperie"
       >
         <div class="inline-block py-2 px-2 font-medium">
