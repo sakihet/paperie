@@ -45,7 +45,7 @@ const handleAdd = (e: Event) => {
       />
     </div>
     <div class="f-1 text-right m-2">
-      <div class="inline-block">
+      <div class="inline-block mx-4">
         <label>
           <input
             type="radio"
@@ -67,21 +67,19 @@ const handleAdd = (e: Event) => {
             List
         </label>
       </div>
-      <div class="inline-block mx-2">
-        <button
+      <div class="inline-block">
+        <AppButton
           class=""
           v-if="store.theme === 'light'"
           @click="store.toggleTheme()"
-        >
-          Dark
-        </button>
-        <button
+          text="Dark"
+        />
+        <AppButton
           class=""
           v-else
           @click="store.toggleTheme()"
-        >
-          Light
-        </button>
+          text="Light"
+        />
       </div>
       <button
         class="mx-4 px-2 py-1 border-1 border-solid border-button-default rounded bg-transparent"
