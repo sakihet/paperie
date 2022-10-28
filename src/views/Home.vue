@@ -49,6 +49,7 @@ onMounted(async () => {
     if (note) {
       store.editorNoteTitle = note.title
       store.editorNoteContent = note.content
+      store.editorNoteType = note.noteType || 'plain'
     } else {
       console.log('not found')
       router.push({})
@@ -67,6 +68,7 @@ watch (() => route.query.noteId, async (queryNoteId) => {
       store.editorNoteContent = note.content
       store.editorNoteId = note.id
       store.editorNoteTitle = note.title
+      store.editorNoteType = note.noteType || 'plain'
     } else {
       console.log('not found')
       router.push({})
@@ -85,7 +87,7 @@ watch (() => route.query.noteId, async (queryNoteId) => {
           @click="handleCloseEditorDialog"
         ></div>
         <dialog
-          class="border-1 border-color-default shadow rounded layout-stack-1"
+          class="border-1 border-color-default shadow rounded layout-stack-1 bg-primary"
           :open="store.editorDialogOpen"
           @close="handleClose"
         >
@@ -136,7 +138,9 @@ watch (() => route.query.noteId, async (queryNoteId) => {
             />
           </div>
         </div>
-        <div class="f-3 p-4">
+        <div
+          class="f-5"
+        >
           <TheNoteEditor v-if="store.isAdding || store.isEditing"/>
         </div>
       </div>
