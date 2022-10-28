@@ -4,6 +4,7 @@ import { connect } from '../db'
 import { NoteApplicationService } from '../applications/noteApplicationService'
 import { NoteRepository } from '../repositories/noteRepository'
 import { Note } from '../entities/note'
+import { NoteType } from '../types/noteType'
 
 const noteApplicationService = new NoteApplicationService(
   new NoteRepository()
@@ -41,6 +42,7 @@ interface Store {
   editorNoteContent: string,
   editorNoteId: string,
   editorNoteTitle: string,
+  editorNoteType: NoteType,
   pressingModifier: boolean,
   composing: boolean,
   isAdding: boolean,
@@ -57,7 +59,8 @@ interface Store {
   openEditorForAdd: () => void,
   openEditorForEdit: (note: Note) => void,
   saveLayout: () => void,
-  updateNote: (id: string, title: string, content: string) => void,
+  updateNote: (id: string, title: string, content: string, noteType: NoteType) => void,
+  updateNoteType: (id: string, noteType: NoteType) => void,
   toggleTheme: () => void
 }
 
@@ -70,6 +73,7 @@ export const store: Store = reactive<Store>({
   editorNoteContent: '',
   editorNoteId: '',
   editorNoteTitle: '',
+  editorNoteType: 'plain',
   pressingModifier: false,
   composing: false,
   isAdding: false,
@@ -101,6 +105,7 @@ export const store: Store = reactive<Store>({
         title: store.editorNoteTitle,
         content: store.editorNoteContent,
         isPinned: false,
+        noteType: store.editorNoteType,
         createdAt: date,
         updatedAt: date
       }
@@ -135,11 +140,13 @@ export const store: Store = reactive<Store>({
     this.updateNote(
       this.editorNoteId,
       this.editorNoteTitle,
-      this.editorNoteContent
+      this.editorNoteContent,
+      this.editorNoteType
     )
     this.editorNoteContent = ''
     this.editorNoteId = '',
     this.editorNoteTitle = ''
+    this.editorNoteType = 'plain'
     this.editorDialogOpen = false
     this.isEditing = false
   },
@@ -160,6 +167,7 @@ export const store: Store = reactive<Store>({
         title: note.title,
         content: note.content,
         isPinned: !note.isPinned,
+        noteType: note.noteType,
         createdAt: note.createdAt,
         updatedAt: new Date()
       }
@@ -176,6 +184,7 @@ export const store: Store = reactive<Store>({
     store.isAdding = true
     store.editorDialogOpen = true
     store.commandMenuDialogOpen = false
+    store.editorNoteType = 'plain'
   },
   openEditorForEdit (note: Note) {
     store.isEditing = true
@@ -184,11 +193,12 @@ export const store: Store = reactive<Store>({
     store.editorNoteId = note.id
     store.editorNoteTitle = note.title
     store.editorNoteContent = note.content
+    store.editorNoteType = note.noteType
   },
   saveLayout () {
     localStorage.setItem(storageKey, this.notesLayout)
   },
-  updateNote (id: string, title: string, content: string) {
+  updateNote (id: string, title: string, content: string, noteType: NoteType) {
     const handler = async () => {
       const idx = this.notes.findIndex((x) => x.id === id)
       const note: Note = this.notes[idx]
@@ -197,6 +207,7 @@ export const store: Store = reactive<Store>({
         title: title,
         content: content,
         isPinned: note.isPinned,
+        noteType: noteType,
         createdAt: note.createdAt,
         updatedAt: new Date()
       }
@@ -204,6 +215,29 @@ export const store: Store = reactive<Store>({
       if (updated) {
         this.notes[idx].title = updated.title
         this.notes[idx].content = updated.content
+        this.notes[idx].noteType = updated.noteType
+        this.notes[idx].updatedAt = updated.updatedAt
+        this.notes = this.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
+      }
+    }
+    handler()
+  },
+  updateNoteType (id: string, noteType: NoteType) {
+    const handler = async () => {
+      const idx = this.notes.findIndex((x) => x.id === id)
+      const note: Note = this.notes[idx]
+      const n: Note = {
+        id: note.id,
+        title: note.title,
+        content: note.content,
+        isPinned: note.isPinned,
+        noteType: noteType,
+        createdAt: note.createdAt,
+        updatedAt: new Date()
+      }
+      const updated = await noteApplicationService.put(n)
+      if (updated) {
+        this.notes[idx].noteType = updated.noteType
         this.notes[idx].updatedAt = updated.updatedAt
         this.notes = this.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
       }

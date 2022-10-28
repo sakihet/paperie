@@ -25,6 +25,27 @@
 .f-4 {
   flex: 4;
 }
+.f-5 {
+  flex: 5;
+}
+.f-6 {
+  flex: 6;
+}
+.f-7 {
+  flex: 7;
+}
+.f-8 {
+  flex: 8;
+}
+.f-9 {
+  flex: 9;
+}
+.f-10 {
+  flex: 10;
+}
+.f-11 {
+  flex: 11;
+}
 /* overflow */
 .overflow-y-scroll {
   overflow-y: scroll;
@@ -96,6 +117,12 @@
 }
 .ml-0 {
   margin-left: 0;
+}
+.mt-1 {
+  margin-top: 0.25rem;
+}
+.mt-2 {
+  margin-top: 0.5rem;
 }
 .p-1 {
   padding: 0.25rem;
