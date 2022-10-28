@@ -1,6 +1,7 @@
 import { DBSchema, openDB } from 'idb'
 import { DB_NAME, DB_VERSION } from '../db'
 import { Note } from '../entities/note'
+import { NoteType } from '../types/noteType'
 
 interface MyDB extends DBSchema {
   notes: {
@@ -9,6 +10,7 @@ interface MyDB extends DBSchema {
       title: string
       content: string
       isPinned: boolean
+      noteType: NoteType
       createdAt: Date
       updatedAt: Date
     }
