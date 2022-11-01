@@ -79,7 +79,10 @@ watch (() => route.query.noteId, async (queryNoteId) => {
 
 <template>
   <div class="">
-    <div v-if="store.notesLayout === 'grid'" class="px-4">
+    <div
+      v-if="store.notesLayout === 'grid'"
+      class=""
+    >
       <div class="layout-center">
         <div
           class="pattern-mask"
@@ -118,7 +121,10 @@ watch (() => route.query.noteId, async (queryNoteId) => {
         </div>
       </div>
     </div>
-    <div v-else-if="store.notesLayout === 'list'" style="height: calc(100vh - 4.5rem);">
+    <div
+      v-else-if="store.notesLayout === 'list'"
+      style="height: calc(100vh - 4.5rem);"
+    >
       <div class="flex-row">
         <div
           class="f-1 overflow-y-scroll pattern-scrollbar-thin divide-solid divide-color-secondary divide-y-2 p-4"
@@ -127,7 +133,7 @@ watch (() => route.query.noteId, async (queryNoteId) => {
           <div
             v-for="note in store.notes"
             :key="note.id"
-            class=""
+            class="bg-secondary"
           >
             <NoteItem
               :note="note"

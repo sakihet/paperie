@@ -34,7 +34,7 @@ p {
 }
 
 body {
-  --color-background: var(--color-gray-50);
+  --color-background: var(--color-white);
   --color-background-secondary: var(--color-gray-100);
   --color-code-background: var(--color-blue-50);
   --color-text-primary: var(--color-gray-900);
@@ -47,7 +47,7 @@ body {
   --color-hover: var(--color-gray-200);
   --color-scrollbar-bg: var(--color-gray-200);
   --color-scrollbar-thumb-bg: var(--color-gray-400);
-  background-color: var(--color-background);
+  background-color: var(--color-background-secondary);
   color: var(--color-text-primary);
 }
 
@@ -56,8 +56,8 @@ body {
 
 .dark > * {
   color-scheme: dark;
-  --color-background: var(--color-gray-900);
-  --color-background-secondary: var(--color-gray-800);
+  --color-background: var(--color-gray-800);
+  --color-background-secondary: var(--color-gray-900);
   --color-code-background: var(--color-blue-700);
   --color-text-primary: var(--color-white);
   --color-text-secondary: var(--color-gray-300);
@@ -67,7 +67,7 @@ body {
   --color-hover: var(--color-gray-700);
   --color-scrollbar-bg: var(--color-gray-700);
   --color-scrollbar-thumb-bg: var(--color-gray-500);
-  background-color: var(--color-background);
+  background-color: var(--color-background-secondary);
   color: var(--color-text-primary);
 }
 

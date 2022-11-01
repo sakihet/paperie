@@ -51,11 +51,14 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div id="app-page" class="flex-column">
+  <div
+    id="app-page"
+    class="flex-column"
+  >
     <TheNavBar />
     <TheCommandMenu />
     <TheDialogKeyboardShortcuts />
-    <div class="f-1 mx-4">
+    <div class="f-1">
       <router-view />
     </div>
     <TheFooter />

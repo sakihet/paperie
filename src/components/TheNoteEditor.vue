@@ -76,7 +76,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
 </script>
 
 <template>
-  <div>
+  <div class="bg-primary">
     <div v-if="store.notesLayout === 'grid'">
       <div class="h-8 text-secondary">
         <span>Type:</span>
@@ -121,7 +121,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
       class="flex-column"
     >
       <div class="f-1 flex-column">
-        <div class="h-8 m-4 text-secondary">
+        <div class="h-4 m-4 text-secondary">
           <span>Type:</span>
           <label>
             <input type="radio" value="plain" name="type" v-model="store.editorNoteType" @change=handleChangeNoteType />Plain
@@ -130,11 +130,11 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
             <input type="radio" value="markdown" name="type" v-model="store.editorNoteType" @change="handleChangeNoteType" />Markdown
           </label>
         </div>
-        <div class="flex-row">
+        <div class="flex-row divide-x-2 divide-solid divide-color-secondary">
           <div class="f-1">
             <div class="">
               <input
-                class="p-4 w-full h-12 border-none focus:outline-none text-large font-bold"
+                class="p-4 w-full h-12 border-none focus:outline-none text-large font-bold bg-primary"
                 type="text"
                 ref="refEditorTitle"
                 v-model="store.editorNoteTitle"
@@ -146,7 +146,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
             </div>
             <div class="f-1">
               <textarea
-                class="px-4 border-color-default focus:outline-none text-medium border-none font-sans w-full"
+                class="px-4 border-color-default focus:outline-none text-medium border-none font-sans w-full bg-primary"
                 style="height: calc(100vh - 10rem)"
                 v-model="store.editorNoteContent"
                 ref="refEditorContent"
@@ -161,7 +161,9 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
             </div>
           </div>
           <div class="f-1" v-if="store.editorNoteType === 'markdown'">
-            <div class="h-12"></div>
+            <div class="h-12">
+              <span class="text-small text-secondary mx-4">Preview</span>
+            </div>
             <div class="mx-4" v-html="outputMarkdown"></div>
           </div>
         </div>
