@@ -24,28 +24,32 @@ const handleAdd = (e: Event) => {
 </script>
 
 <template>
-  <div class="flex-row h-12 border-b-1 shadow">
-    <div class="m-2">
-      <router-link
-        to="/"
-        class="inline-block px-4 text-decoration-none text-large text-primary hover rounded"
-      >
-        <div class="py-1">
-          <span class="font-bold">
-            {{ capitalize(name) }}
-          </span>
-          <span class="mx-2 text-small">v{{ version }}</span>
-        </div>
-      </router-link>
-    </div>
-    <div class="my-3">
+  <div class="flex-row h-12 border-b-1 border-solid border-color-default">
+    <router-link
+      to="/"
+      class="inline-block px-4 text-decoration-none text-large text-primary hover rounded flex-row"
+    >
+      <div class="py-2">
+        <span class="font-bold">
+          {{ capitalize(name) }}
+        </span>
+      </div>
+      <div class="py-3">
+        <span class="mx-2 text-small">
+          v{{ version }}
+        </span>
+      </div>
+    </router-link>
+    <div class="flex-column mx-1">
       <AppButton
-          text="Add"
-          @click="handleAdd"
+        text="Add"
+        @click="handleAdd"
+        class="m-auto"
       />
     </div>
-    <div class="f-1 text-right m-2">
-      <div class="inline-block mx-4">
+    <div class="f-1"></div>
+    <div class="flex-column">
+      <div class="inline-block m-auto mx-2">
         <label>
           <input
             type="radio"
@@ -67,42 +71,45 @@ const handleAdd = (e: Event) => {
             List
         </label>
       </div>
-      <div class="inline-block">
+    </div>
+    <div class="flex-column">
+      <div class="m-auto mx-2">
         <AppButton
           class=""
-          v-if="store.theme === 'light'"
           @click="store.toggleTheme()"
-          text="Dark"
-        />
-        <AppButton
-          class=""
-          v-else
-          @click="store.toggleTheme()"
-          text="Light"
+          :text="store.theme === 'light' ? 'Dark' : 'Light' "
         />
       </div>
-      <button
-        class="mx-4 px-2 py-1 border-1 border-solid border-button-default rounded bg-transparent"
-        @click="store.dialogKeyboardShortcutsOpen = true"
-      >
-        ?
-      </button>
-      <router-link
-        to="/about"
-        class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover rounded"
-      >
-        <div class="inline-block py-2 px-2 font-medium">
-          About
-        </div>
-      </router-link>
-      <a
-        class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover rounded"
-        href="https://github.com/sakihet/paperie"
-      >
-        <div class="inline-block py-2 px-2 font-medium">
-          GitHub
-        </div>
-      </a>
+    </div>
+    <div class="flex-column">
+      <div class="m-auto mx-2">
+        <button
+          class="px-2 py-1 border-1 border-solid border-button-default rounded bg-transparent"
+          @click="store.dialogKeyboardShortcutsOpen = true"
+        >
+          ?
+        </button>
+      </div>
+    </div>
+    <div class="flex-column">
+      <div class="m-auto mx-2">
+        <router-link
+          to="/about"
+          class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover rounded"
+        >
+          <div class="inline-block py-2 px-2 font-medium">
+            About
+          </div>
+        </router-link>
+        <a
+          class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover rounded"
+          href="https://github.com/sakihet/paperie"
+        >
+          <div class="inline-block py-2 px-2 font-medium">
+            GitHub
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </template>

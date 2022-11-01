@@ -63,6 +63,9 @@
 .m-4 {
   margin: 1rem;
 }
+.m-auto {
+  margin: auto;
+}
 .mx-1 {
   margin-left: 0.25rem;
   margin-right: 0.25rem;
@@ -114,6 +117,10 @@
 .my-8 {
   margin-top: 2rem;
   margin-bottom: 2rem;
+}
+.my-auto {
+  margin-top: auto;
+  margin-bottom: auto;
 }
 .ml-0 {
   margin-left: 0;
