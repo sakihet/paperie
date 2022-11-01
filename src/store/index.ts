@@ -5,15 +5,16 @@ import { NoteApplicationService } from '../applications/noteApplicationService'
 import { NoteRepository } from '../repositories/noteRepository'
 import { Note } from '../entities/note'
 import { NoteType } from '../types/noteType'
+import { LayoutType } from '../types/layoutType'
 
 const noteApplicationService = new NoteApplicationService(
   new NoteRepository()
 )
 
 const storageKey = 'layout'
-const getLayout = (): string => {
-  const currentLayout = localStorage.getItem(storageKey)
-  return currentLayout ? currentLayout : 'grid'
+const getLayout = (): LayoutType => {
+  const value = localStorage.getItem(storageKey)
+  return value === 'grid' ? 'grid' : 'list'
 }
 
 const getTheme = () => {
@@ -38,7 +39,7 @@ interface Store {
   editorDialogOpen: boolean,
   dialogKeyboardShortcutsOpen: boolean,
   notes: Array<Note>,
-  notesLayout: string,
+  notesLayout: LayoutType,
   editorNoteContent: string,
   editorNoteId: string,
   editorNoteTitle: string,
@@ -69,7 +70,7 @@ export const store: Store = reactive<Store>({
   editorDialogOpen: false,
   dialogKeyboardShortcutsOpen: false,
   notes: [],
-  notesLayout: '',
+  notesLayout: 'list',
   editorNoteContent: '',
   editorNoteId: '',
   editorNoteTitle: '',
