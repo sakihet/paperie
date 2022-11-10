@@ -58,9 +58,7 @@ onMounted(async () => {
     <TheNavBar />
     <TheCommandMenu />
     <TheDialogKeyboardShortcuts />
-    <div class="f-1">
-      <router-view />
-    </div>
+    <router-view />
     <TheFooter />
   </div>
 </template>

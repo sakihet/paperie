@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, watch } from 'vue'
+import { onMounted, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { store } from '../store'
 import NoteItem from '../components/NoteItem.vue'
@@ -31,7 +31,6 @@ const handleDelete = (noteId: string) => {
   if (window.confirm("Do you really want to delete?")) store.deleteNote(noteId)
 }
 const handleEdit = (note: Note) => {
-  router.push({query: {'noteId': `${note.id}`}})
   store.openEditorForEdit(note)
 }
 const handleEditConfirm = () => {
@@ -78,58 +77,55 @@ watch (() => route.query.noteId, async (queryNoteId) => {
 </script>
 
 <template>
-  <div class="">
-    <div
-      v-if="store.notesLayout === 'grid'"
-      class=""
-    >
-      <div class="layout-center">
-        <div
-          class="pattern-mask"
-          v-if="store.editorDialogOpen"
-          @click="handleCloseEditorDialog"
-        ></div>
-        <dialog
-          class="border-1 border-color-default shadow rounded layout-stack-1 bg-primary"
-          :open="store.editorDialogOpen"
-          @close="handleClose"
-        >
-          <TheNoteEditor v-if="store.isAdding || store.isEditing" />
-          <div class="flex-row">
-            <div class="f-1 text-secondary">
-              <small>
-                <p><AppCode>Command + Enter</AppCode> or <AppCode>Esc</AppCode>: Save</p>
-                <p><AppCode>Command + Delete</AppCode>: Delete</p>
-              </small>
-            </div>
+  <div
+    v-if="store.notesLayout === 'grid'"
+    class="f-1 flex-column"
+  >
+    <div class="layout-center">
+      <div
+        class="pattern-mask"
+        v-if="store.editorDialogOpen"
+        @click="handleCloseEditorDialog"
+      ></div>
+      <dialog
+        class="border-1 border-color-default shadow rounded layout-stack-1 bg-primary"
+        :open="store.editorDialogOpen"
+        @close="handleClose"
+      >
+        <TheNoteEditor v-if="store.isAdding || store.isEditing" />
+        <div class="flex-row">
+          <div class="f-1 text-secondary">
+            <small>
+              <p><AppCode>Command + Enter</AppCode> or <AppCode>Esc</AppCode>: Save</p>
+              <p><AppCode>Command + Delete</AppCode>: Delete</p>
+            </small>
           </div>
-        </dialog>
-      </div>
-      <div :class="{ 'layout-cluster': true, 'my-4': true }">
-        <div
-          class="bg-primary"
-          v-for="note in store.notes"
-          :key="note.id"
-        >
-          <NoteItem
-            :note="note"
-            :layout="store.notesLayout"
-            @delete="handleDelete"
-            @edit="handleEdit"
-            @toggleIsPinned="handleToggleIsPinned"
-          />
         </div>
+      </dialog>
+    </div>
+    <div :class="{ 'layout-cluster': true, 'my-4': true }">
+      <div
+        class="bg-primary"
+        v-for="note in store.notes"
+        :key="note.id"
+      >
+        <NoteItem
+          :note="note"
+          :layout="store.notesLayout"
+          @delete="handleDelete"
+          @edit="handleEdit"
+          @toggleIsPinned="handleToggleIsPinned"
+        />
       </div>
     </div>
-    <div
-      v-else-if="store.notesLayout === 'list'"
-      style="height: calc(100vh - 4.5rem);"
-    >
-      <div class="flex-row">
-        <div
-          class="f-1 overflow-y-scroll pattern-scrollbar-thin divide-solid divide-color-secondary divide-y-2 p-4"
-          style="max-height: calc(100vh - 4.5rem)"
-        >
+  </div>
+  <div
+    v-else-if="store.notesLayout === 'list'"
+    class="f-1 flex-column"
+  >
+    <div class="f-1 flex-row h-full">
+      <div class="f-1 p-4 flex-column">
+        <div class="f-1 pattern-scrollbar-thin divide-y-2 divide-solid divide-color-secondary overflow-y-scroll">
           <div
             v-for="note in store.notes"
             :key="note.id"
@@ -144,11 +140,9 @@ watch (() => route.query.noteId, async (queryNoteId) => {
             />
           </div>
         </div>
-        <div
-          class="f-5"
-        >
-          <TheNoteEditor v-if="store.isAdding || store.isEditing"/>
-        </div>
+      </div>
+      <div class="f-5 flex-column">
+        <TheNoteEditor v-if="store.isAdding || store.isEditing"/>
       </div>
     </div>
   </div>

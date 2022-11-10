@@ -41,83 +41,34 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
 </script>
 
 <template>
-  <div
-    @click="handleEdit(note)"
-    @mouseover="isHovered = true"
-    @mouseleave="isHovered = false"
+  <router-link
+    :to="`/?noteId=${note.id}`"
+    class="text-decoration-none text-primary"
   >
     <div
-      v-if="props.layout === 'grid'"
-      class="border-solid border-color-default border-1 shadow rounded flex-column"
-      :class="{ 'border-t-2 border-color-blue': note.isPinned, 'w-48': true, 'h-48' : true }"
+      @click="handleEdit(note)"
+      @mouseover="isHovered = true"
+      @mouseleave="isHovered = false"
     >
-      <div class="font-semibold p-2 overflow-hidden h-9">
-        <span class="">{{ note.title }}</span>
-      </div>
-      <div class="f-1">
-        <AppTextarea
-          class="text-secondary"
-          :id="note.id"
-          :content="note.content"
-          :rows="7"
-          :cols="16"
-        />
-      </div>
-      <div class="h-9 flex-row mx-1">
-        <div class="f-1"></div>
-        <div class="w-8">
-          <details
-            class="pattern-dropdown"
-            @click="handleClickDropdown($event)"
-            :open="isDropdownOpen"
-          >
-            <summary>
-              <div class="h-8 w-8 py-1 cursor-pointer user-select-none font-bold text-center hover rounded-4">
-                <span class="">⋮</span>
-              </div>
-            </summary>
-            <div class="w-24">
-              <ul class="list-style-none border-solid border-color-default border-1 pl-0 user-select-none cursor-pointer my-1 shadow bg-dropdown rounded text-secondary">
-                <li class="h-8 hover" v-if="props.note.isPinned">
-                  <div
-                    class="py-2 px-4"
-                    @click="handleToggleIsPinned($event, note.id)"
-                  >
-                    <span>Unpin</span>
-                  </div>
-                </li>
-                <li class="h-8 hover" v-else>
-                  <div
-                    class="py-2 px-4"
-                    @click="handleToggleIsPinned($event, note.id)"
-                  >
-                    <span>Pin</span>
-                  </div>
-                </li>
-                <li class="h-8 hover">
-                  <div
-                    class="py-2 px-4"
-                    @click="handleDelete($event, note.id)"
-                  >
-                    <span>Delete</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </details>
-        </div>
-      </div>
-    </div>
-    <div
-      v-else-if="props.layout === 'list'"
-      class="bg-primary h-28"
-      :class="{ 'border-l-2 border-color-blue': note.isPinned}"
-    >
-      <div class="p-2 overflow-hidden h-10 flex-row">
-        <div class="f-1 font-semibold">
+      <div
+        v-if="props.layout === 'grid'"
+        class="border-solid border-color-default border-1 shadow rounded flex-column"
+        :class="{ 'border-t-2 border-color-blue': note.isPinned, 'w-48': true, 'h-48' : true }"
+      >
+        <div class="font-semibold p-2 overflow-hidden h-9">
           <span class="">{{ note.title }}</span>
         </div>
-        <div>
+        <div class="f-1">
+          <AppTextarea
+            class="text-secondary"
+            :id="note.id"
+            :content="note.content"
+            :rows="7"
+            :cols="16"
+          />
+        </div>
+        <div class="h-9 flex-row mx-1">
+          <div class="f-1"></div>
           <div class="w-8">
             <details
               class="pattern-dropdown"
@@ -131,10 +82,7 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
               </summary>
               <div class="w-24">
                 <ul class="list-style-none border-solid border-color-default border-1 pl-0 user-select-none cursor-pointer my-1 shadow bg-dropdown rounded text-secondary">
-                  <li
-                    class="h-8 hover"
-                    v-if="props.note.isPinned"
-                  >
+                  <li class="h-8 hover" v-if="props.note.isPinned">
                     <div
                       class="py-2 px-4"
                       @click="handleToggleIsPinned($event, note.id)"
@@ -142,10 +90,7 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
                       <span>Unpin</span>
                     </div>
                   </li>
-                  <li
-                    class="h-8 hover"
-                    v-else
-                  >
+                  <li class="h-8 hover" v-else>
                     <div
                       class="py-2 px-4"
                       @click="handleToggleIsPinned($event, note.id)"
@@ -167,9 +112,69 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
           </div>
         </div>
       </div>
-      <div class="h-18 overflow-hidden text-secondary p-2">
-        <div class="text-small">{{ note.content }}</div>
+      <div
+        v-else-if="props.layout === 'list'"
+        class="bg-primary h-28"
+        :class="{ 'border-l-2 border-color-blue': note.isPinned}"
+      >
+        <div class="p-2 overflow-hidden h-10 flex-row">
+          <div class="f-1 font-semibold">
+            <span class="">{{ note.title }}</span>
+          </div>
+          <div>
+            <div class="w-8">
+              <details
+                class="pattern-dropdown"
+                @click="handleClickDropdown($event)"
+                :open="isDropdownOpen"
+              >
+                <summary>
+                  <div class="h-8 w-8 py-1 cursor-pointer user-select-none font-bold text-center hover rounded-4">
+                    <span class="">⋮</span>
+                  </div>
+                </summary>
+                <div class="w-24">
+                  <ul class="list-style-none border-solid border-color-default border-1 pl-0 user-select-none cursor-pointer my-1 shadow bg-dropdown rounded text-secondary">
+                    <li
+                      class="h-8 hover"
+                      v-if="props.note.isPinned"
+                    >
+                      <div
+                        class="py-2 px-4"
+                        @click="handleToggleIsPinned($event, note.id)"
+                      >
+                        <span>Unpin</span>
+                      </div>
+                    </li>
+                    <li
+                      class="h-8 hover"
+                      v-else
+                    >
+                      <div
+                        class="py-2 px-4"
+                        @click="handleToggleIsPinned($event, note.id)"
+                      >
+                        <span>Pin</span>
+                      </div>
+                    </li>
+                    <li class="h-8 hover">
+                      <div
+                        class="py-2 px-4"
+                        @click="handleDelete($event, note.id)"
+                      >
+                        <span>Delete</span>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+              </details>
+            </div>
+          </div>
+        </div>
+        <div class="h-18 overflow-hidden text-secondary p-2">
+          <div class="text-small">{{ note.content }}</div>
+        </div>
       </div>
     </div>
-  </div>
+  </router-link>
 </template>

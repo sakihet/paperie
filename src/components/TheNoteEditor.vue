@@ -76,15 +76,30 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
 </script>
 
 <template>
-  <div class="bg-primary">
-    <div v-if="store.notesLayout === 'grid'">
+  <div class="bg-primary f-1 flex-column">
+    <div
+      v-if="store.notesLayout === 'grid'"
+      class="f-1"
+    >
       <div class="h-8 text-secondary">
         <span>Type:</span>
         <label>
-          <input type="radio" value="plain" name="type" v-model="store.editorNoteType" @change=handleChangeNoteType />Plain
+          <input
+            type="radio"
+            value="plain"
+            name="type"
+            v-model="store.editorNoteType"
+            @change=handleChangeNoteType
+          />Plain
         </label>
         <label>
-          <input type="radio" value="markdown" name="type" v-model="store.editorNoteType" @change="handleChangeNoteType" />Markdown
+          <input
+            type="radio"
+            value="markdown"
+            name="type"
+            v-model="store.editorNoteType"
+            @change="handleChangeNoteType"
+          />Markdown
         </label>
       </div>
       <div>
@@ -118,54 +133,66 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
     </div>
     <div
       v-else-if="store.notesLayout === 'list'"
-      class="flex-column"
+      class="f-1 flex-column"
     >
-      <div class="f-1 flex-column">
-        <div class="h-4 m-4 text-secondary">
-          <span>Type:</span>
-          <label>
-            <input type="radio" value="plain" name="type" v-model="store.editorNoteType" @change=handleChangeNoteType />Plain
-          </label>
-          <label>
-            <input type="radio" value="markdown" name="type" v-model="store.editorNoteType" @change="handleChangeNoteType" />Markdown
-          </label>
-        </div>
-        <div class="flex-row divide-x-2 divide-solid divide-color-secondary">
+      <div class="h-4 m-4 text-secondary">
+        <span>Type:</span>
+        <label>
+          <input
+            type="radio"
+            value="plain"
+            name="type"
+            v-model="store.editorNoteType"
+            @change=handleChangeNoteType
+          />Plain
+        </label>
+        <label>
+          <input
+            type="radio"
+            value="markdown"
+            name="type"
+            v-model="store.editorNoteType"
+            @change="handleChangeNoteType"
+          />Markdown
+        </label>
+      </div>
+      <div class="f-1 flex-row divide-x-2 divide-solid divide-color-secondary">
+        <div class="f-1 flex-column">
+          <div class="">
+            <input
+              class="p-4 w-full h-12 border-none focus:outline-none text-large font-bold bg-primary"
+              type="text"
+              ref="refEditorTitle"
+              v-model="store.editorNoteTitle"
+              @keydown="handleKeyDownOnTitle"
+              @keyup="handleKeyUpOnTitle"
+              @compositionstart="handleComposingStart"
+              @compositionend="handleComposingEnd"
+            />
+          </div>
           <div class="f-1">
-            <div class="">
-              <input
-                class="p-4 w-full h-12 border-none focus:outline-none text-large font-bold bg-primary"
-                type="text"
-                ref="refEditorTitle"
-                v-model="store.editorNoteTitle"
-                @keydown="handleKeyDownOnTitle"
-                @keyup="handleKeyUpOnTitle"
-                @compositionstart="handleComposingStart"
-                @compositionend="handleComposingEnd"
-              />
-            </div>
-            <div class="f-1">
-              <textarea
-                class="px-4 border-color-default focus:outline-none text-medium border-none font-sans w-full bg-primary"
-                style="height: calc(100vh - 10rem)"
-                v-model="store.editorNoteContent"
-                ref="refEditorContent"
-                @keydown="handleKeyDownOnContent"
-                @keyup="handleKeyUpOnContent"
-                @compositionstart="handleComposingStart"
-                @compositionend="handleComposingEnd"
-              ></textarea>
-            </div>
-            <div class="text-secondary px-2 h-6">
-              <p><AppCode>Command + Enter</AppCode> or <AppCode>Esc</AppCode>: Save</p>
-            </div>
+            <textarea
+              class="px-4 border-color-default focus:outline-none text-medium border-none font-sans w-full bg-primary h-full pattern-scrollbar-thin"
+              v-model="store.editorNoteContent"
+              ref="refEditorContent"
+              @keydown="handleKeyDownOnContent"
+              @keyup="handleKeyUpOnContent"
+              @compositionstart="handleComposingStart"
+              @compositionend="handleComposingEnd"
+            ></textarea>
           </div>
-          <div class="f-1" v-if="store.editorNoteType === 'markdown'">
-            <div class="h-12">
-              <span class="text-small text-secondary mx-4">Preview</span>
-            </div>
-            <div class="mx-4" v-html="outputMarkdown"></div>
+          <div class="text-secondary px-2 h-6">
+            <p><AppCode>Command + Enter</AppCode> or <AppCode>Esc</AppCode>: Save</p>
           </div>
+        </div>
+        <div
+          class="f-1"
+          v-if="store.editorNoteType === 'markdown'"
+        >
+          <div class="h-12">
+            <span class="text-small text-secondary mx-4">Preview</span>
+          </div>
+          <div class="mx-4" v-html="outputMarkdown"></div>
         </div>
       </div>
     </div>

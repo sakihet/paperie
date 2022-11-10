@@ -50,6 +50,9 @@
 .overflow-y-scroll {
   overflow-y: scroll;
 }
+.overflow-y-hidden {
+  overflow-y: hidden;
+}
 /* spacing */
 .m-1 {
   margin: 0.25rem;

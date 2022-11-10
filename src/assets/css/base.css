@@ -49,6 +49,7 @@ body {
   --color-scrollbar-thumb-bg: var(--color-gray-400);
   background-color: var(--color-background-secondary);
   color: var(--color-text-primary);
+  overflow-y: hidden;
 }
 
 @media (prefers-color-scheme: dark) {
