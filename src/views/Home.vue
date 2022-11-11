@@ -123,9 +123,12 @@ watch (() => route.query.noteId, async (queryNoteId) => {
     v-else-if="store.notesLayout === 'list'"
     class="f-1 flex-column"
   >
-    <div class="f-1 flex-row h-full">
-      <div class="f-1 p-4 flex-column">
-        <div class="f-1 pattern-scrollbar-thin divide-y-2 divide-solid divide-color-secondary overflow-y-scroll">
+    <div class="f-1 flex-row">
+      <div
+        class="f-1 p-4 flex-column overflow-y-scroll pattern-scrollbar-thin"
+        style="height: calc(100vh - 4.5rem);"
+      >
+        <div class="f-1 divide-y-2 divide-solid divide-color-secondary">
           <div
             v-for="note in store.notes"
             :key="note.id"
