@@ -116,7 +116,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
       </div>
       <div class="flex-row">
         <textarea
-          class="px-2 border-color-default focus:outline-none text-medium border-none font-sans f-1"
+          class="px-2 border-color-default focus:outline-none text-medium border-none font-sans f-1 resize-none"
           rows="16"
           cols="60"
           v-model="store.editorNoteContent"
@@ -126,8 +126,14 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
           @compositionstart="handleComposingStart"
           @compositionend="handleComposingEnd"
         ></textarea>
-        <div class="f-1" v-if="store.editorNoteType === 'markdown'">
-          <div class="mx-4" v-html="outputMarkdown"></div>
+        <div
+          v-if="store.editorNoteType === 'markdown'"
+          class="f-1"
+        >
+          <div
+            class="mx-4"
+            v-html="outputMarkdown"
+          ></div>
         </div>
       </div>
     </div>
@@ -172,7 +178,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
           </div>
           <div class="f-1">
             <textarea
-              class="px-4 border-color-default focus:outline-none text-medium border-none font-sans w-full bg-primary h-full pattern-scrollbar-thin"
+              class="px-4 border-color-default focus:outline-none text-medium border-none font-sans w-full bg-primary h-full pattern-scrollbar-thin resize-none"
               v-model="store.editorNoteContent"
               ref="refEditorContent"
               @keydown="handleKeyDownOnContent"
@@ -182,7 +188,9 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
             ></textarea>
           </div>
           <div class="text-secondary px-2 h-6">
-            <p><AppCode>Command + Enter</AppCode> or <AppCode>Esc</AppCode>: Save</p>
+            <p>
+              <AppCode>Command + Enter</AppCode> or <AppCode>Esc</AppCode>: Save
+            </p>
           </div>
         </div>
         <div
@@ -192,7 +200,10 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
           <div class="h-12">
             <span class="text-small text-secondary mx-4">Preview</span>
           </div>
-          <div class="mx-4" v-html="outputMarkdown"></div>
+          <div
+            class="mx-4"
+            v-html="outputMarkdown">
+          </div>
         </div>
       </div>
     </div>
