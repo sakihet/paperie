@@ -50,7 +50,7 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
         class="border-solid border-color-default border-1 shadow rounded flex-column"
         :class="{ 'border-t-2 border-color-blue': note.isPinned, 'w-48': true, 'h-48' : true }"
       >
-        <div class="font-semibold p-2 overflow-hidden h-9">
+        <div class="font-semibold p-2 overflow-hidden h-9 text-overflow-ellipsis">
           <span class="">{{ note.title }}</span>
         </div>
         <div class="f-1">
@@ -77,7 +77,10 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
               </summary>
               <div class="w-24">
                 <ul class="list-style-none border-solid border-color-default border-1 pl-0 user-select-none cursor-pointer my-1 shadow bg-dropdown rounded text-secondary">
-                  <li class="h-8 hover" v-if="props.note.isPinned">
+                  <li
+                    v-if="props.note.isPinned"
+                    class="h-8 hover"
+                  >
                     <div
                       class="py-2 px-4"
                       @click="handleToggleIsPinned($event, note.id)"
@@ -85,7 +88,10 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
                       <span>Unpin</span>
                     </div>
                   </li>
-                  <li class="h-8 hover" v-else>
+                  <li
+                    v-else
+                    class="h-8 hover"
+                  >
                     <div
                       class="py-2 px-4"
                       @click="handleToggleIsPinned($event, note.id)"
@@ -113,7 +119,7 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
         :class="{ 'border-l-2 border-color-blue': note.isPinned}"
       >
         <div class="p-2 overflow-hidden h-10 flex-row">
-          <div class="f-1 font-semibold">
+          <div class="f-1 font-semibold overflow-hidden text-overflow-ellipsis">
             <span class="">{{ note.title }}</span>
           </div>
           <div>
