@@ -22,10 +22,6 @@ const handleClickDropdown = (e: Event) => {
   e.stopPropagation()
   isDropdownOpen.value = !(isDropdownOpen.value)
 }
-const handleEdit = (note: Note) => {
-  isHovered.value = false
-  emit('edit', note)
-}
 const handleDelete = (e: Event, noteId: string) => {
   e.stopPropagation()
   isHovered.value = false
@@ -42,11 +38,10 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
 
 <template>
   <router-link
-    :to="`/?noteId=${note.id}`"
     class="text-decoration-none text-primary"
+    :to="`/?noteId=${note.id}`"
   >
     <div
-      @click="handleEdit(note)"
       @mouseover="isHovered = true"
       @mouseleave="isHovered = false"
     >
