@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import AppTextarea from '../components/AppTextarea.vue'
 import { Note } from '../entities/note'
+import AppTextarea from '../components/AppTextarea.vue'
+import NoteDropdown from './NoteDropdown.vue'
 
 const props = defineProps<{
   note: Note,
@@ -10,29 +11,16 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'delete', noteId: string): void
-  (e: 'edit', note: Note): void
   (e: 'toggleIsPinned', noteId: string): void
 }>()
 
 const isHovered = ref(false)
-const isDropdownOpen = ref(false)
 
-const handleClickDropdown = (e: Event) => {
-  e.preventDefault()
-  e.stopPropagation()
-  isDropdownOpen.value = !(isDropdownOpen.value)
-}
-const handleDelete = (e: Event, noteId: string) => {
-  e.stopPropagation()
-  isHovered.value = false
+const handleDelete = (noteId: string) => {
   emit('delete', noteId)
-  isDropdownOpen.value = false
 }
-const handleToggleIsPinned = (e: Event, noteId: string) => {
-  e.stopPropagation()
-  isHovered.value = false
+const handleToggleIsPinned = (noteId: string) => {
   emit('toggleIsPinned', noteId)
-  isDropdownOpen.value = false
 }
 </script>
 
@@ -64,53 +52,11 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
         </div>
         <div class="h-9 flex-row mx-1">
           <div class="f-1"></div>
-          <div class="w-8">
-            <details
-              class="pattern-dropdown"
-              @click="handleClickDropdown($event)"
-              :open="isDropdownOpen"
-            >
-              <summary>
-                <div class="h-8 w-8 py-1 cursor-pointer user-select-none font-bold text-center hover rounded-4">
-                  <span class="">⋮</span>
-                </div>
-              </summary>
-              <div class="w-24">
-                <ul class="list-style-none border-solid border-color-default border-1 pl-0 user-select-none cursor-pointer my-1 shadow bg-dropdown rounded text-secondary">
-                  <li
-                    v-if="props.note.isPinned"
-                    class="h-8 hover"
-                  >
-                    <div
-                      class="py-2 px-4"
-                      @click="handleToggleIsPinned($event, note.id)"
-                    >
-                      <span>Unpin</span>
-                    </div>
-                  </li>
-                  <li
-                    v-else
-                    class="h-8 hover"
-                  >
-                    <div
-                      class="py-2 px-4"
-                      @click="handleToggleIsPinned($event, note.id)"
-                    >
-                      <span>Pin</span>
-                    </div>
-                  </li>
-                  <li class="h-8 hover">
-                    <div
-                      class="py-2 px-4"
-                      @click="handleDelete($event, note.id)"
-                    >
-                      <span>Delete</span>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </details>
-          </div>
+          <NoteDropdown
+            :note="note"
+            @clickDelete="handleDelete(note.id)"
+            @clickToggleIsPinned="handleToggleIsPinned(note.id)"
+          />
         </div>
       </div>
       <div
@@ -123,53 +69,11 @@ const handleToggleIsPinned = (e: Event, noteId: string) => {
             <span class="">{{ note.title }}</span>
           </div>
           <div>
-            <div class="w-8">
-              <details
-                class="pattern-dropdown"
-                @click="handleClickDropdown($event)"
-                :open="isDropdownOpen"
-              >
-                <summary>
-                  <div class="h-8 w-8 py-1 cursor-pointer user-select-none font-bold text-center hover rounded-4">
-                    <span class="">⋮</span>
-                  </div>
-                </summary>
-                <div class="w-24">
-                  <ul class="list-style-none border-solid border-color-default border-1 pl-0 user-select-none cursor-pointer my-1 shadow bg-dropdown rounded text-secondary">
-                    <li
-                      class="h-8 hover"
-                      v-if="props.note.isPinned"
-                    >
-                      <div
-                        class="py-2 px-4"
-                        @click="handleToggleIsPinned($event, note.id)"
-                      >
-                        <span>Unpin</span>
-                      </div>
-                    </li>
-                    <li
-                      class="h-8 hover"
-                      v-else
-                    >
-                      <div
-                        class="py-2 px-4"
-                        @click="handleToggleIsPinned($event, note.id)"
-                      >
-                        <span>Pin</span>
-                      </div>
-                    </li>
-                    <li class="h-8 hover">
-                      <div
-                        class="py-2 px-4"
-                        @click="handleDelete($event, note.id)"
-                      >
-                        <span>Delete</span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </details>
-            </div>
+            <NoteDropdown
+              :note="note"
+              @clickDelete="handleDelete(note.id)"
+              @clickToggleIsPinned="handleToggleIsPinned(note.id)"
+            />
           </div>
         </div>
         <div class="h-18 overflow-hidden text-secondary p-2">
