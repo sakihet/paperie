@@ -41,11 +41,14 @@ const handleAdd = (e: Event) => {
       </div>
     </router-link>
     <div class="flex-column mx-1">
-      <AppButton
-        text="Add"
-        @click="handleAdd"
-        class="m-auto"
-      />
+      <router-link
+        to="/new"
+        class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover rounded"
+      >
+        <div class="inline-block py-2 px-2">
+          Add
+        </div>
+      </router-link>
     </div>
     <div class="f-1"></div>
     <div class="flex-column">
