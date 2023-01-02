@@ -186,6 +186,8 @@ export const store: Store = reactive<Store>({
     store.editorDialogOpen = true
     store.commandMenuDialogOpen = false
     store.editorNoteType = 'plain'
+    store.editorNoteTitle = ''
+    store.editorNoteContent = ''
   },
   openEditorForEdit (note: Note) {
     store.isEditing = true

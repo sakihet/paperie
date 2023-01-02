@@ -4,8 +4,6 @@ import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
 import { useRouter } from 'vue-router';
 
-const router = useRouter()
-
 const capitalize = (str: string) => {
   return str[0].toUpperCase() + str.slice(1)
 }
@@ -14,12 +12,6 @@ const handleChangeLayout = (e: Event) => {
   const nextLayout = (value === 'grid' ? 'grid' : 'list')
   store.notesLayout = nextLayout
   store.saveLayout()
-}
-const handleAdd = (e: Event) => {
-  router.push({})
-  store.editorNoteTitle = ''
-  store.editorNoteContent = ''
-  store.openEditorForAdd()
 }
 </script>
 
@@ -41,14 +33,16 @@ const handleAdd = (e: Event) => {
       </div>
     </router-link>
     <div class="flex-column mx-1">
-      <router-link
-        to="/new"
-        class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover rounded"
-      >
-        <div class="inline-block py-2 px-2">
-          Add
-        </div>
-      </router-link>
+      <div class="m-auto">
+        <router-link
+          to="/new"
+          class="inline-block text-decoration-none hover:text-decoration-underline text-primary hover rounded border-solid border-1 border-button-default"
+        >
+          <div class="inline-block py-1 px-2 mx-2 text-small">
+            Add
+          </div>
+        </router-link>
+      </div>
     </div>
     <div class="f-1"></div>
     <div class="flex-column">

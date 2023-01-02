@@ -12,6 +12,7 @@ const router = useRouter()
 
 const handleAddConfirm = () => {
   store.addConfirm()
+  router.push({})
 }
 const handleClose = () => {
   store.isAdding = false
@@ -26,16 +27,20 @@ const handleCloseEditorDialog = () => {
   } else {
     console.log('error')
   }
+  router.push({})
 }
 const handleDelete = (noteId: string) => {
-  if (window.confirm("Do you really want to delete?")) store.deleteNote(noteId)
+  if (window.confirm("Do you really want to delete?")) {
+    store.deleteNote(noteId)
+    router.push({})
+  }
 }
 const handleEdit = (note: Note) => {
   store.openEditorForEdit(note)
 }
 const handleEditConfirm = () => {
-  router.push({})
   store.editConfirm()
+  router.push({})
 }
 const handleToggleIsPinned = (noteId: string) => store.toggleNoteIsPinned(noteId)
 
@@ -55,22 +60,34 @@ onMounted(async () => {
     }
   }
 })
-watch (() => route.query.noteId, async (queryNoteId) => {
+watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
   if (store.commandMenuDialogOpen) store.commandMenuDialogOpen = false
-  const noteId = queryNoteId?.toString()
-  if (noteId) {
-    store.commandMenuDialogOpen = false
-    store.editorDialogOpen = true
-    store.isEditing = true
-    const note = store.notes.find(x => x.id === noteId)
-    if (note) {
-      store.editorNoteContent = note.content
-      store.editorNoteId = note.id
-      store.editorNoteTitle = note.title
-      store.editorNoteType = note.noteType || 'plain'
-    } else {
-      console.log('not found')
-      router.push({})
+  if (noteIdAfter) {
+    if (noteIdAfter !== noteIdBefore) {
+      const noteId = noteIdAfter?.toString()
+      if (noteId) {
+        store.commandMenuDialogOpen = false
+        store.editorDialogOpen = true
+        store.isEditing = true
+        const note = store.notes.find(x => x.id === noteId)
+        if (note) {
+          store.editorNoteContent = note.content
+          store.editorNoteId = note.id
+          store.editorNoteTitle = note.title
+          store.editorNoteType = note.noteType || 'plain'
+        } else {
+          console.log('not found')
+          router.push({})
+        }
+      }
+    }
+  } else if (!noteIdAfter && noteIdBefore) {
+    // TODO: handle loading
+    const path = route.path
+    if (path !== '/new') {
+      store.isAdding = false
+      store.isEditing = false
+      store.editorDialogOpen = false
     }
   }
 })
@@ -145,7 +162,7 @@ watch (() => route.query.noteId, async (queryNoteId) => {
         </div>
       </div>
       <div class="f-5 flex-column">
-        <TheNoteEditor v-if="store.isAdding || store.isEditing"/>
+        <TheNoteEditor v-if="store.isAdding || store.isEditing" />
       </div>
     </div>
   </div>
