@@ -12,6 +12,8 @@ const route = useRoute()
 const router = useRouter()
 store.init()
 
+const moveToIndex = () => router.push({ path: '/' })
+
 onMounted(async () => {
   await store.load()
   document.onkeydown = (e: KeyboardEvent) => {
@@ -21,7 +23,7 @@ onMounted(async () => {
         store.pressingModifier = false
       } else if (e.key === 'Escape') {
         store.escape()
-        router.push({})
+        moveToIndex()
       } else if (e.key === CommandMenuModifier) {
         store.pressingModifier = true
       } else if (store.pressingModifier){
@@ -31,7 +33,7 @@ onMounted(async () => {
           store.pressingModifier = false
         } else if (e.key === 'Enter') {
           store.escape()
-          router.push({})
+          moveToIndex()
         } else if (e.key === 'Delete') {
           const noteId = route.query.noteId?.toString()
           if (noteId) {
