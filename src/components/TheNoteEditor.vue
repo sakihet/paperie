@@ -18,6 +18,10 @@ onMounted(() => {
 onUpdated(() => {})
 onUnmounted(() => {})
 
+const emit = defineEmits<{
+  (e: 'inputNote'): void
+}>()
+
 const md = new markdownIt()
 const handleChangeNoteType = () => {
   store.updateNoteType(store.editorNoteId, store.editorNoteType)
@@ -60,6 +64,9 @@ const handleKeyDownOnTitle = (e: KeyboardEvent) => {
       setTimeout(() => focusEditorContent(), 100)
     }
   }
+}
+const handleInput = (e: Event) => {
+  emit('inputNote')
 }
 const handleKeyUpOnTitle = (e: KeyboardEvent) => {
   if (e.key === 'Control' && !store.composing) {
@@ -112,6 +119,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
           @keyup="handleKeyUpOnTitle"
           @compositionstart="handleComposingStart"
           @compositionend="handleComposingEnd"
+          @input="handleInput"
         />
       </div>
       <div class="flex-row">
@@ -125,6 +133,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
           @keyup="handleKeyUpOnContent"
           @compositionstart="handleComposingStart"
           @compositionend="handleComposingEnd"
+          @input="handleInput"
         ></textarea>
         <div
           v-if="store.editorNoteType === 'markdown'"
@@ -174,6 +183,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
               @keyup="handleKeyUpOnTitle"
               @compositionstart="handleComposingStart"
               @compositionend="handleComposingEnd"
+              @input="handleInput"
             />
           </div>
           <div class="f-1">
@@ -185,6 +195,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
               @keyup="handleKeyUpOnContent"
               @compositionstart="handleComposingStart"
               @compositionend="handleComposingEnd"
+              @input="handleInput"
             ></textarea>
           </div>
           <div class="text-secondary px-2 h-6">

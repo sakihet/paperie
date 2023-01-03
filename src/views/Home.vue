@@ -42,6 +42,9 @@ const handleEditConfirm = () => {
   store.editConfirm()
   router.push({})
 }
+const handleInputNote = () => {
+  // TODO: create or update
+}
 const handleToggleIsPinned = (noteId: string) => store.toggleNoteIsPinned(noteId)
 
 onMounted(async () => {
@@ -109,7 +112,10 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         :open="store.editorDialogOpen"
         @close="handleClose"
       >
-        <TheNoteEditor v-if="store.isAdding || store.isEditing" />
+        <TheNoteEditor
+          v-if="store.isAdding || store.isEditing"
+          @input-note="handleInputNote"
+        />
         <div class="flex-row">
           <div class="f-1 text-secondary">
             <small>
@@ -162,7 +168,10 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         </div>
       </div>
       <div class="f-5 flex-column">
-        <TheNoteEditor v-if="store.isAdding || store.isEditing" />
+        <TheNoteEditor
+          v-if="store.isAdding || store.isEditing"
+          @input-note="handleInputNote"
+        />
       </div>
     </div>
   </div>
