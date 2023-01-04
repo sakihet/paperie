@@ -26,7 +26,7 @@ const emit = defineEmits<{
 
 const md = new markdownIt()
 const handleChangeNoteType = () => {
-  store.updateNoteType(store.editorNoteId, store.editorNoteType)
+  store.updateNoteType(store.editor.noteId, store.editor.noteType)
 }
 const handleComposingStart = () => store.composing = true
 const handleComposingEnd = () => store.composing = false
@@ -84,7 +84,7 @@ const focusEditorContent = () => {
 const focusEditorTitle = () => {
   refEditorTitle.value?.focus()
 }
-const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
+const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
 </script>
 
 <template>
@@ -100,7 +100,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
             type="radio"
             value="plain"
             name="type"
-            v-model="store.editorNoteType"
+            v-model="store.editor.noteType"
             @change=handleChangeNoteType
           />Plain
         </label>
@@ -109,7 +109,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
             type="radio"
             value="markdown"
             name="type"
-            v-model="store.editorNoteType"
+            v-model="store.editor.noteType"
             @change="handleChangeNoteType"
           />Markdown
         </label>
@@ -119,7 +119,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
           class="p-2 w-full h-8 border-none focus:outline-none text-large font-bold"
           type="text"
           ref="refEditorTitle"
-          v-model="store.editorNoteTitle"
+          v-model="store.editor.noteTitle"
           @keydown="handleKeyDownOnTitle"
           @keyup="handleKeyUpOnTitle"
           @compositionstart="handleComposingStart"
@@ -132,7 +132,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
           class="px-2 border-color-default focus:outline-none text-medium border-none font-sans f-1 resize-none"
           rows="16"
           cols="60"
-          v-model="store.editorNoteContent"
+          v-model="store.editor.noteContent"
           ref="refEditorContent"
           @keydown="handleKeyDownOnContent"
           @keyup="handleKeyUpOnContent"
@@ -141,7 +141,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
           @input="handleInput"
         ></textarea>
         <div
-          v-if="store.editorNoteType === 'markdown'"
+          v-if="store.editor.noteType === 'markdown'"
           class="f-1"
         >
           <div
@@ -162,7 +162,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
             type="radio"
             value="plain"
             name="type"
-            v-model="store.editorNoteType"
+            v-model="store.editor.noteType"
             @change=handleChangeNoteType
           />Plain
         </label>
@@ -171,7 +171,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
             type="radio"
             value="markdown"
             name="type"
-            v-model="store.editorNoteType"
+            v-model="store.editor.noteType"
             @change="handleChangeNoteType"
           />Markdown
         </label>
@@ -183,7 +183,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
               class="p-4 w-full h-12 border-none focus:outline-none text-large font-bold bg-primary"
               type="text"
               ref="refEditorTitle"
-              v-model="store.editorNoteTitle"
+              v-model="store.editor.noteTitle"
               @keydown="handleKeyDownOnTitle"
               @keyup="handleKeyUpOnTitle"
               @compositionstart="handleComposingStart"
@@ -194,7 +194,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
           <div class="f-1">
             <textarea
               class="px-4 border-color-default focus:outline-none text-medium border-none font-sans w-full bg-primary h-full pattern-scrollbar-thin resize-none"
-              v-model="store.editorNoteContent"
+              v-model="store.editor.noteContent"
               ref="refEditorContent"
               @keydown="handleKeyDownOnContent"
               @keyup="handleKeyUpOnContent"
@@ -211,7 +211,7 @@ const outputMarkdown = computed(() => md.render(store.editorNoteContent) )
         </div>
         <div
           class="f-1"
-          v-if="store.editorNoteType === 'markdown'"
+          v-if="store.editor.noteType === 'markdown'"
         >
           <div class="h-12">
             <span class="text-small text-secondary mx-4">Preview</span>

@@ -40,10 +40,12 @@ interface Store {
   dialogKeyboardShortcutsOpen: boolean,
   notes: Array<Note>,
   notesLayout: LayoutType,
-  editorNoteContent: string,
-  editorNoteId: string,
-  editorNoteTitle: string,
-  editorNoteType: NoteType,
+  editor: {
+    noteContent: string
+    noteId: string,
+    noteTitle: string,
+    noteType: NoteType
+  },
   pressingModifier: boolean,
   composing: boolean,
   isAdding: boolean,
@@ -72,10 +74,12 @@ export const store: Store = reactive<Store>({
   dialogKeyboardShortcutsOpen: false,
   notes: [],
   notesLayout: 'list',
-  editorNoteContent: '',
-  editorNoteId: '',
-  editorNoteTitle: '',
-  editorNoteType: 'plain',
+  editor: {
+    noteContent: '',
+    noteId: '',
+    noteTitle: '',
+    noteType: 'plain'
+  },
   pressingModifier: false,
   composing: false,
   isAdding: false,
@@ -101,16 +105,16 @@ export const store: Store = reactive<Store>({
     this.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
   },
   addConfirm () {
-    if (this.editorNoteContent.length === 0 && this.editorNoteTitle.length === 0) {
+    if (this.editor.noteContent.length === 0 && this.editor.noteTitle.length === 0) {
     } else {
       const id = v4()
       const date = new Date()
       const note: Note = {
         id: id,
-        title: store.editorNoteTitle,
-        content: store.editorNoteContent,
+        title: store.editor.noteTitle,
+        content: store.editor.noteContent,
         isPinned: false,
-        noteType: store.editorNoteType,
+        noteType: store.editor.noteType,
         createdAt: date,
         updatedAt: date
       }
@@ -118,8 +122,8 @@ export const store: Store = reactive<Store>({
     }
     this.editorDialogOpen = false
     this.isAdding = false
-    this.editorNoteContent = ''
-    this.editorNoteTitle = ''
+    this.editor.noteContent = ''
+    this.editor.noteTitle = ''
   },
   addNote (note: Note) {
     const handler = async () => {
@@ -134,8 +138,8 @@ export const store: Store = reactive<Store>({
       await noteApplicationService.delete(id)
       const idx = this.notes.findIndex((x) => x.id === id)
       this.notes.splice(idx, 1)
-      this.editorNoteTitle = ''
-      this.editorNoteContent = ''
+      this.editor.noteTitle = ''
+      this.editor.noteContent = ''
       this.isEditing = false
       this.editorDialogOpen = false
     }
@@ -143,15 +147,15 @@ export const store: Store = reactive<Store>({
   },
   editConfirm () {
     this.updateNote(
-      this.editorNoteId,
-      this.editorNoteTitle,
-      this.editorNoteContent,
-      this.editorNoteType
+      this.editor.noteId,
+      this.editor.noteTitle,
+      this.editor.noteContent,
+      this.editor.noteType
     )
-    this.editorNoteContent = ''
-    this.editorNoteId = '',
-    this.editorNoteTitle = ''
-    this.editorNoteType = 'plain'
+    this.editor.noteContent = ''
+    this.editor.noteId = '',
+    this.editor.noteTitle = ''
+    this.editor.noteType = 'plain'
     this.editorDialogOpen = false
     this.isEditing = false
   },
@@ -189,18 +193,18 @@ export const store: Store = reactive<Store>({
     store.isAdding = true
     store.editorDialogOpen = true
     store.commandMenuDialogOpen = false
-    store.editorNoteType = 'plain'
-    store.editorNoteTitle = ''
-    store.editorNoteContent = ''
+    store.editor.noteType = 'plain'
+    store.editor.noteTitle = ''
+    store.editor.noteContent = ''
   },
   openEditorForEdit (note: Note) {
     store.isEditing = true
     store.editorDialogOpen = true
     store.commandMenuDialogOpen = false
-    store.editorNoteId = note.id
-    store.editorNoteTitle = note.title
-    store.editorNoteContent = note.content
-    store.editorNoteType = note.noteType
+    store.editor.noteId = note.id
+    store.editor.noteTitle = note.title
+    store.editor.noteContent = note.content
+    store.editor.noteType = note.noteType
   },
   saveLayout () {
     localStorage.setItem(storageKey, this.notesLayout)

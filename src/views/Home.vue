@@ -54,10 +54,12 @@ watch (() => store.isLoaded, async (after, before) => {
       if (note) {
         store.editorDialogOpen = true
         store.isEditing = true
-        store.editorNoteContent = note.content
-        store.editorNoteId = note.id
-        store.editorNoteTitle = note.title
-        store.editorNoteType = note.noteType || 'plain'
+        store.editor = {
+          noteContent: note.content,
+          noteId: note.id,
+          noteTitle: note.title,
+          noteType: note.noteType || 'plain'
+        }
       }
     }
   }
@@ -73,10 +75,12 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         store.isEditing = true
         const note = store.notes.find(x => x.id === noteId)
         if (note) {
-          store.editorNoteContent = note.content
-          store.editorNoteId = note.id
-          store.editorNoteTitle = note.title
-          store.editorNoteType = note.noteType || 'plain'
+          store.editor = {
+            noteContent: note.content,
+            noteId: note.id,
+            noteTitle: note.title,
+            noteType: note.noteType || 'plain'
+          }
         } else {
           console.log('not found')
           router.push({})
