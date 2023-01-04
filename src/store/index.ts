@@ -50,7 +50,7 @@ interface Store {
   isEditing: boolean,
   isLoaded: boolean,
   theme: string,
-  init: () => void,
+  init: () => Promise<void>,
   load: () => Promise<void>,
   addConfirm: () => void,
   addNote: (note: Note) => void,
@@ -82,7 +82,7 @@ export const store: Store = reactive<Store>({
   isEditing: false,
   isLoaded: false,
   theme: 'light',
-  init () {
+  async init () {
     this.notesLayout = getLayout()
     const connectHandler = async () => await connect()
     const loadHandler = async () => await this.load()

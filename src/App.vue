@@ -10,12 +10,11 @@ import { store } from './store';
 const CommandMenuModifier = 'Meta' // TODO: consider the other OS
 const route = useRoute()
 const router = useRouter()
-store.init()
 
 const moveToIndex = () => router.push({ path: '/' })
 
 onMounted(async () => {
-  await store.load()
+  await store.init()
   document.onkeydown = (e: KeyboardEvent) => {
     if (!store.composing) {
       if (!store.isAdding && !store.isEditing && e.key === '+') {
