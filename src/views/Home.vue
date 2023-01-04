@@ -47,19 +47,18 @@ const handleInputNote = () => {
 }
 const handleToggleIsPinned = (noteId: string) => store.toggleNoteIsPinned(noteId)
 
-onMounted(async () => {
-  const noteId = route.query.noteId?.toString()
-  if (noteId) {
-    store.editorDialogOpen = true
-    store.isEditing = true
-    const note = store.notes.find(x => x.id === noteId)
-    if (note) {
-      store.editorNoteTitle = note.title
-      store.editorNoteContent = note.content
-      store.editorNoteType = note.noteType || 'plain'
-    } else {
-      console.log('not found')
-      router.push({})
+watch (() => store.isLoaded, async (after, before) => {
+  if (after) {
+    if (route.query.noteId) {
+      const note = store.notes.find(x => x.id === route.query.noteId)
+      if (note) {
+        store.editorDialogOpen = true
+        store.isEditing = true
+        store.editorNoteContent = note.content
+        store.editorNoteId = note.id
+        store.editorNoteTitle = note.title
+        store.editorNoteType = note.noteType || 'plain'
+      }
     }
   }
 })

@@ -48,6 +48,7 @@ interface Store {
   composing: boolean,
   isAdding: boolean,
   isEditing: boolean,
+  isLoaded: boolean,
   theme: string,
   init: () => void,
   load: () => Promise<void>,
@@ -79,13 +80,16 @@ export const store: Store = reactive<Store>({
   composing: false,
   isAdding: false,
   isEditing: false,
+  isLoaded: false,
   theme: 'light',
   init () {
     this.notesLayout = getLayout()
     const connectHandler = async () => await connect()
     const loadHandler = async () => await this.load()
     connectHandler()
-    loadHandler()
+    loadHandler().then(() => {
+      this.isLoaded = true
+    })
     const theme = getTheme()
     if (theme) {
       this.theme = theme
