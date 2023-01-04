@@ -37,7 +37,7 @@ onMounted(async () => {
           const noteId = route.query.noteId?.toString()
           if (noteId) {
             if (window.confirm("Do you really want to delete?")) {
-              store.deleteNote(noteId)
+              store.actions.deleteNote(store, noteId)
               router.push({})
             }
           }
