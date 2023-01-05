@@ -72,7 +72,7 @@ const handleChangeLayout = (e: Event) => {
       <div class="m-auto mx-2">
         <AppButton
           class=""
-          @click="store.toggleTheme()"
+          @click="store.actions.toggleTheme(store)"
           :text="store.theme === 'light' ? 'Dark' : 'Light' "
         />
       </div>
