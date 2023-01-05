@@ -25,7 +25,7 @@ const emit = defineEmits<{
 
 const md = new markdownIt()
 const handleChangeNoteType = () => {
-  store.actions.note.updateNoteType(store, store.editor.noteId, store.editor.noteType)
+  store.actions.note.updateNoteType(store)
 }
 const handleComposingStart = () => store.composing = true
 const handleComposingEnd = () => store.composing = false
