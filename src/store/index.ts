@@ -7,16 +7,18 @@ import { Note } from '../entities/note'
 import { NoteType } from '../types/noteType'
 import { LayoutType } from '../types/layoutType'
 
-const noteApplicationService = new NoteApplicationService(
-  new NoteRepository()
-)
-
 const storageKey = 'layout'
+const applyTheme = (theme: string) => {
+  if (theme === 'dark') {
+    document.firstElementChild?.classList.add('dark')
+  } else {
+    document.firstElementChild?.classList.remove('dark')
+  }
+}
 const getLayout = (): LayoutType => {
   const value = localStorage.getItem(storageKey)
   return value === 'grid' ? 'grid' : 'list'
 }
-
 const getTheme = () => {
   const key = 'theme'
   if (localStorage.getItem(key)) {
@@ -25,14 +27,9 @@ const getTheme = () => {
     return window.matchMedia('(preferes-color-scheme: dark)').matches ? 'dark' : 'light'
   }
 }
-
-const applyTheme = (theme: string) => {
-  if (theme === 'dark') {
-    document.firstElementChild?.classList.add('dark')
-  } else {
-    document.firstElementChild?.classList.remove('dark')
-  }
-}
+const noteApplicationService = new NoteApplicationService(
+  new NoteRepository()
+)
 
 interface Store {
   actions: {
@@ -42,28 +39,28 @@ interface Store {
     updateNoteType: (store: Store, id: string, noteType: NoteType) => void
   },
   commandMenuDialogOpen: boolean,
-  editorDialogOpen: boolean,
+  composing: boolean,
   dialogKeyboardShortcutsOpen: boolean,
-  notes: Array<Note>,
-  notesLayout: LayoutType,
   editor: {
     noteContent: string
     noteId: string,
     noteTitle: string,
     noteType: NoteType
   },
-  pressingModifier: boolean,
-  composing: boolean,
+  editorDialogOpen: boolean,
   isAdding: boolean,
   isEditing: boolean,
   isLoaded: boolean,
+  notes: Array<Note>,
+  notesLayout: LayoutType,
+  pressingModifier: boolean,
   theme: string,
-  init: () => Promise<void>,
-  load: () => Promise<void>,
   addConfirm: () => void,
   addNote: (note: Note) => void,
   editConfirm: () => void,
   escape: () => void,
+  init: () => Promise<void>,
+  load: () => Promise<void>,
   openEditorForAdd: () => void,
   openEditorForEdit: (note: Note) => void,
   saveLayout: () => void,
