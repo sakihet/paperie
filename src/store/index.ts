@@ -50,44 +50,139 @@ interface Store {
   pressingModifier: boolean,
   theme: string,
   actions: {
+    addConfirm: (store: Store) => void,
+    editConfirm: (store: Store) => void,
+    escape: (store: Store) => void,
+    init: (store: Store) => Promise<void>,
+    load: (store: Store) => Promise<void>,
+    openEditorForAdd: (store: Store) => void,
+    openEditorForEdit: (store: Store, note: Note) => void,
+    saveLayout: (store: Store) => void,
+    toggleTheme: (store: Store) => void,
     note: {
       delete: (store: Store, id: string) => void,
       toggleIsPinned: (store: Store, id: string) => void,
       update: (store: Store, id: string, title: string, content: string, noteType: NoteType) => void,
       updateNoteType: (store: Store, id: string, noteType: NoteType) => void
     }
-  },
-  addConfirm: () => void,
-  addNote: (note: Note) => void,
-  editConfirm: () => void,
-  escape: () => void,
-  init: () => Promise<void>,
-  load: () => Promise<void>,
-  openEditorForAdd: () => void,
-  openEditorForEdit: (note: Note) => void,
-  saveLayout: () => void,
-  toggleTheme: () => void
+  }
 }
 
 export const store: Store = reactive<Store>({
   commandMenuDialogOpen: false,
   composing: false,
   dialogKeyboardShortcutsOpen: false,
-  editorDialogOpen: false,
   editor: {
     noteContent: '',
     noteId: '',
     noteTitle: '',
     noteType: 'plain'
   },
-  pressingModifier: false,
-  notes: [],
-  notesLayout: 'list',
+  editorDialogOpen: false,
   isAdding: false,
   isEditing: false,
   isLoaded: false,
+  notes: [],
+  notesLayout: 'list',
+  pressingModifier: false,
   theme: 'light',
   actions: {
+    async init (store) {
+      store.notesLayout = getLayout()
+      const connectHandler = async () => await connect()
+      const loadHandler = async () => await store.actions.load(store)
+      connectHandler()
+      loadHandler().then(() => {
+        store.isLoaded = true
+      })
+      const theme = getTheme()
+      if (theme) {
+        store.theme = theme
+        applyTheme(theme)
+      }
+    },
+    async load (store) {
+      const result = await noteApplicationService.getAll()
+      store.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
+    },
+    addConfirm (store) {
+      if (store.editor.noteContent.length === 0 && store.editor.noteTitle.length === 0) {
+      } else {
+        const id = v4()
+        const date = new Date()
+        const note: Note = {
+          id: id,
+          title: store.editor.noteTitle,
+          content: store.editor.noteContent,
+          isPinned: false,
+          noteType: store.editor.noteType,
+          createdAt: date,
+          updatedAt: date
+        }
+        const handler = async () => {
+          await noteApplicationService.add(note)
+          const result = await noteApplicationService.getAll()
+          store.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
+        }
+        handler()
+      }
+      store.editorDialogOpen = false
+      store.isAdding = false
+      store.editor.noteContent = ''
+      store.editor.noteTitle = ''
+    },
+    editConfirm (store) {
+      store.actions.note.update(
+        store,
+        store.editor.noteId,
+        store.editor.noteTitle,
+        store.editor.noteContent,
+        store.editor.noteType
+      )
+      store.editor.noteContent = ''
+      store.editor.noteId = '',
+      store.editor.noteTitle = ''
+      store.editor.noteType = 'plain'
+      store.editorDialogOpen = false
+      store.isEditing = false
+    },
+    escape (store) {
+      if (store.isAdding) {
+        store.actions.addConfirm(store)
+      } else if (store.isEditing) {
+        store.actions.editConfirm(store)
+      }
+      store.editorDialogOpen = false
+    },
+    openEditorForAdd (store) {
+      store.isAdding = true
+      store.editorDialogOpen = true
+      store.commandMenuDialogOpen = false
+      store.editor.noteType = 'plain'
+      store.editor.noteTitle = ''
+      store.editor.noteContent = ''
+    },
+    openEditorForEdit (store:Store, note: Note) {
+      store.isEditing = true
+      store.editorDialogOpen = true
+      store.commandMenuDialogOpen = false
+      store.editor.noteId = note.id
+      store.editor.noteTitle = note.title
+      store.editor.noteContent = note.content
+      store.editor.noteType = note.noteType
+    },
+    saveLayout (store) {
+      localStorage.setItem(storageKey, store.notesLayout)
+    },
+    toggleTheme () {
+      if (store.theme === 'light') {
+        store.theme = 'dark'
+      } else if (store.theme === 'dark') {
+        store.theme = 'light'
+      }
+      applyTheme(store.theme)
+      localStorage.setItem('theme', store.theme)
+    },
     note: {
       delete(store, id) {
         const handler = async () => {
@@ -155,103 +250,4 @@ export const store: Store = reactive<Store>({
       }
     }
   },
-  async init () {
-    this.notesLayout = getLayout()
-    const connectHandler = async () => await connect()
-    const loadHandler = async () => await this.load()
-    connectHandler()
-    loadHandler().then(() => {
-      this.isLoaded = true
-    })
-    const theme = getTheme()
-    if (theme) {
-      this.theme = theme
-      applyTheme(theme)
-    }
-  },
-  async load () {
-    const result = await noteApplicationService.getAll()
-    this.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
-  },
-  addConfirm () {
-    if (this.editor.noteContent.length === 0 && this.editor.noteTitle.length === 0) {
-    } else {
-      const id = v4()
-      const date = new Date()
-      const note: Note = {
-        id: id,
-        title: store.editor.noteTitle,
-        content: store.editor.noteContent,
-        isPinned: false,
-        noteType: store.editor.noteType,
-        createdAt: date,
-        updatedAt: date
-      }
-      this.addNote(note)
-    }
-    this.editorDialogOpen = false
-    this.isAdding = false
-    this.editor.noteContent = ''
-    this.editor.noteTitle = ''
-  },
-  addNote (note: Note) {
-    const handler = async () => {
-      await noteApplicationService.add(note)
-      const result = await noteApplicationService.getAll()
-      this.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
-    }
-    handler()
-  },
-  editConfirm () {
-    this.actions.note.update(
-      this,
-      this.editor.noteId,
-      this.editor.noteTitle,
-      this.editor.noteContent,
-      this.editor.noteType
-    )
-    this.editor.noteContent = ''
-    this.editor.noteId = '',
-    this.editor.noteTitle = ''
-    this.editor.noteType = 'plain'
-    this.editorDialogOpen = false
-    this.isEditing = false
-  },
-  escape () {
-    if (this.isAdding) {
-      this.addConfirm()
-    } else if (this.isEditing) {
-      this.editConfirm()
-    }
-    this.editorDialogOpen = false
-  },
-  openEditorForAdd () {
-    store.isAdding = true
-    store.editorDialogOpen = true
-    store.commandMenuDialogOpen = false
-    store.editor.noteType = 'plain'
-    store.editor.noteTitle = ''
-    store.editor.noteContent = ''
-  },
-  openEditorForEdit (note: Note) {
-    store.isEditing = true
-    store.editorDialogOpen = true
-    store.commandMenuDialogOpen = false
-    store.editor.noteId = note.id
-    store.editor.noteTitle = note.title
-    store.editor.noteContent = note.content
-    store.editor.noteType = note.noteType
-  },
-  saveLayout () {
-    localStorage.setItem(storageKey, this.notesLayout)
-  },
-  toggleTheme () {
-    if (this.theme === 'light') {
-      this.theme = 'dark'
-    } else if (this.theme === 'dark') {
-      this.theme = 'light'
-    }
-    applyTheme(this.theme)
-    localStorage.setItem('theme', this.theme)
-  }
 })

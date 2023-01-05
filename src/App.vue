@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import { onMounted } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import TheCommandMenu from './components/TheCommandMenu.vue'
 import TheFooter from './components/TheFooter.vue'
 import TheDialogKeyboardShortcuts from './components/TheDialogKeyboardShortcuts.vue'
 import TheNavBar from './components/TheNavBar.vue'
-import { store } from './store';
+import { store } from './store'
 
 const CommandMenuModifier = 'Meta' // TODO: consider the other OS
 const route = useRoute()
@@ -14,14 +14,14 @@ const router = useRouter()
 const moveToIndex = () => router.push({ path: '/' })
 
 onMounted(async () => {
-  await store.init()
+  await store.actions.init(store)
   document.onkeydown = (e: KeyboardEvent) => {
     if (!store.composing) {
       if (!store.isAdding && !store.isEditing && e.key === '+') {
-        store.openEditorForAdd()
+        store.actions.openEditorForAdd(store)
         store.pressingModifier = false
       } else if (e.key === 'Escape') {
-        store.escape()
+        store.actions.escape(store)
         moveToIndex()
       } else if (e.key === CommandMenuModifier) {
         store.pressingModifier = true
@@ -31,7 +31,7 @@ onMounted(async () => {
           store.commandMenuDialogOpen = !store.commandMenuDialogOpen
           store.pressingModifier = false
         } else if (e.key === 'Enter') {
-          store.escape()
+          store.actions.escape(store)
           moveToIndex()
         } else if (e.key === 'Delete') {
           const noteId = route.query.noteId?.toString()

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { onMounted, watch } from 'vue'
+import { watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { store } from '../store'
 import NoteItem from '../components/NoteItem.vue'
@@ -11,7 +11,7 @@ const route = useRoute()
 const router = useRouter()
 
 const handleAddConfirm = () => {
-  store.addConfirm()
+  store.actions.addConfirm(store)
   router.push({})
 }
 const handleClose = () => {
@@ -36,10 +36,10 @@ const handleDelete = (noteId: string) => {
   }
 }
 const handleEdit = (note: Note) => {
-  store.openEditorForEdit(note)
+  store.actions.openEditorForEdit(store, note)
 }
 const handleEditConfirm = () => {
-  store.editConfirm()
+  store.actions.editConfirm(store)
   router.push({})
 }
 const handleInputNote = () => {

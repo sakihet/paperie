@@ -21,7 +21,7 @@ const routes = [
     beforeEnter: () => {
       store.isEditing = false
       store.isAdding = true
-      store.openEditorForAdd()
+      store.actions.openEditorForAdd(store)
     },
   },
   {

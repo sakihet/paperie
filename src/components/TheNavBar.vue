@@ -2,7 +2,6 @@
 import { name, version } from '../../package.json'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
-import { useRouter } from 'vue-router';
 
 const capitalize = (str: string) => {
   return str[0].toUpperCase() + str.slice(1)
@@ -11,7 +10,7 @@ const handleChangeLayout = (e: Event) => {
   const value = (e.target as HTMLInputElement).value
   const nextLayout = (value === 'grid' ? 'grid' : 'list')
   store.notesLayout = nextLayout
-  store.saveLayout()
+  store.actions.saveLayout(store)
 }
 </script>
 

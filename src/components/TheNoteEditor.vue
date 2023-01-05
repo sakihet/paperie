@@ -2,7 +2,6 @@
 import { computed, onMounted, onUnmounted, onUpdated, ref } from 'vue'
 import markdownIt from 'markdown-it'
 import AppCode from '../components/AppCode.vue'
-import NoteInputType from '../components/NoteInputType.vue'
 import { store } from '../store'
 import { NoteType } from '../types/noteType'
 
@@ -26,7 +25,7 @@ const emit = defineEmits<{
 
 const md = new markdownIt()
 const handleChangeNoteType = () => {
-  store.actions.updateNoteType(store, store.editor.noteId, store.editor.noteType)
+  store.actions.note.updateNoteType(store, store.editor.noteId, store.editor.noteType)
 }
 const handleComposingStart = () => store.composing = true
 const handleComposingEnd = () => store.composing = false
