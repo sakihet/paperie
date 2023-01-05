@@ -21,7 +21,7 @@ onMounted(async () => {
         store.actions.openEditorForAdd(store)
         store.pressingModifier = false
       } else if (e.key === 'Escape') {
-        store.actions.escape(store)
+        store.actions.createOrUpdateNote(store)
         moveToIndex()
       } else if (e.key === CommandMenuModifier) {
         store.pressingModifier = true
@@ -31,7 +31,7 @@ onMounted(async () => {
           store.commandMenuDialogOpen = !store.commandMenuDialogOpen
           store.pressingModifier = false
         } else if (e.key === 'Enter') {
-          store.actions.escape(store)
+          store.actions.createOrUpdateNote(store)
           moveToIndex()
         } else if (e.key === 'Delete') {
           const noteId = route.query.noteId?.toString()
