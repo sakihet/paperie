@@ -31,7 +31,7 @@ const handleCloseEditorDialog = () => {
 }
 const handleDelete = (noteId: string) => {
   if (window.confirm("Do you really want to delete?")) {
-    store.actions.deleteNote(store, noteId)
+    store.actions.note.delete(store, noteId)
     router.push({})
   }
 }
@@ -46,7 +46,7 @@ const handleInputNote = () => {
   // TODO: create or update
 }
 const handleToggleIsPinned = (noteId: string) => {
-  store.actions.toggleNoteIsPinned(store, noteId)
+  store.actions.note.toggleIsPinned(store, noteId)
 }
 
 watch (() => store.isLoaded, async (after, before) => {

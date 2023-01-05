@@ -32,12 +32,6 @@ const noteApplicationService = new NoteApplicationService(
 )
 
 interface Store {
-  actions: {
-    deleteNote: (store: Store, id: string) => void,
-    toggleNoteIsPinned: (store: Store, id: string) => void,
-    updateNote: (store: Store, id: string, title: string, content: string, noteType: NoteType) => void,
-    updateNoteType: (store: Store, id: string, noteType: NoteType) => void
-  },
   commandMenuDialogOpen: boolean,
   composing: boolean,
   dialogKeyboardShortcutsOpen: boolean,
@@ -55,6 +49,14 @@ interface Store {
   notesLayout: LayoutType,
   pressingModifier: boolean,
   theme: string,
+  actions: {
+    note: {
+      delete: (store: Store, id: string) => void,
+      toggleIsPinned: (store: Store, id: string) => void,
+      update: (store: Store, id: string, title: string, content: string, noteType: NoteType) => void,
+      updateNoteType: (store: Store, id: string, noteType: NoteType) => void
+    }
+  },
   addConfirm: () => void,
   addNote: (note: Note) => void,
   editConfirm: () => void,
@@ -68,77 +70,10 @@ interface Store {
 }
 
 export const store: Store = reactive<Store>({
-  actions: {
-    deleteNote(store, id) {
-      const handler = async () => {
-        await noteApplicationService.delete(id)
-      }
-      handler().then(() => {
-        const idx = store.notes.findIndex((x) => x.id === id)
-        store.notes.splice(idx, 1)
-        store.editor.noteTitle = ''
-        store.editor.noteContent = ''
-        store.isEditing = false
-        store.editorDialogOpen = false
-      })
-    },
-    toggleNoteIsPinned(store, id) {
-      const handler = async () => {
-        const idx = store.notes.findIndex((x) => x.id === id)
-        const note: Note = store.notes[idx]
-        const updated = await noteApplicationService.put(
-          {...note, isPinned: !note.isPinned, updatedAt: new Date()}
-        )
-        if (updated) {
-          store.notes[idx].isPinned = updated.isPinned
-          store.notes[idx].updatedAt = updated.updatedAt
-          store.notes = store.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
-        }
-      }
-      handler()
-    },
-    updateNote(store, id, title, content, noteType) {
-      const handler = async () => {
-        const idx = store.notes.findIndex((x) => x.id === id)
-        const note: Note = store.notes[idx]
-        const updated = await noteApplicationService.put({
-          ...note,
-          title: title,
-          content: content,
-          noteType: noteType,
-          updatedAt: new Date()
-        })
-        if (updated) {
-          store.notes[idx].title = updated.title
-          store.notes[idx].content = updated.content
-          store.notes[idx].noteType = updated.noteType
-          store.notes[idx].updatedAt = updated.updatedAt
-          store.notes = store.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
-        }
-      }
-      handler()
-    },
-    updateNoteType(store, id, noteType) {
-      const handler = async () => {
-        const idx = store.notes.findIndex((x) => x.id === id)
-        const note: Note = store.notes[idx]
-        const updated = await noteApplicationService.put(
-          {...note, noteType: noteType, updatedAt: new Date()}
-        )
-        if (updated) {
-          store.notes[idx].noteType = updated.noteType
-          store.notes[idx].updatedAt = updated.updatedAt
-          store.notes = store.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
-        }
-      }
-      handler()
-    }
-  },
   commandMenuDialogOpen: false,
-  editorDialogOpen: false,
+  composing: false,
   dialogKeyboardShortcutsOpen: false,
-  notes: [],
-  notesLayout: 'list',
+  editorDialogOpen: false,
   editor: {
     noteContent: '',
     noteId: '',
@@ -146,11 +81,80 @@ export const store: Store = reactive<Store>({
     noteType: 'plain'
   },
   pressingModifier: false,
-  composing: false,
+  notes: [],
+  notesLayout: 'list',
   isAdding: false,
   isEditing: false,
   isLoaded: false,
   theme: 'light',
+  actions: {
+    note: {
+      delete(store, id) {
+        const handler = async () => {
+          await noteApplicationService.delete(id)
+        }
+        handler().then(() => {
+          const idx = store.notes.findIndex((x) => x.id === id)
+          store.notes.splice(idx, 1)
+          store.editor.noteTitle = ''
+          store.editor.noteContent = ''
+          store.isEditing = false
+          store.editorDialogOpen = false
+        })
+      },
+      toggleIsPinned(store, id) {
+        const handler = async () => {
+          const idx = store.notes.findIndex((x) => x.id === id)
+          const note: Note = store.notes[idx]
+          const updated = await noteApplicationService.put(
+            {...note, isPinned: !note.isPinned, updatedAt: new Date()}
+          )
+          if (updated) {
+            store.notes[idx].isPinned = updated.isPinned
+            store.notes[idx].updatedAt = updated.updatedAt
+            store.notes = store.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
+          }
+        }
+        handler()
+      },
+      update(store, id, title, content, noteType) {
+        const handler = async () => {
+          const idx = store.notes.findIndex((x) => x.id === id)
+          const note: Note = store.notes[idx]
+          const updated = await noteApplicationService.put({
+            ...note,
+            title: title,
+            content: content,
+            noteType: noteType,
+            updatedAt: new Date()
+          })
+          if (updated) {
+            store.notes[idx].title = updated.title
+            store.notes[idx].content = updated.content
+            store.notes[idx].noteType = updated.noteType
+            store.notes[idx].updatedAt = updated.updatedAt
+            store.notes = store.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
+          }
+        }
+        handler()
+      },
+      updateNoteType(store, id, noteType) {
+        const handler = async () => {
+          const idx = store.notes.findIndex((x) => x.id === id)
+          const note: Note = store.notes[idx]
+          const updated = await noteApplicationService.put(
+            {...note, noteType: noteType, updatedAt: new Date()}
+          )
+          if (updated) {
+            store.notes[idx].noteType = updated.noteType
+            store.notes[idx].updatedAt = updated.updatedAt
+            store.notes = store.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
+          }
+        }
+        handler()
+      }
+    }
+  },
   async init () {
     this.notesLayout = getLayout()
     const connectHandler = async () => await connect()
@@ -199,7 +203,7 @@ export const store: Store = reactive<Store>({
     handler()
   },
   editConfirm () {
-    this.actions.updateNote(
+    this.actions.note.update(
       this,
       this.editor.noteId,
       this.editor.noteTitle,
