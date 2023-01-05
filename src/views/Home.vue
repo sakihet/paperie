@@ -11,7 +11,7 @@ const route = useRoute()
 const router = useRouter()
 
 const handleAddConfirm = () => {
-  store.actions.addConfirm(store)
+  store.actions.note.create(store)
   router.push({})
 }
 const handleClose = () => {
@@ -39,7 +39,7 @@ const handleEdit = (note: Note) => {
   store.actions.openEditorForEdit(store, note)
 }
 const handleEditConfirm = () => {
-  store.actions.editConfirm(store)
+  store.actions.note.update(store)
   router.push({})
 }
 const handleInputNote = () => {
