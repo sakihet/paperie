@@ -156,6 +156,10 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         class="f-1 p-4 flex-column overflow-y-scroll pattern-scrollbar-thin"
         style="height: calc(100vh - 4.5rem);"
       >
+        <div class="flex-row h-8">
+          <div class="f-1">Notes</div>
+          <div>{{ store.notes.length }}</div>
+        </div>
         <div class="f-1 divide-y-2 divide-solid divide-color-secondary">
           <div
             v-for="note in store.notes"
