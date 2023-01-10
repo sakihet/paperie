@@ -1,9 +1,7 @@
 <script setup lang="ts">
 import { computed, onMounted, onUnmounted, onUpdated, ref } from 'vue'
 import markdownIt from 'markdown-it'
-import AppCode from '../components/AppCode.vue'
 import { store } from '../store'
-import { NoteType } from '../types/noteType'
 
 const refEditorContent = ref<HTMLElement | null>(null)
 const refEditorTitle = ref<HTMLElement | null>(null)
@@ -73,9 +71,6 @@ const handleKeyUpOnTitle = (e: KeyboardEvent) => {
   if (e.key === 'Control' && !store.composing) {
     pressingControlKey.value = false
   }
-}
-const handleUpdateNoteType = (noteType: NoteType) => {
-  // TODO
 }
 const focusEditorContent = () => {
   refEditorContent.value?.focus()
