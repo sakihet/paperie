@@ -119,6 +119,7 @@ export const store: Store = reactive<Store>({
       store.isAdding = true
       store.editorDialogOpen = true
       store.commandMenuDialogOpen = false
+      store.editor.noteId = ''
       store.editor.noteType = 'plain'
       store.editor.noteTitle = ''
       store.editor.noteContent = ''
@@ -165,7 +166,7 @@ export const store: Store = reactive<Store>({
             store.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
           }
           handler().then(() => {
-            store.editor.noteId === note.id
+            store.editor.noteId = note.id
           })
         }
       },
