@@ -104,7 +104,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
 <template>
   <div
     v-if="store.notesLayout === 'grid'"
-    class="f-1 flex-column"
+    class="f-1 flex-column mx-4"
   >
     <div class="layout-center">
       <div
