@@ -2,8 +2,9 @@ import { v4 } from 'uuid'
 import { beforeAll, describe, expect, it } from 'vitest'
 import { NoteApplicationService } from '../../src/applications/noteApplicationService'
 import { Note } from '../../src/entities/note'
+import { INoteRepository } from '../../src/repositories/noteRepository'
 
-class ArrayRepository {
+class ArrayNoteRepository implements INoteRepository{
   constructor (
     ary
   ) {
@@ -41,15 +42,13 @@ class ArrayRepository {
   }
 }
 
-class NoteRepository extends ArrayRepository {}
-
 describe('NoteApplicationService', () => {
   let ary
   let service
   beforeAll(() => {
     ary = []
     service = new NoteApplicationService(
-      new NoteRepository(ary)
+      new ArrayNoteRepository(ary)
     )
   })
   it('add', async () => {

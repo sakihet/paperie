@@ -1,11 +1,20 @@
 import { Note } from "../entities/note"
-import { NoteRepository } from "../repositories/noteRepository"
+import { INoteRepository } from "../repositories/noteRepository"
 
-export class NoteApplicationService {
-  noteRepository: NoteRepository
+export interface INoteApplicationService {
+  add: (note: Note) => Promise<string>
+  clear: () => Promise<void>
+  delete: (id: string) => Promise<void>
+  get: (id: string) => Promise<Note | undefined>
+  getAll: () => Promise<Note[]>
+  put: (note: Note) => Promise<Note | undefined>
+}
+
+export class NoteApplicationService implements INoteApplicationService {
+  noteRepository: INoteRepository
 
   constructor (
-    noteRepository: NoteRepository
+    noteRepository: INoteRepository
   ) {
     this.noteRepository = noteRepository
   }

@@ -23,7 +23,16 @@ const getNotesStore = async () => {
   return db.transaction('notes', 'readwrite').objectStore('notes')
 }
 
-export class NoteRepository {
+export interface INoteRepository {
+  add: (note: Note) => Promise<string>
+  clear: () => Promise<void>
+  delete: (id: string) => Promise<void>
+  get: (id: string) => Promise<Note | undefined>
+  getAll: () => Promise<Note[]>
+  put: (note: Note) => Promise<string>
+}
+
+export class NoteRepository implements INoteRepository {
   async add (note: Note): Promise<string> {
     return await (await getNotesStore()).add(note)
   }
