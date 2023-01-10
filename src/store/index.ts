@@ -106,11 +106,14 @@ export const store: Store = reactive<Store>({
     },
     createOrUpdateNote (store) {
       if (store.isAdding) {
-        store.actions.note.create(store)
+        if (store.editor.noteId) {
+          store.actions.note.update(store)
+        } else {
+          store.actions.note.create(store)
+        }
       } else if (store.isEditing) {
         store.actions.note.update(store)
       }
-      store.editorDialogOpen = false
     },
     openEditorForAdd (store) {
       store.isAdding = true
@@ -161,12 +164,10 @@ export const store: Store = reactive<Store>({
             const result = await noteApplicationService.getAll()
             store.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
           }
-          handler()
+          handler().then(() => {
+            store.editor.noteId === note.id
+          })
         }
-        store.editorDialogOpen = false
-        store.isAdding = false
-        store.editor.noteContent = ''
-        store.editor.noteTitle = ''
       },
       delete(store, id) {
         const handler = async () => {
@@ -216,12 +217,6 @@ export const store: Store = reactive<Store>({
           }
         }
         handler().then(() => {
-          store.editor.noteContent = ''
-          store.editor.noteId = '',
-          store.editor.noteTitle = ''
-          store.editor.noteType = 'plain'
-          store.editorDialogOpen = false
-          store.isEditing = false
         })
       },
       updateNoteType(store) {

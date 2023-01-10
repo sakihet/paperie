@@ -202,11 +202,6 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
               @input="handleInput"
             ></textarea>
           </div>
-          <div class="text-secondary px-2 h-6">
-            <p>
-              <AppCode>Command + Enter</AppCode> or <AppCode>Esc</AppCode>: Save
-            </p>
-          </div>
         </div>
         <div
           class="f-1"

@@ -43,7 +43,7 @@ const handleEditConfirm = () => {
   router.push({})
 }
 const handleInputNote = () => {
-  // TODO: create or update
+  store.actions.createOrUpdateNote(store)
 }
 const handleToggleIsPinned = (noteId: string) => {
   store.actions.note.toggleIsPinned(store, noteId)
@@ -121,14 +121,6 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
           v-if="store.isAdding || store.isEditing"
           @input-note="handleInputNote"
         />
-        <div class="flex-row">
-          <div class="f-1 text-secondary">
-            <small>
-              <p><AppCode>Command + Enter</AppCode> or <AppCode>Esc</AppCode>: Save</p>
-              <p><AppCode>Command + Delete</AppCode>: Delete</p>
-            </small>
-          </div>
-        </div>
       </dialog>
     </div>
     <div :class="{ 'layout-cluster': true, 'my-4': true }">
