@@ -66,6 +66,17 @@ onUpdated(() => {
             >
               <router-link
                 class="text-decoration-none"
+                :to="{ path: '/new' }"
+                @click="store.commandMenuDialogOpen = false"
+              >
+                /new
+              </router-link>
+            </li>
+            <li
+              class="h-8"
+            >
+              <router-link
+                class="text-decoration-none"
                 :to="{ path: '/about' }"
                 @click="store.commandMenuDialogOpen = false"
               >
