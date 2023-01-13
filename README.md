@@ -1,15 +1,21 @@
 # Paperie
 
-An experimental note-taking app.
-
-## Features
-
-- Local-first software
-- PWA
+Paperie is a free, open source note-taking app for introverts.
+Your notes data is only stored on your browser's storage.
 
 ## Try it now
 
 [Paperie](https://paperie.vercel.app/)
+
+## Tech
+
+- Tooling: [Vite](https://vitejs.dev/)
+- View: [Vue](https://vuejs.org/)
+- Router: [Vue Router](https://router.vuejs.org/)
+- State management: [Reactivity API](https://vuejs.org/guide/scaling-up/state-management.html#simple-state-management-with-reactivity-api)
+- Storage: [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API)
+- IndexedDB: [idb](https://github.com/jakearchibald/idb)
+- Style: Plain old CSS for future-proof
 
 ## Development
 
