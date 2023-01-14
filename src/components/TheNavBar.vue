@@ -80,7 +80,7 @@ const handleChangeLayout = (e: Event) => {
     <div class="flex-column">
       <div class="m-auto mx-2">
         <button
-          class="px-2 py-1 border-1 border-solid border-button-default rounded bg-transparent"
+          class="px-2 py-1 border-1 border-solid border-button-default rounded bg-transparent hover"
           @click="store.dialogKeyboardShortcutsOpen = true"
         >
           ?
@@ -90,10 +90,10 @@ const handleChangeLayout = (e: Event) => {
     <div class="flex-column">
       <div class="m-auto mx-2">
         <router-link
-          to="/about"
           class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover rounded"
+          to="/about"
         >
-          <div class="inline-block py-2 px-2 font-medium">
+          <div class="inline-block py-2 px-2">
             About
           </div>
         </router-link>
@@ -101,7 +101,7 @@ const handleChangeLayout = (e: Event) => {
           class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover rounded"
           href="https://github.com/sakihet/paperie"
         >
-          <div class="inline-block py-2 px-2 font-medium">
+          <div class="inline-block py-2 px-2">
             GitHub
           </div>
         </a>
