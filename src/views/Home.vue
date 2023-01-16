@@ -133,8 +133,9 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         :key="note.id"
       >
         <NoteItem
-          :note="note"
           :layout="store.notesLayout"
+          :note="note"
+          :selectedNoteId="route.query.noteId?.toString()"
           @delete="handleDelete"
           @edit="handleEdit"
           @toggleIsPinned="handleToggleIsPinned"
