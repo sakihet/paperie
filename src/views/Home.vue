@@ -123,6 +123,10 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         />
       </dialog>
     </div>
+    <div class="flex-row w-48 py-4">
+      <div class="f-1">Notes</div>
+      <div>{{ store.notes.length }}</div>
+    </div>
     <div :class="{ 'layout-cluster': true, 'my-4': true }">
       <div
         class="bg-primary"
