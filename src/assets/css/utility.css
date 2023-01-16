@@ -414,6 +414,9 @@
 .bg-secondary {
   background-color: var(--color-background-secondary);
 }
+.bg-selected {
+  background-color: var(--color-background-selected);
+}
 /* focus */
 .focus\:outline-none:focus {
   outline: none;

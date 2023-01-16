@@ -5,8 +5,9 @@ import AppTextarea from '../components/AppTextarea.vue'
 import NoteDropdown from './NoteDropdown.vue'
 
 const props = defineProps<{
+  layout: string,
   note: Note,
-  layout: string
+  selectedNoteId: string | undefined
 }>()
 
 const emit = defineEmits<{
@@ -61,8 +62,8 @@ const handleToggleIsPinned = (noteId: string) => {
       </div>
       <div
         v-else-if="props.layout === 'list'"
-        class="bg-primary h-28"
-        :class="{ 'border-l-2 border-color-blue border-solid': note.isPinned}"
+        class="h-28"
+        :class="{ 'border-l-2 border-color-blue border-solid': note.isPinned, 'bg-selected': note.id === selectedNoteId, 'bg-primary': note.id !== selectedNoteId }"
       >
         <div class="p-2 overflow-hidden h-10 flex-row">
           <div class="f-1 font-semibold overflow-hidden text-overflow-ellipsis">

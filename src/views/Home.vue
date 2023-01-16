@@ -4,7 +4,6 @@ import { useRoute, useRouter } from 'vue-router'
 import { store } from '../store'
 import NoteItem from '../components/NoteItem.vue'
 import { Note } from '../entities/note'
-import AppCode from '../components/AppCode.vue'
 import TheNoteEditor from '../components/TheNoteEditor.vue'
 
 const route = useRoute()
@@ -163,8 +162,9 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
             class="bg-secondary"
           >
             <NoteItem
-              :note="note"
               :layout="store.notesLayout"
+              :note="note"
+              :selectedNoteId="route.query.noteId?.toString()"
               @delete="handleDelete"
               @edit="handleEdit"
               @toggleIsPinned="handleToggleIsPinned"
