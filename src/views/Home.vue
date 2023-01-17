@@ -149,7 +149,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
   >
     <div class="f-1 flex-row">
       <div
-        class="f-1 p-4 flex-column overflow-y-scroll pattern-scrollbar-thin"
+        class="w-64 p-4 flex-column overflow-y-scroll pattern-scrollbar-thin"
         style="height: calc(100vh - 4.5rem);"
       >
         <div class="flex-row h-8 text-secondary">
@@ -173,7 +173,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
           </div>
         </div>
       </div>
-      <div class="f-5 flex-column">
+      <div class="f-1 flex-column">
         <TheNoteEditor
           v-if="store.isAdding || store.isEditing"
           @input-note="handleInputNote"
