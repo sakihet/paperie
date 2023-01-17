@@ -305,6 +305,9 @@
   font-weight: 700;
 }
 /* text position */
+.text-left {
+  text-align: left;
+}
 .text-center {
   text-align: center;
 }

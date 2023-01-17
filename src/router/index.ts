@@ -1,5 +1,6 @@
 import About from '../views/About.vue'
 import Home from '../views/Home.vue'
+import Settings from '../views/Settings.vue'
 import { createRouter, createWebHistory } from 'vue-router'
 import { store } from '../store'
 
@@ -28,6 +29,11 @@ const routes = [
     path: '/about',
     name: 'About',
     component: About
+  },
+  {
+    path: '/settings',
+    name: 'Settings',
+    component: Settings
   }
 ]
 

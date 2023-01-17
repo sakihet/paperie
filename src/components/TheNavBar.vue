@@ -90,7 +90,7 @@ const handleChangeLayout = (e: Event) => {
     <div class="flex-column">
       <div class="m-auto mx-2">
         <router-link
-          class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover rounded"
+          class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover rounded text-small"
           to="/about"
         >
           <div class="inline-block py-2 px-2">
@@ -98,7 +98,7 @@ const handleChangeLayout = (e: Event) => {
           </div>
         </router-link>
         <a
-          class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover rounded"
+          class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover rounded text-small"
           href="https://github.com/sakihet/paperie"
         >
           <div class="inline-block py-2 px-2">
