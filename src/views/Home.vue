@@ -122,7 +122,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         />
       </dialog>
     </div>
-    <div class="flex-row w-48 py-4">
+    <div class="flex-row w-48 py-4 text-secondary">
       <div class="f-1">Notes</div>
       <div>{{ store.notes.length }}</div>
     </div>
@@ -152,7 +152,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         class="f-1 p-4 flex-column overflow-y-scroll pattern-scrollbar-thin"
         style="height: calc(100vh - 4.5rem);"
       >
-        <div class="flex-row h-8">
+        <div class="flex-row h-8 text-secondary">
           <div class="f-1">Notes</div>
           <div>{{ store.notes.length }}</div>
         </div>
