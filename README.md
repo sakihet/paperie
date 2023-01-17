@@ -3,6 +3,9 @@
 Paperie is a free, open source note-taking app for introverts.
 Your notes data is only stored on your browser's storage.
 
+![paperie-light](screenshots/light.png)
+![paperie-dark](screenshots/dark.png)
+
 ## Try it now
 
 [Paperie](https://paperie.vercel.app/)
