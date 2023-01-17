@@ -19,9 +19,6 @@ import AppCode from '../components/AppCode.vue'
         <div>
           <ul class="list-style-none pl-0 text-secondary">
             <li>
-              <AppCode>+</AppCode>: Add a new note
-            </li>
-            <li>
               <AppCode>Command + k</AppCode>: Open the command menu
             </li>
           </ul>

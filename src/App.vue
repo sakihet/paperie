@@ -17,10 +17,7 @@ onMounted(async () => {
   await store.actions.init(store)
   document.onkeydown = (e: KeyboardEvent) => {
     if (!store.composing) {
-      if (!store.isAdding && !store.isEditing && e.key === '+') {
-        store.actions.openEditorForAdd(store)
-        store.pressingModifier = false
-      } else if (e.key === 'Escape') {
+      if (e.key === 'Escape') {
         store.actions.createOrUpdateNote(store)
         moveToIndex()
       } else if (e.key === CommandMenuModifier) {
