@@ -8,7 +8,7 @@ Your notes data is only stored on your browser's storage.
 
 ## Try it now
 
-[Paperie](https://paperie.vercel.app/)
+[Paperie](https://paperie.app/)
 
 ## Tech
 
