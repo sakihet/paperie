@@ -44,7 +44,7 @@ const handleToggleIsPinned = (noteId: string) => {
         </div>
         <div class="f-1">
           <AppTextarea
-            class="text-secondary"
+            class="text-secondary bg-primary"
             :id="note.id"
             :content="note.content"
             :rows="7"

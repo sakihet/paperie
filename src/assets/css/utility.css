@@ -247,6 +247,12 @@
 .h-64 {
   height: 16rem;
 }
+.h-128 {
+  height: 32rem;
+}
+.h-192 {
+  height: 48rem;
+}
 .h-full {
   height: 100%;
 }
@@ -267,6 +273,12 @@
 }
 .w-64 {
   width: 16rem;
+}
+.w-128 {
+  width: 32rem;
+}
+.w-196 {
+  width: 48rem;
 }
 .w-100 {
   width: 100%;

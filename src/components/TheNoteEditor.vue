@@ -82,10 +82,10 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
 </script>
 
 <template>
-  <div class="bg-primary f-1 flex-column">
+  <div class="bg-primary flex-column f-1">
     <div
       v-if="store.notesLayout === 'grid'"
-      class="f-1"
+      class="f-1 flex-column"
     >
       <div class="h-8 text-secondary">
         <span>Type:</span>
@@ -108,35 +108,35 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
           />Markdown
         </label>
       </div>
-      <div>
-        <input
-          class="p-2 w-full h-8 border-none focus:outline-none text-large font-bold"
-          type="text"
-          ref="refEditorTitle"
-          v-model="store.editor.noteTitle"
-          @keydown="handleKeyDownOnTitle"
-          @keyup="handleKeyUpOnTitle"
-          @compositionstart="handleComposingStart"
-          @compositionend="handleComposingEnd"
-          @input="handleInput"
-        />
-      </div>
-      <div class="flex-row">
-        <textarea
-          class="px-2 border-color-default focus:outline-none text-medium border-none font-sans f-1 resize-none"
-          rows="16"
-          cols="60"
-          v-model="store.editor.noteContent"
-          ref="refEditorContent"
-          @keydown="handleKeyDownOnContent"
-          @keyup="handleKeyUpOnContent"
-          @compositionstart="handleComposingStart"
-          @compositionend="handleComposingEnd"
-          @input="handleInput"
-        ></textarea>
+      <div class="f-1 flex-row divide-x-2 divide-solid divide-color-secondary">
+        <div class="f-1 flex-column">
+          <div>
+            <input
+              class="w-full h-8 border-none focus:outline-none text-large font-bold bg-primary"
+              type="text"
+              ref="refEditorTitle"
+              v-model="store.editor.noteTitle"
+              @keydown="handleKeyDownOnTitle"
+              @keyup="handleKeyUpOnTitle"
+              @compositionstart="handleComposingStart"
+              @compositionend="handleComposingEnd"
+              @input="handleInput"
+            />
+          </div>
+          <textarea
+            class="w-full border-color-default focus:outline-none text-medium border-none font-sans f-1 resize-none bg-primary"
+            v-model="store.editor.noteContent"
+            ref="refEditorContent"
+            @keydown="handleKeyDownOnContent"
+            @keyup="handleKeyUpOnContent"
+            @compositionstart="handleComposingStart"
+            @compositionend="handleComposingEnd"
+            @input="handleInput"
+          ></textarea>
+        </div>
         <div
-          v-if="store.editor.noteType === 'markdown'"
           class="f-1"
+          v-if="store.editor.noteType === 'markdown'"
         >
           <div
             class="mx-4"

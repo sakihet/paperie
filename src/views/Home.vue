@@ -112,7 +112,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         @click="handleCloseEditorDialog"
       ></div>
       <dialog
-        class="border-1 border-color-default shadow rounded layout-stack-1 bg-primary"
+        class="border-1 border-color-default shadow rounded layout-stack-1 bg-primary h-192 w-196 flex-column"
         :open="store.editorDialogOpen"
         @close="handleClose"
       >
