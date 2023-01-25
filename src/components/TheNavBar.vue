@@ -21,6 +21,9 @@ const handleChangeLayout = (e: Event) => {
       class="inline-block px-4 text-decoration-none text-large text-primary hover rounded flex-row"
     >
       <div class="py-2">
+        <img src="../assets/paperie.png" height="32" width="32"/>
+      </div>
+      <div class="py-2">
         <span class="font-bold">
           {{ capitalize(name) }}
         </span>
