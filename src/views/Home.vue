@@ -112,14 +112,16 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         @click="handleCloseEditorDialog"
       ></div>
       <dialog
-        class="border-1 border-color-default shadow rounded layout-stack-1 bg-primary h-192 w-196 flex-column"
+        class="border-none p-0"
         :open="store.editorDialogOpen"
         @close="handleClose"
       >
-        <TheNoteEditor
-          v-if="store.isAdding || store.isEditing"
-          @input-note="handleInputNote"
-        />
+        <div class="p-4 border-1 border-color-default border-solid shadow rounded layout-stack-1 bg-primary h-192 w-196 flex-column">
+          <TheNoteEditor
+            v-if="store.isAdding || store.isEditing"
+            @input-note="handleInputNote"
+          />
+        </div>
       </dialog>
     </div>
     <div class="flex-row w-48 py-4 text-secondary">
