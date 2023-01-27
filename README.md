@@ -1,7 +1,6 @@
 # Paperie
 
-Paperie is a free, open source note-taking app for introverts.
-Your notes data is only stored on your browser's storage.
+A local-first oriented note-taking app for individuals build with PWA.
 
 ![paperie-light](screenshots/light.png)
 ![paperie-dark](screenshots/dark.png)
