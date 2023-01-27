@@ -103,7 +103,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
 <template>
   <div
     v-if="store.notesLayout === 'grid'"
-    class="f-1 flex-column mx-4"
+    class="f-1 flex-column m-4"
   >
     <div class="layout-center">
       <div
@@ -124,9 +124,11 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         </div>
       </dialog>
     </div>
-    <div class="flex-row w-48 py-4 text-secondary">
-      <div class="f-1">Notes</div>
-      <div>{{ store.notes.length }}</div>
+    <div class="w-48 text-secondary">
+      <div class="flex-row">
+        <div class="f-1">Notes</div>
+        <div>{{ store.notes.length }}</div>
+      </div>
     </div>
     <div :class="{ 'layout-cluster': true, 'my-4': true }">
       <div
@@ -154,7 +156,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         class="w-64 p-4 flex-column overflow-y-scroll pattern-scrollbar-thin"
         style="height: calc(100vh - 4.5rem);"
       >
-        <div class="h-8">
+        <div class="">
           <div class="flex-row text-secondary">
             <div class="f-1">Notes</div>
             <div class="">{{ store.notes.length }}</div>
