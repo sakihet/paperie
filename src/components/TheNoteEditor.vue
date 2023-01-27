@@ -88,7 +88,6 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
       class="f-1 flex-column"
     >
       <div class="h-8 text-secondary">
-        <span>Type:</span>
         <label>
           <input
             type="radio"
@@ -150,7 +149,6 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
       class="f-1 flex-column"
     >
       <div class="h-4 m-4 text-secondary">
-        <span>Type:</span>
         <label>
           <input
             type="radio"
@@ -174,7 +172,7 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
         <div class="f-1 flex-column">
           <div class="">
             <input
-              class="p-4 w-full h-12 border-none focus:outline-none text-large font-bold bg-primary"
+              class="p-4 w-full h-10 border-none focus:outline-none text-large font-bold bg-primary"
               type="text"
               ref="refEditorTitle"
               v-model="store.editor.noteTitle"
