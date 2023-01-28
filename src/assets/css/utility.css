@@ -54,6 +54,9 @@
   overflow-y: hidden;
 }
 /* spacing */
+.m-0 {
+  margin: 0;
+}
 .m-1 {
   margin: 0.25rem;
 }
@@ -68,6 +71,10 @@
 }
 .m-auto {
   margin: auto;
+}
+.mx-0 {
+  margin-left: 0;
+  margin-right: 0;
 }
 .mx-1 {
   margin-left: 0.25rem;
