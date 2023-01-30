@@ -2,6 +2,7 @@
 import { computed, onMounted, onUnmounted, onUpdated, ref } from 'vue'
 import markdownIt from 'markdown-it'
 import { store } from '../store'
+import TheNoteEditorHeader from '../components/TheNoteEditorHeader.vue'
 
 const refEditorContent = ref<HTMLElement | null>(null)
 const refEditorTitle = ref<HTMLElement | null>(null)
@@ -88,24 +89,7 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
       class="f-1 flex-column"
     >
       <div class="h-8 text-secondary">
-        <label>
-          <input
-            type="radio"
-            value="plain"
-            name="type"
-            v-model="store.editor.noteType"
-            @change=handleChangeNoteType
-          />Plain
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="markdown"
-            name="type"
-            v-model="store.editor.noteType"
-            @change="handleChangeNoteType"
-          />Markdown
-        </label>
+        <TheNoteEditorHeader @change-note-type="handleChangeNoteType" />
       </div>
       <div class="f-1 flex-row divide-x-2 divide-solid divide-color-secondary">
         <div class="f-1 flex-column">
@@ -149,24 +133,7 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
       class="f-1 flex-column"
     >
       <div class="h-4 m-4 text-secondary">
-        <label>
-          <input
-            type="radio"
-            value="plain"
-            name="type"
-            v-model="store.editor.noteType"
-            @change=handleChangeNoteType
-          />Plain
-        </label>
-        <label>
-          <input
-            type="radio"
-            value="markdown"
-            name="type"
-            v-model="store.editor.noteType"
-            @change="handleChangeNoteType"
-          />Markdown
-        </label>
+        <TheNoteEditorHeader @change-note-type="handleChangeNoteType" />
       </div>
       <div class="f-1 flex-row divide-x-2 divide-solid divide-color-secondary">
         <div class="f-1 flex-column">
