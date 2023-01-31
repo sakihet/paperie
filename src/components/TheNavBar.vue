@@ -23,12 +23,12 @@ const handleChangeLayout = (e: Event) => {
       <div class="py-2">
         <img src="../assets/paperie.png" height="32" width="32"/>
       </div>
-      <div class="py-2">
+      <div class="py-2 pattern-show-when-not-mobile">
         <span class="font-bold">
           {{ capitalize(name) }}
         </span>
       </div>
-      <div class="py-3">
+      <div class="py-3 pattern-show-when-not-mobile">
         <span class="mx-2 text-small">
           v{{ version }}
         </span>
@@ -46,9 +46,8 @@ const handleChangeLayout = (e: Event) => {
         </router-link>
       </div>
     </div>
-    <div class="f-1"></div>
-    <div class="flex-column">
-      <div class="inline-block m-auto mx-2">
+    <div class="flex-column f-1 text-right">
+      <div class="inline-block m-auto mx-2 nowrap">
         <label>
           <input
             type="radio"
@@ -90,7 +89,7 @@ const handleChangeLayout = (e: Event) => {
         </button>
       </div>
     </div>
-    <div class="flex-column">
+    <div class="flex-column nowrap">
       <div class="m-auto mx-2">
         <router-link
           class="inline-block text-decoration-none hover:text-decoration-underline text-secondary hover rounded text-small"
