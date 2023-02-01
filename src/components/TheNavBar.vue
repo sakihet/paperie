@@ -2,7 +2,10 @@
 import { name, version } from '../../package.json'
 import { store } from '../store'
 import AppButton from '../components/AppButton.vue'
+import router from '../router'
+import { ref } from 'vue'
 
+const isDropdownOpen = ref(false)
 const capitalize = (str: string) => {
   return str[0].toUpperCase() + str.slice(1)
 }
@@ -11,6 +14,13 @@ const handleChangeLayout = (e: Event) => {
   const nextLayout = (value === 'grid' ? 'grid' : 'list')
   store.notesLayout = nextLayout
   store.actions.saveLayout(store)
+}
+const handleDeleteAll = (e: Event) => {
+  if (window.confirm("Do you really want to delete?")) {
+    store.actions.note.deleteAll(store)
+  }
+  isDropdownOpen.value = false
+  router.push({})
 }
 </script>
 
@@ -89,6 +99,32 @@ const handleChangeLayout = (e: Event) => {
         >
           ?
         </button>
+      </div>
+    </div>
+    <div class="flex-column">
+      <div class="m-auto mx-2">
+        <details
+          class="pattern-dropdown"
+          :open="isDropdownOpen"
+        >
+          <summary>
+            <div class="text-secondary">
+              <span>…</span>
+            </div>
+          </summary>
+          <div class="">
+            <ul class="list-style-none border-solid border-color-default border-1 pl-0 text-secondary bg-dropdown cursor-pointer py-1 rounded">
+              <li class="h-8 hover">
+                <div
+                  class="py-2 px-4"
+                  @click="handleDeleteAll($event)"
+                >
+                  <span>Delete All</span>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </details>
       </div>
     </div>
     <div class="flex-column nowrap">

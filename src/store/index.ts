@@ -60,6 +60,7 @@ interface Store {
     note: {
       create: (store: Store) => void,
       delete: (store: Store, id: string) => void,
+      deleteAll: (store: Store) => void,
       toggleIsPinned: (store: Store, id: string) => void,
       update: (store: Store) => void,
       updateNoteType: (store: Store) => void
@@ -181,7 +182,13 @@ export const store: Store = reactive<Store>({
           store.editor.noteContent = ''
           store.isEditing = false
           store.editorDialogOpen = false
-      })
+        })
+      },
+      deleteAll(store) {
+        const handler = async () => {
+          await noteApplicationService.clear()
+        }
+        handler().then(() => store.notes = [])
       },
       toggleIsPinned(store, id) {
         const handler = async () => {
