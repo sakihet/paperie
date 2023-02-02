@@ -255,7 +255,9 @@ export const store: Store = reactive<Store>({
             store.notes = store.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
           }
         }
-        handler()
+        if (store.isEditing) {
+          handler()
+        }
       }
     }
   },
