@@ -11,7 +11,6 @@ const router = useRouter()
 
 const handleAddConfirm = () => {
   store.actions.note.create(store)
-  router.push({})
 }
 const handleClose = () => {
   store.isAdding = false
@@ -26,7 +25,7 @@ const handleCloseEditorDialog = () => {
   } else {
     console.log('error')
   }
-  router.push({})
+  router.push({ path: '/'})
 }
 const handleEdit = (note: Note) => {
   store.actions.openEditorForEdit(store, note)
