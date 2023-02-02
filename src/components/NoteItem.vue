@@ -62,7 +62,7 @@ const handleToggleIsPinned = (noteId: string) => {
       </div>
       <div
         v-else-if="props.layout === 'list'"
-        class="h-28"
+        class="h-24"
         :class="{ 'border-l-2 border-color-blue border-solid': note.isPinned, 'bg-selected': note.id === selectedNoteId, 'bg-primary': note.id !== selectedNoteId }"
       >
         <div class="p-2 overflow-hidden h-10 flex-row">

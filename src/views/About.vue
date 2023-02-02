@@ -2,7 +2,7 @@
 </script>
 
 <template>
-  <div class="layout-center px-4 py-4">
+  <div class="layout-center px-4 py-4 f-1">
     <h1 class="py-6">About</h1>
     <div class="text-medium">
       <p class="my-2">Paperie is a <a href="https://www.inkandswitch.com/local-first/" target="_blank">local-first</a> oriented note-taking app for individuals build with PWA.</p>
