@@ -27,9 +27,6 @@ const emit = defineEmits<{
   (e: 'inputNote'): void
 }>()
 const md = new markdownIt()
-const handleChangeNoteType = () => {
-  store.actions.note.updateNoteType(store)
-}
 const handleComposingStart = () => store.composing = true
 const handleComposingEnd = () => store.composing = false
 const handleKeyDownOnContent = (e: KeyboardEvent) => {
@@ -93,7 +90,7 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
       class="f-1 flex-column"
     >
       <div class="h-8 text-secondary">
-        <TheNoteEditorHeader @change-note-type="handleChangeNoteType" />
+        <TheNoteEditorHeader />
       </div>
       <div class="f-1 flex-row divide-x-2 divide-solid divide-color-secondary">
         <div class="f-1 flex-column">

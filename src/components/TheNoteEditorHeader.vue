@@ -2,12 +2,8 @@
 import { store } from '../store'
 
 const handleChange = () => {
-  emit('changeNoteType')
+  store.actions.note.updateNoteType(store)
 }
-
-const emit = defineEmits<{
-  (e: 'changeNoteType'): void
-}>()
 </script>
 
 <template>

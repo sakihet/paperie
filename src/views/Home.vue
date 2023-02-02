@@ -28,15 +28,6 @@ const handleCloseEditorDialog = () => {
   }
   router.push({})
 }
-const handleDelete = (noteId: string) => {
-  if (window.confirm("Do you really want to delete?")) {
-    store.actions.note.delete(store, noteId)
-    router.push({})
-  }
-}
-const handleDuplicate = (noteId: string) => {
-  store.actions.note.duplicate(store, noteId)
-}
 const handleEdit = (note: Note) => {
   store.actions.openEditorForEdit(store, note)
 }
@@ -46,9 +37,6 @@ const handleEditConfirm = () => {
 }
 const handleInputNote = () => {
   store.actions.createOrUpdateNote(store)
-}
-const handleToggleIsPinned = (noteId: string) => {
-  store.actions.note.toggleIsPinned(store, noteId)
 }
 
 watch (() => store.isLoaded, async (after, before) => {
@@ -143,10 +131,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
           :layout="store.notesLayout"
           :note="note"
           :selectedNoteId="route.query.noteId?.toString()"
-          @delete="handleDelete"
-          @duplicate="handleDuplicate"
           @edit="handleEdit"
-          @toggleIsPinned="handleToggleIsPinned"
         />
       </div>
     </div>
@@ -176,10 +161,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
               :layout="store.notesLayout"
               :note="note"
               :selectedNoteId="route.query.noteId?.toString()"
-              @delete="handleDelete"
-              @duplicate="handleDuplicate"
               @edit="handleEdit"
-              @toggleIsPinned="handleToggleIsPinned"
             />
           </div>
         </div>

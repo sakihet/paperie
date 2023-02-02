@@ -1,14 +1,10 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { Note } from '../entities/note';
+import { Note } from '../entities/note'
+import { store } from '../store'
 
 const props = defineProps<{
   note: Note,
-}>()
-const emit = defineEmits<{
-  (e: 'clickDelete'): void
-  (e: 'clickDuplicate'): void
-  (e: 'clickToggleIsPinned'): void
 }>()
 const isDropdownOpen = ref(false)
 const handleClickDropdown = (e: Event) => {
@@ -17,19 +13,17 @@ const handleClickDropdown = (e: Event) => {
   isDropdownOpen.value = !(isDropdownOpen.value)
 }
 const handleDelete = (e: Event) => {
-  e.preventDefault()
-  e.stopPropagation()
-  emit('clickDelete')
+  if (window.confirm("Do you really want to delete?")) {
+    store.actions.note.delete(store, props.note.id)
+  }
   isDropdownOpen.value = false
 }
 const handleDuplicate = (e: Event) => {
-  emit('clickDuplicate')
+  store.actions.note.duplicate(store, props.note.id)
   isDropdownOpen.value = false
 }
 const handleToggleIsPinned = (e: Event) => {
-  e.preventDefault()
-  e.stopPropagation()
-  emit('clickToggleIsPinned')
+  store.actions.note.toggleIsPinned(store, props.note.id)
   isDropdownOpen.value = false
 }
 </script>
