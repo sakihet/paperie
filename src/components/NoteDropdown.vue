@@ -7,6 +7,7 @@ const props = defineProps<{
 }>()
 const emit = defineEmits<{
   (e: 'clickDelete'): void
+  (e: 'clickDuplicate'): void
   (e: 'clickToggleIsPinned'): void
 }>()
 const isDropdownOpen = ref(false)
@@ -19,6 +20,10 @@ const handleDelete = (e: Event) => {
   e.preventDefault()
   e.stopPropagation()
   emit('clickDelete')
+  isDropdownOpen.value = false
+}
+const handleDuplicate = (e: Event) => {
+  emit('clickDuplicate')
   isDropdownOpen.value = false
 }
 const handleToggleIsPinned = (e: Event) => {
@@ -51,6 +56,14 @@ const handleToggleIsPinned = (e: Event) => {
               @click="handleToggleIsPinned($event)"
             >
               <span>{{ props.note.isPinned ? 'Unpin' : 'Pin'}}</span>
+            </div>
+          </li>
+          <li class="h-8 hover">
+            <div
+              class="py-2 px-4"
+              @click="handleDuplicate($event)"
+            >
+              <span>Duplicate</span>
             </div>
           </li>
           <li class="h-8 hover">

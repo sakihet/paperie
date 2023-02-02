@@ -12,6 +12,7 @@ const props = defineProps<{
 
 const emit = defineEmits<{
   (e: 'delete', noteId: string): void
+  (e: 'duplicate', noteId: string): void
   (e: 'toggleIsPinned', noteId: string): void
 }>()
 
@@ -19,6 +20,9 @@ const isHovered = ref(false)
 
 const handleDelete = (noteId: string) => {
   emit('delete', noteId)
+}
+const handleDuplicate = (noteId: string) => {
+  emit('duplicate', noteId)
 }
 const handleToggleIsPinned = (noteId: string) => {
   emit('toggleIsPinned', noteId)
@@ -56,6 +60,7 @@ const handleToggleIsPinned = (noteId: string) => {
           <NoteDropdown
             :note="note"
             @clickDelete="handleDelete(note.id)"
+            @clickDuplicate="handleDuplicate(note.id)"
             @clickToggleIsPinned="handleToggleIsPinned(note.id)"
           />
         </div>
@@ -73,6 +78,7 @@ const handleToggleIsPinned = (noteId: string) => {
             <NoteDropdown
               :note="note"
               @clickDelete="handleDelete(note.id)"
+              @clickDuplicate="handleDuplicate(note.id)"
               @clickToggleIsPinned="handleToggleIsPinned(note.id)"
             />
           </div>

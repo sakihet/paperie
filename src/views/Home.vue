@@ -34,6 +34,9 @@ const handleDelete = (noteId: string) => {
     router.push({})
   }
 }
+const handleDuplicate = (noteId: string) => {
+  store.actions.note.duplicate(store, noteId)
+}
 const handleEdit = (note: Note) => {
   store.actions.openEditorForEdit(store, note)
 }
@@ -141,6 +144,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
           :note="note"
           :selectedNoteId="route.query.noteId?.toString()"
           @delete="handleDelete"
+          @duplicate="handleDuplicate"
           @edit="handleEdit"
           @toggleIsPinned="handleToggleIsPinned"
         />
@@ -173,6 +177,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
               :note="note"
               :selectedNoteId="route.query.noteId?.toString()"
               @delete="handleDelete"
+              @duplicate="handleDuplicate"
               @edit="handleEdit"
               @toggleIsPinned="handleToggleIsPinned"
             />

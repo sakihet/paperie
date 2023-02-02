@@ -61,6 +61,7 @@ interface Store {
       create: (store: Store) => void,
       delete: (store: Store, id: string) => void,
       deleteAll: (store: Store) => void,
+      duplicate: (store: Store, id: string) => void,
       toggleIsPinned: (store: Store, id: string) => void,
       update: (store: Store) => void,
       updateNoteType: (store: Store) => void
@@ -189,6 +190,20 @@ export const store: Store = reactive<Store>({
           await noteApplicationService.clear()
         }
         handler().then(() => store.notes = [])
+      },
+      duplicate(store, id) {
+        const handler = async () => {
+          const n = await noteApplicationService.get(id)
+          if (n) {
+            const note: Note = n
+            const date = new Date()
+            const duplicated: Note = {...note, id: v4(), title: `${note.title} copy`, createdAt: date, updatedAt: date}
+            await noteApplicationService.add(duplicated)
+            const result = await noteApplicationService.getAll()
+            store.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
+          }
+        }
+        handler()
       },
       toggleIsPinned(store, id) {
         const handler = async () => {
