@@ -15,6 +15,12 @@ const handleChangeLayout = (e: Event) => {
   store.notesLayout = nextLayout
   store.actions.saveLayout(store)
 }
+const handleToggle = (e: Event) => {
+  const elem = e.currentTarget as HTMLDetailsElement
+  if (elem.open) {
+    isDropdownOpen.value = true
+  }
+}
 const handleDeleteAll = (e: Event) => {
   if (window.confirm("Do you really want to delete?")) {
     store.actions.note.deleteAll(store)
@@ -106,6 +112,7 @@ const handleDeleteAll = (e: Event) => {
         <details
           class="pattern-dropdown"
           :open="isDropdownOpen"
+          @toggle="handleToggle($event)"
         >
           <summary>
             <div class="text-secondary">
