@@ -83,7 +83,7 @@ const handleToggleIsPinned = (noteId: string) => {
             />
           </div>
         </div>
-        <div class="h-18 overflow-hidden text-secondary p-2">
+        <div class="h-12 overflow-hidden text-secondary p-2">
           <div class="text-small">{{ note.content }}</div>
         </div>
       </div>
