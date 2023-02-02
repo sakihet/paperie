@@ -9,9 +9,6 @@ import TheNoteEditor from '../components/TheNoteEditor.vue'
 const route = useRoute()
 const router = useRouter()
 
-const handleAddConfirm = () => {
-  store.actions.note.create(store)
-}
 const handleClose = () => {
   store.isAdding = false
   store.isEditing = false
@@ -21,7 +18,6 @@ const handleCloseEditorDialog = () => {
   if (store.isEditing) {
     handleEditConfirm()
   } else if (store.isAdding) {
-    handleAddConfirm()
   } else {
     console.log('error')
   }
