@@ -1,12 +1,14 @@
 <script setup lang="ts">
-import { computed, onMounted, onUnmounted, onUpdated, ref } from 'vue'
+import { computed, onMounted, onUnmounted, onUpdated, ref, watch } from 'vue'
 import markdownIt from 'markdown-it'
 import { store } from '../store'
 import TheNoteEditorHeader from '../components/TheNoteEditorHeader.vue'
+import { useRoute } from 'vue-router'
 
 const refEditorContent = ref<HTMLElement | null>(null)
 const refEditorTitle = ref<HTMLElement | null>(null)
 const pressingControlKey = ref(false)
+const route = useRoute()
 
 onMounted(() => {
   if (store.isAdding) {
@@ -15,13 +17,15 @@ onMounted(() => {
     focusEditorContent()
   }
 })
-onUpdated(() => {})
-onUnmounted(() => {})
-
+watch (() => store.isAdding, async (after, before) => {
+  if (after) focusEditorTitle()
+})
+watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
+  if (noteIdAfter && (noteIdAfter !== noteIdBefore)) focusEditorContent()
+})
 const emit = defineEmits<{
   (e: 'inputNote'): void
 }>()
-
 const md = new markdownIt()
 const handleChangeNoteType = () => {
   store.actions.note.updateNoteType(store)
