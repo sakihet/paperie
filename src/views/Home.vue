@@ -2,8 +2,7 @@
 import { watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { store } from '../store'
-import NoteItem from '../components/NoteItem.vue'
-import { Note } from '../entities/note'
+import NoteList from '../components/NoteList.vue'
 import TheNoteEditor from '../components/TheNoteEditor.vue'
 
 const route = useRoute()
@@ -23,9 +22,7 @@ const handleCloseEditorDialog = () => {
   }
   router.push({ path: '/'})
 }
-const handleEdit = (note: Note) => {
-  store.actions.openEditorForEdit(store, note)
-}
+
 const handleEditConfirm = () => {
   store.actions.note.update(store)
   router.push({})
@@ -110,26 +107,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         </div>
       </dialog>
     </div>
-    <div class="w-48 text-secondary">
-      <div class="flex-row">
-        <div class="f-1">Notes</div>
-        <div>{{ store.notes.length }}</div>
-      </div>
-    </div>
-    <div :class="{ 'layout-cluster': true, 'my-4': true }">
-      <div
-        class="bg-primary"
-        v-for="note in store.notes"
-        :key="note.id"
-      >
-        <NoteItem
-          :layout="store.notesLayout"
-          :note="note"
-          :selectedNoteId="route.query.noteId?.toString()"
-          @edit="handleEdit"
-        />
-      </div>
-    </div>
+    <NoteList />
   </div>
   <div
     v-else-if="store.notesLayout === 'list'"
@@ -140,26 +118,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         class="w-64 p-4 flex-column overflow-y-scroll pattern-scrollbar-thin"
         style="height: calc(100vh - 4.5rem);"
       >
-        <div class="">
-          <div class="flex-row text-secondary">
-            <div class="f-1">Notes</div>
-            <div class="">{{ store.notes.length }}</div>
-          </div>
-        </div>
-        <div class="f-1 divide-y-2 divide-solid divide-color-secondary mt-2">
-          <div
-            v-for="note in store.notes"
-            :key="note.id"
-            class="bg-secondary"
-          >
-            <NoteItem
-              :layout="store.notesLayout"
-              :note="note"
-              :selectedNoteId="route.query.noteId?.toString()"
-              @edit="handleEdit"
-            />
-          </div>
-        </div>
+        <NoteList />
       </div>
       <div class="f-1 flex-column">
         <TheNoteEditor

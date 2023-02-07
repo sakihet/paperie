@@ -23,7 +23,7 @@ const isHovered = ref(false)
     >
       <div
         v-if="props.layout === 'grid'"
-        class="border-solid border-color-default border-1 shadow rounded flex-column"
+        class="border-solid border-color-default border-1 rounded flex-column"
         :class="{ 'border-t-2 border-color-blue': note.isPinned, 'w-48': true, 'h-48' : true }"
       >
         <div class="font-semibold p-2 overflow-hidden h-9 text-overflow-ellipsis">
