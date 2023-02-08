@@ -233,6 +233,9 @@
 .h-10 {
   height: 2.5rem;
 }
+.h-11 {
+  height: 2.75rem;
+}
 .h-12 {
   height: 3rem;
 }
@@ -456,6 +459,9 @@
 }
 .bg-selected {
   background-color: var(--color-background-selected);
+}
+.bg-blue {
+  background-color: var(--color-link)
 }
 /* focus */
 .focus\:outline-none:focus {

@@ -26,27 +26,28 @@ const isHovered = ref(false)
         class="border-solid border-color-default border-1 rounded flex-column"
         :class="{ 'border-t-2 border-color-blue': note.isPinned, 'w-48': true, 'h-48' : true }"
       >
-        <div class="font-semibold p-2 overflow-hidden h-9 text-overflow-ellipsis flex-row">
-          <div class="f-1">
-            <span class="">{{ note.title }}</span>
+        <div class="p-2 layout-stack-1">
+          <div class="h-8 flex-row">
+            <div class="f-1 font-semibold overflow-hidden text-overflow-ellipsis">
+              <span class="nowrap">{{ note.title }}</span>
+            </div>
+            <div class="w-6">
+              <div v-if="isHovered">
+                <NoteDropdown
+                  :note="note"
+                />
+              </div>
+            </div>
           </div>
-          <div v-if="isHovered">
-            <NoteDropdown
-              :note="note"
+          <div class="f-1">
+            <AppTextarea
+              class="text-secondary bg-primary"
+              :id="note.id"
+              :content="note.content"
+              :rows="7"
+              :cols="16"
             />
           </div>
-        </div>
-        <div class="f-1">
-          <AppTextarea
-            class="text-secondary bg-primary"
-            :id="note.id"
-            :content="note.content"
-            :rows="7"
-            :cols="16"
-          />
-        </div>
-        <div class="h-9 flex-row mx-1">
-          <div class="f-1"></div>
         </div>
       </div>
       <div
@@ -54,18 +55,22 @@ const isHovered = ref(false)
         class="h-24"
         :class="{ 'border-l-2 border-color-blue border-solid': note.isPinned, 'bg-selected': note.id === selectedNoteId, 'bg-primary': note.id !== selectedNoteId }"
       >
-        <div class="p-2 overflow-hidden h-10 flex-row">
-          <div class="f-1 font-semibold overflow-hidden text-overflow-ellipsis">
-            <span class="">{{ note.title }}</span>
+        <div class="p-2 layout-stack-1">
+          <div class="py-1 overflow-hidden h-8 flex-row">
+            <div class="f-1 font-semibold overflow-hidden text-overflow-ellipsis">
+              <span class="">{{ note.title }}</span>
+            </div>
+            <div class="w-6">
+              <div v-if="isHovered">
+                <NoteDropdown
+                  :note="note"
+                />
+              </div>
+            </div>
           </div>
-          <div v-if="isHovered">
-            <NoteDropdown
-              :note="note"
-            />
+          <div class="h-11 overflow-hidden text-secondary">
+            <div class="text-small">{{ note.content }}</div>
           </div>
-        </div>
-        <div class="h-12 overflow-hidden text-secondary p-2">
-          <div class="text-small">{{ note.content }}</div>
         </div>
       </div>
     </div>

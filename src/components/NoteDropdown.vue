@@ -29,14 +29,14 @@ const handleToggleIsPinned = (e: Event) => {
 </script>
 
 <template>
-  <div class="w-8">
+  <div class="w-6">
     <details
       class="pattern-dropdown"
       @click="handleClickDropdown($event)"
       :open="isDropdownOpen"
     >
       <summary>
-        <div class="h-8 w-8 py-1 cursor-pointer user-select-none font-bold text-center hover rounded-4">
+        <div class="h-6 w-6 cursor-pointer user-select-none font-bold text-center hover rounded">
           <span class="">⋮</span>
         </div>
       </summary>
