@@ -26,8 +26,15 @@ const isHovered = ref(false)
         class="border-solid border-color-default border-1 rounded flex-column"
         :class="{ 'border-t-2 border-color-blue': note.isPinned, 'w-48': true, 'h-48' : true }"
       >
-        <div class="font-semibold p-2 overflow-hidden h-9 text-overflow-ellipsis">
-          <span class="">{{ note.title }}</span>
+        <div class="font-semibold p-2 overflow-hidden h-9 text-overflow-ellipsis flex-row">
+          <div class="f-1">
+            <span class="">{{ note.title }}</span>
+          </div>
+          <div v-if="isHovered">
+            <NoteDropdown
+              :note="note"
+            />
+          </div>
         </div>
         <div class="f-1">
           <AppTextarea
@@ -40,9 +47,6 @@ const isHovered = ref(false)
         </div>
         <div class="h-9 flex-row mx-1">
           <div class="f-1"></div>
-          <NoteDropdown
-            :note="note"
-          />
         </div>
       </div>
       <div
@@ -54,7 +58,7 @@ const isHovered = ref(false)
           <div class="f-1 font-semibold overflow-hidden text-overflow-ellipsis">
             <span class="">{{ note.title }}</span>
           </div>
-          <div>
+          <div v-if="isHovered">
             <NoteDropdown
               :note="note"
             />
