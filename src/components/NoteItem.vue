@@ -44,7 +44,7 @@ const isHovered = ref(false)
               class="text-secondary bg-primary"
               :id="note.id"
               :content="note.content"
-              :rows="7"
+              :rows="9"
               :cols="16"
             />
           </div>
