@@ -33,9 +33,7 @@ const isHovered = ref(false)
             </div>
             <div class="w-6">
               <div v-if="isHovered">
-                <NoteDropdown
-                  :note="note"
-                />
+                <NoteDropdown :note="note"/>
               </div>
             </div>
           </div>
@@ -58,13 +56,11 @@ const isHovered = ref(false)
         <div class="p-2">
           <div class="overflow-hidden h-8 flex-row">
             <div class="f-1 font-semibold overflow-hidden text-overflow-ellipsis">
-              <span class="">{{ note.title }}</span>
+              <span class="nowrap">{{ note.title }}</span>
             </div>
             <div class="w-6">
               <div v-if="isHovered">
-                <NoteDropdown
-                  :note="note"
-                />
+                <NoteDropdown :note="note"/>
               </div>
             </div>
           </div>
