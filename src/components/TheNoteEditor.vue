@@ -133,47 +133,51 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
       v-else-if="store.notesLayout === 'list'"
       class="f-1 flex-column"
     >
-      <div class="h-4 m-4 text-secondary">
-        <TheNoteEditorHeader />
-      </div>
-      <div class="f-1 flex-row divide-x-2 divide-solid divide-color-secondary">
-        <div class="f-1 flex-column">
-          <div class="">
-            <input
-              class="p-4 w-full h-10 border-none focus:outline-none text-large font-bold bg-primary"
-              type="text"
-              ref="refEditorTitle"
-              v-model="store.editor.noteTitle"
-              @keydown="handleKeyDownOnTitle"
-              @keyup="handleKeyUpOnTitle"
-              @compositionstart="handleComposingStart"
-              @compositionend="handleComposingEnd"
-              @input="handleInput"
-            />
-          </div>
-          <div class="f-1">
-            <textarea
-              class="px-4 border-color-default focus:outline-none text-medium border-none font-sans w-full bg-primary h-full pattern-scrollbar-thin resize-none"
-              v-model="store.editor.noteContent"
-              ref="refEditorContent"
-              @keydown="handleKeyDownOnContent"
-              @keyup="handleKeyUpOnContent"
-              @compositionstart="handleComposingStart"
-              @compositionend="handleComposingEnd"
-              @input="handleInput"
-            ></textarea>
-          </div>
+      <div class="f-1 p-4 layout-stack-2 flex-column">
+        <div class="h-4 text-secondary">
+          <TheNoteEditorHeader />
         </div>
-        <div
-          class="f-1"
-          v-if="store.editor.noteType === 'markdown'"
-        >
-          <div class="h-12">
-            <span class="text-small text-secondary mx-4">Preview</span>
+        <div class="f-1 flex-row divide-x-2 divide-solid divide-color-secondary">
+          <div class="f-1 flex-column layout-stack-2">
+            <div class="">
+              <input
+                class="w-full h-8 border-none focus:outline-none text-large font-bold bg-primary"
+                type="text"
+                ref="refEditorTitle"
+                v-model="store.editor.noteTitle"
+                @keydown="handleKeyDownOnTitle"
+                @keyup="handleKeyUpOnTitle"
+                @compositionstart="handleComposingStart"
+                @compositionend="handleComposingEnd"
+                @input="handleInput"
+              />
+            </div>
+            <div class="f-1">
+              <textarea
+                class="border-color-default focus:outline-none text-medium border-none font-sans w-full bg-primary h-full pattern-scrollbar-thin resize-none"
+                v-model="store.editor.noteContent"
+                ref="refEditorContent"
+                @keydown="handleKeyDownOnContent"
+                @keyup="handleKeyUpOnContent"
+                @compositionstart="handleComposingStart"
+                @compositionend="handleComposingEnd"
+                @input="handleInput"
+              ></textarea>
+            </div>
           </div>
           <div
-            class="mx-4"
-            v-html="outputMarkdown">
+            class="f-1"
+            v-if="store.editor.noteType === 'markdown'"
+          >
+            <div class="p-4 flex-column">
+              <div class="h-8">
+                <span class="text-small text-secondary">Preview</span>
+              </div>
+              <div
+                class=""
+                v-html="outputMarkdown">
+              </div>
+            </div>
           </div>
         </div>
       </div>
