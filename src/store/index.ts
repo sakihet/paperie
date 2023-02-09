@@ -1,5 +1,5 @@
 import { v4 } from 'uuid'
-import { reactive } from 'vue'
+import { computed, reactive } from 'vue'
 import { connect } from '../db'
 import { NoteApplicationService } from '../applications/noteApplicationService'
 import { NoteRepository } from '../repositories/noteRepository'
@@ -107,7 +107,7 @@ export const store: Store = reactive<Store>({
     },
     async load (store) {
       const result = await noteApplicationService.getAll()
-      store.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
+      store.notes = result
     },
     createOrUpdateNote (store) {
       if (store.isAdding) {
@@ -168,7 +168,7 @@ export const store: Store = reactive<Store>({
           const handler = async () => {
             await noteApplicationService.add(note)
             const result = await noteApplicationService.getAll()
-            store.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
+            store.notes = result
           }
           handler().then(() => {
             store.editor.noteId = note.id
@@ -203,7 +203,7 @@ export const store: Store = reactive<Store>({
             const duplicated: Note = {...note, id: v4(), title: `${note.title} copy`, createdAt: date, updatedAt: date}
             await noteApplicationService.add(duplicated)
             const result = await noteApplicationService.getAll()
-            store.notes = result.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
+            store.notes = result
           }
         }
         handler()
@@ -218,7 +218,6 @@ export const store: Store = reactive<Store>({
           if (updated) {
             store.notes[idx].isPinned = updated.isPinned
             store.notes[idx].updatedAt = updated.updatedAt
-            store.notes = store.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
           }
         }
         handler()
@@ -239,7 +238,6 @@ export const store: Store = reactive<Store>({
             store.notes[idx].content = updated.content
             store.notes[idx].noteType = updated.noteType
             store.notes[idx].updatedAt = updated.updatedAt
-            store.notes = store.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
           }
         }
         handler().then(() => {
@@ -255,7 +253,6 @@ export const store: Store = reactive<Store>({
           if (updated) {
             store.notes[idx].noteType = updated.noteType
             store.notes[idx].updatedAt = updated.updatedAt
-            store.notes = store.notes.sort((a: Note, b:Note) => b.updatedAt.getTime() - a.updatedAt.getTime()).sort(x => x.isPinned ? -1 : 1)
           }
         }
         if (store.isEditing) {
@@ -265,3 +262,15 @@ export const store: Store = reactive<Store>({
     }
   },
 })
+
+const sortFunc = (sortKey: SortKey): ((a: Note, b:Note) => number) => {
+  if (sortKey === 'updated') {
+    return (a: Note, b: Note) => b.updatedAt.getTime() - a.updatedAt.getTime()
+  } else if (sortKey === 'created') {
+    return (a: Note, b: Note) => b.createdAt.getTime() - a.createdAt.getTime()
+  } else {
+    return (a: Note, b: Note) => a.title.localeCompare(b.title)
+  }
+}
+
+export const notesSorted = computed(() => store.notes.sort(sortFunc(store.sortKey)).sort(x => x.isPinned ? -1 : 1))

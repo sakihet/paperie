@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router'
 import { computed, ref } from 'vue'
 import { Note } from '../entities/note'
-import { store } from '../store'
+import { notesSorted, store } from '../store'
 import NoteItem from '../components/NoteItem.vue'
 
 const route = useRoute()
@@ -64,11 +64,21 @@ const handleToggle = (e: Event) => {
           </details>
         </div>
       </div>
+      <div class="h-6 mb-2 text-right">
+        <select
+          class="h-6 px-2 border-solid border-1 border-color-default text-secondary bg-secondary text-small"
+          v-model="store.sortKey"
+        >
+          <option value="updated">Last updated</option>
+          <option value="created">Last created</option>
+          <option value="title">Title</option>
+        </select>
+      </div>
     </div>
     <div :class="classObjectContent">
       <div
         class="bg-primary"
-        v-for="note in store.notes"
+        v-for="note in notesSorted"
         :key="note.id"
       >
         <NoteItem
