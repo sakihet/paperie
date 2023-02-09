@@ -6,6 +6,7 @@ import { NoteRepository } from '../repositories/noteRepository'
 import { Note } from '../entities/note'
 import { NoteType } from '../types/noteType'
 import { LayoutType } from '../types/layoutType'
+import { SortKey } from '../types/sortKey'
 
 const storageKey = 'layout'
 const applyTheme = (theme: string) => {
@@ -48,6 +49,7 @@ interface Store {
   notes: Array<Note>,
   notesLayout: LayoutType,
   pressingModifier: boolean,
+  sortKey: SortKey,
   theme: string,
   actions: {
     createOrUpdateNote: (store: Store) => void,
@@ -86,6 +88,7 @@ export const store: Store = reactive<Store>({
   notes: [],
   notesLayout: 'list',
   pressingModifier: false,
+  sortKey : 'updated',
   theme: 'light',
   actions: {
     async init (store) {
