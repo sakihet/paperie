@@ -154,7 +154,7 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
             </div>
             <div class="f-1">
               <textarea
-                class="border-color-default focus:outline-none text-medium border-none font-sans w-full bg-primary h-full pattern-scrollbar-thin resize-none"
+                class="border-color-default focus:outline-none text-medium border-none font-sans w-full bg-primary h-full pattern-scrollbar-thin resize-none text-primary"
                 v-model="store.editor.noteContent"
                 ref="refEditorContent"
                 @keydown="handleKeyDownOnContent"
