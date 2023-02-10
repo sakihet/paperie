@@ -42,9 +42,7 @@ const handleToggleIsPinned = (e: Event) => {
       </summary>
       <div class="w-24">
         <ul class="list-style-none border-solid border-color-default border-1 pl-0 user-select-none cursor-pointer my-1 shadow bg-dropdown rounded text-secondary py-1">
-          <li
-            class="h-8 hover"
-          >
+          <li class="h-8 hover">
             <div
               class="py-2 px-4"
               @click="handleToggleIsPinned($event)"

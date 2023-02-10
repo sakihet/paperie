@@ -38,14 +38,14 @@ const handleToggle = (e: Event) => {
       <div class="flex-row h-8">
         <div class="f-1">Notes</div>
         <div class="mx-2">{{ store.notes.length }}</div>
-        <div class="w-6">
+        <div class="">
           <details
             class="pattern-dropdown"
             @toggle="handleToggle($event)"
             :open="isDropdownOpen"
           >
             <summary>
-              <div class="cursor-pointer user-select-none font-bold text-center hover">
+              <div class="h-6 w-6 cursor-pointer user-select-none font-bold text-center hover rounded">
                 <span class="">⋮</span>
               </div>
             </summary>

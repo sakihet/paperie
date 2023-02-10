@@ -23,11 +23,11 @@ const isHovered = ref(false)
     >
       <div
         v-if="props.layout === 'grid'"
-        class="border-solid border-color-default border-1 rounded flex-column"
-        :class="{ 'border-t-2 border-color-blue': note.isPinned, 'w-48': true, 'h-48' : true }"
+        class="flex-column"
+        :class="{ 'border-t-2 border-color-blue border-solid': note.isPinned, 'w-48': true, 'h-48' : true }"
       >
-        <div class="p-2">
-          <div class="h-8 flex-row">
+        <div class="p-2 layout-stack-1">
+          <div class="h-6 flex-row">
             <div class="f-1 font-semibold overflow-hidden text-overflow-ellipsis">
               <span class="nowrap">{{ note.title }}</span>
             </div>
@@ -42,10 +42,11 @@ const isHovered = ref(false)
               class="text-secondary bg-primary"
               :id="note.id"
               :content="note.content"
-              :rows="9"
+              :rows="8"
               :cols="16"
             />
           </div>
+          <div class="h-4 text-small text-secondary">{{ note.updatedAt.toISOString().split('T')[0] }}</div>
         </div>
       </div>
       <div
@@ -53,8 +54,8 @@ const isHovered = ref(false)
         class="h-24"
         :class="{ 'border-l-2 border-color-blue border-solid': note.isPinned, 'bg-selected': note.id === selectedNoteId, 'bg-primary': note.id !== selectedNoteId }"
       >
-        <div class="p-2">
-          <div class="overflow-hidden h-8 flex-row">
+        <div class="p-2 layout-stack-1">
+          <div class="overflow-hidden h-6 flex-row">
             <div class="f-1 font-semibold overflow-hidden text-overflow-ellipsis">
               <span class="nowrap">{{ note.title }}</span>
             </div>
@@ -64,9 +65,10 @@ const isHovered = ref(false)
               </div>
             </div>
           </div>
-          <div class="h-12 overflow-hidden text-secondary">
+          <div class="h-8 overflow-hidden text-secondary">
             <div class="text-small">{{ note.content }}</div>
           </div>
+          <div class="h-4 text-small text-secondary">{{ note.updatedAt.toISOString().split('T')[0] }}</div>
         </div>
       </div>
     </div>
