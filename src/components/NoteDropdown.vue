@@ -16,15 +16,18 @@ const handleDelete = (e: Event) => {
   if (window.confirm("Do you really want to delete?")) {
     store.actions.note.delete(store, props.note.id)
   }
-  isDropdownOpen.value = false
 }
 const handleDuplicate = (e: Event) => {
   store.actions.note.duplicate(store, props.note.id)
-  isDropdownOpen.value = false
+}
+const handleToggle = (e: Event) => {
+  const elem = e.currentTarget as HTMLDetailsElement
+  if (elem.open) {
+    isDropdownOpen.value = true
+  }
 }
 const handleToggleIsPinned = (e: Event) => {
   store.actions.note.toggleIsPinned(store, props.note.id)
-  isDropdownOpen.value = false
 }
 </script>
 
@@ -33,6 +36,7 @@ const handleToggleIsPinned = (e: Event) => {
     <details
       class="pattern-dropdown"
       @click="handleClickDropdown($event)"
+      @toggle="handleToggle($event)"
       :open="isDropdownOpen"
     >
       <summary>
