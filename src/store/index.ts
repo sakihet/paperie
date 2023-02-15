@@ -49,6 +49,7 @@ interface Store {
   notes: Array<Note>,
   notesLayout: LayoutType,
   pressingModifier: boolean,
+  searchQuery: string,
   sortKey: SortKey,
   theme: string,
   actions: {
@@ -88,6 +89,7 @@ export const store: Store = reactive<Store>({
   notes: [],
   notesLayout: 'list',
   pressingModifier: false,
+  searchQuery: '',
   sortKey : 'updated',
   theme: 'light',
   actions: {
@@ -273,4 +275,8 @@ const sortFunc = (sortKey: SortKey): ((a: Note, b:Note) => number) => {
   }
 }
 
-export const notesSorted = computed(() => store.notes.sort(sortFunc(store.sortKey)).sort(x => x.isPinned ? -1 : 1))
+export const notesResult = computed(() =>
+  store.notes.filter(n =>
+    n.title.includes(store.searchQuery) || n.content.includes(store.searchQuery)
+  ).sort(sortFunc(store.sortKey)).sort(x => x.isPinned ? -1 : 1)
+)

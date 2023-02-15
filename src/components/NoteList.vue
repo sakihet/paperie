@@ -2,7 +2,7 @@
 import { useRoute } from 'vue-router'
 import { computed, ref } from 'vue'
 import { Note } from '../entities/note'
-import { notesSorted, store } from '../store'
+import { notesResult, store } from '../store'
 import NoteItem from '../components/NoteItem.vue'
 
 const route = useRoute()
@@ -35,50 +35,60 @@ const handleToggle = (e: Event) => {
 <template>
   <div>
     <div :class="classObjectHeader">
-      <div class="flex-row h-8">
-        <div class="f-1">Notes</div>
-        <div class="mx-2">{{ store.notes.length }}</div>
-        <div class="">
-          <details
-            class="pattern-dropdown"
-            @toggle="handleToggle($event)"
-            :open="isDropdownOpen"
-          >
-            <summary>
-              <div class="h-6 w-6 cursor-pointer user-select-none font-bold text-center hover rounded">
-                <span class="">⋮</span>
+      <div class="layout-stack-2">
+        <div class="flex-row h-6">
+          <div class="f-1">Notes</div>
+          <div class="mx-2">{{ store.notes.length }}</div>
+          <div class="">
+            <details
+              class="pattern-dropdown"
+              @toggle="handleToggle($event)"
+              :open="isDropdownOpen"
+            >
+              <summary>
+                <div class="h-6 w-6 cursor-pointer user-select-none font-bold text-center hover rounded">
+                  <span class="">⋮</span>
+                </div>
+              </summary>
+              <div class="w-28">
+                <ul class="list-style-none border-solid border-color-default border-1 pl-0 user-select-none cursor-pointer my-1 shadow bg-dropdown rounded text-secondary py-1">
+                  <li class="h-8 hover">
+                    <div
+                      class="py-2 px-4"
+                      @click="handleDeleteAll($event)"
+                    >
+                      <span>Delete all</span>
+                    </div>
+                  </li>
+                </ul>
               </div>
-            </summary>
-            <div class="w-28">
-              <ul class="list-style-none border-solid border-color-default border-1 pl-0 user-select-none cursor-pointer my-1 shadow bg-dropdown rounded text-secondary py-1">
-                <li class="h-8 hover">
-                  <div
-                    class="py-2 px-4"
-                    @click="handleDeleteAll($event)"
-                  >
-                    <span>Delete all</span>
-                  </div>
-                </li>
-              </ul>
-            </div>
-          </details>
+            </details>
+          </div>
         </div>
-      </div>
-      <div class="h-6 mb-2 text-right">
-        <select
-          class="h-6 px-2 border-solid border-1 border-color-default text-secondary bg-secondary text-small"
-          v-model="store.sortKey"
-        >
-          <option value="updated">Last updated</option>
-          <option value="created">Last created</option>
-          <option value="title">Title</option>
-        </select>
+        <div class="h-6">
+          <input
+            class="h-6 w-full border-solid border-1 border-color-default px-2"
+            type="search"
+            placeholder="Search"
+            v-model="store.searchQuery"
+          />
+        </div>
+        <div class="h-6 mb-2 text-right">
+          <select
+            class="h-6 px-2 border-solid border-1 border-color-default text-secondary bg-secondary text-small"
+            v-model="store.sortKey"
+          >
+            <option value="updated">Last updated</option>
+            <option value="created">Last created</option>
+            <option value="title">Title</option>
+          </select>
+        </div>
       </div>
     </div>
     <div :class="classObjectContent">
       <div
         class="bg-primary"
-        v-for="note in notesSorted"
+        v-for="note in notesResult"
         :key="note.id"
       >
         <NoteItem
