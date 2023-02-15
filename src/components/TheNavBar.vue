@@ -81,16 +81,6 @@ const handleChangeLayout = (e: Event) => {
         />
       </div>
     </div>
-    <div class="flex-column">
-      <div class="m-auto mx-2">
-        <button
-          class="px-2 py-1 border-1 border-solid border-button-default rounded bg-transparent hover"
-          @click="store.dialogKeyboardShortcutsOpen = true"
-        >
-          ?
-        </button>
-      </div>
-    </div>
     <div class="flex-column nowrap">
       <div class="m-auto">
         <router-link
