@@ -19,6 +19,10 @@ A local-first oriented note-taking app for individuals build with PWA.
 - IndexedDB: [idb](https://github.com/jakearchibald/idb)
 - Style: Plain old CSS for future-proof
 
+## Icons
+
+https://fonts.google.com/icons?icon.set=Material+Symbols
+
 ## Development
 
 ```

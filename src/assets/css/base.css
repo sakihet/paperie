@@ -87,3 +87,6 @@ input {
 #app-page {
   min-height: 100vh;
 }
+svg {
+  fill: currentColor;
+}

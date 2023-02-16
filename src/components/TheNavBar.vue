@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { name, version } from '../../package.json'
 import { store } from '../store'
-import AppButton from '../components/AppButton.vue'
+import IconDarkMode from '../components/IconDarkMode.vue'
+import IconLightMode from '../components/IconLightMode.vue'
 
 const capitalize = (str: string) => {
   return str[0].toUpperCase() + str.slice(1)
@@ -74,11 +75,18 @@ const handleChangeLayout = (e: Event) => {
     </div>
     <div class="flex-column">
       <div class="m-auto mx-2">
-        <AppButton
-          class=""
-          @click="store.actions.toggleTheme(store)"
-          :text="store.theme === 'light' ? 'Dark' : 'Light' "
-        />
+        <button class="border-none bg-transparent p-0">
+          <IconDarkMode
+            class="text-secondary"
+            v-if="store.theme === 'light'"
+            @click="store.actions.toggleTheme(store)"
+          />
+          <IconLightMode
+            class="text-secondary"
+            v-else
+            @click="store.actions.toggleTheme(store)"
+          />
+        </button>
       </div>
     </div>
     <div class="flex-column nowrap">
