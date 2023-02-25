@@ -280,3 +280,7 @@ export const notesResult = computed(() =>
     n.title.includes(store.searchQuery) || n.content.includes(store.searchQuery)
   ).sort(sortFunc(store.sortKey)).sort(x => x.isPinned ? -1 : 1)
 )
+
+export const currentNote = computed(() =>
+  store.notes.find(x => x.id === store.editor.noteId)
+)
