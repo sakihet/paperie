@@ -3,14 +3,13 @@ import { name, version } from '../../package.json'
 import { store } from '../store'
 import IconDarkMode from '../components/IconDarkMode.vue'
 import IconLightMode from '../components/IconLightMode.vue'
+import { LayoutType } from '../types/layoutType';
 
 const capitalize = (str: string) => {
   return str[0].toUpperCase() + str.slice(1)
 }
-const handleChangeLayout = (e: Event) => {
-  const value = (e.target as HTMLInputElement).value
-  const nextLayout = (value === 'grid' ? 'grid' : 'list')
-  store.notesLayout = nextLayout
+const handleChangeLayout = (layout: LayoutType) => {
+  store.notesLayout = layout
   store.actions.saveLayout(store)
 }
 </script>
@@ -49,28 +48,21 @@ const handleChangeLayout = (e: Event) => {
         </router-link>
       </div>
     </div>
-    <div class="flex-column f-1 text-right">
-      <div class="inline-block m-auto mx-2 nowrap">
-        <label>
-          <input
-            type="radio"
-            name="layout"
-            value="grid"
-            @change="handleChangeLayout"
-            v-model="store.notesLayout"
-          >
-            Grid
-        </label>
-        <label>
-          <input
-            type="radio"
-            name="layout"
-            value="list"
-            @change="handleChangeLayout"
-            v-model="store.notesLayout"
-          >
-            List
-        </label>
+    <div class="f-1"></div>
+    <div class="flex-column">
+      <div class="m-auto">
+        <div class="border-1 border-solid border-button-default divide-solid divide-x divide-color-default rounded">
+          <button
+            class="px-2 py-1 text-small border-none"
+            :class="store.notesLayout === 'grid' ? 'bg-selected' : 'bg-transparent'"
+            @click="handleChangeLayout('grid')"
+          >Grid</button>
+          <button
+            class="px-2 py-1 text-small border-none"
+            :class="store.notesLayout === 'list' ? 'bg-selected' : 'bg-transparent'"
+            @click="handleChangeLayout('list')"
+          >Layout</button>
+        </div>
       </div>
     </div>
     <div class="flex-column">
