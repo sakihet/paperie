@@ -460,6 +460,9 @@
 .bg-selected {
   background-color: var(--color-background-selected);
 }
+.bg-icon-selected {
+  background-color: var(--color-background-icon-selected);
+}
 .bg-blue {
   background-color: var(--color-link)
 }
@@ -476,6 +479,9 @@
 }
 .hover:hover {
   background-color: var(--color-hover);
+}
+.hover-icon:hover {
+  background-color: var(--color-hover-icon);
 }
 /* overflow */
 .overflow-hidden {

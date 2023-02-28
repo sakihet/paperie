@@ -3,7 +3,9 @@ import { name, version } from '../../package.json'
 import { store } from '../store'
 import IconDarkMode from '../components/IconDarkMode.vue'
 import IconLightMode from '../components/IconLightMode.vue'
-import { LayoutType } from '../types/layoutType';
+import IconGrid from '../components/IconGrid.vue'
+import IconList from '../components/IconList.vue'
+import { LayoutType } from '../types/layoutType'
 
 const capitalize = (str: string) => {
   return str[0].toUpperCase() + str.slice(1)
@@ -49,19 +51,23 @@ const handleChangeLayout = (layout: LayoutType) => {
       </div>
     </div>
     <div class="f-1"></div>
-    <div class="flex-column">
+    <div class="flex-column h-12">
       <div class="m-auto">
-        <div class="border-1 border-solid border-button-default divide-solid divide-x divide-color-default rounded">
+        <div class="">
           <button
-            class="px-2 py-1 text-small border-none"
-            :class="store.notesLayout === 'grid' ? 'bg-selected' : 'bg-transparent'"
+            class="border-none py-0 px-1 hover-icon cursor-pointer rounded h-6"
+            :class="store.notesLayout === 'grid' ? 'bg-icon-selected' : 'bg-transparent'"
             @click="handleChangeLayout('grid')"
-          >Grid</button>
+          >
+            <IconGrid class="text-secondary" />
+          </button>
           <button
-            class="px-2 py-1 text-small border-none"
-            :class="store.notesLayout === 'list' ? 'bg-selected' : 'bg-transparent'"
+            class="border-none py-0 px-1 hover-icon cursor-pointer rounded h-6"
+            :class="store.notesLayout === 'list' ? 'bg-icon-selected' : 'bg-transparent'"
             @click="handleChangeLayout('list')"
-          >Layout</button>
+          >
+            <IconList class="text-secondary" />
+          </button>
         </div>
       </div>
     </div>
