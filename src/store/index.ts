@@ -67,7 +67,7 @@ interface Store {
       duplicate: (store: Store, id: string) => void,
       toggleIsPinned: (store: Store, id: string) => void,
       update: (store: Store) => void,
-      updateNoteType: (store: Store) => void
+      updateNoteType: (store: Store, noteType: NoteType) => void
     }
   }
 }
@@ -245,16 +245,17 @@ export const store: Store = reactive<Store>({
         handler().then(() => {
         })
       },
-      updateNoteType(store) {
+      updateNoteType(store, noteType) {
         const handler = async () => {
           const idx = store.notes.findIndex((x) => x.id === store.editor.noteId)
           const note: Note = store.notes[idx]
           const updated = await noteApplicationService.put(
-            {...note, noteType: store.editor.noteType, updatedAt: new Date()}
+            {...note, noteType: noteType, updatedAt: new Date()}
           )
           if (updated) {
             store.notes[idx].noteType = updated.noteType
             store.notes[idx].updatedAt = updated.updatedAt
+            store.editor.noteType = noteType
           }
         }
         if (store.isEditing) {

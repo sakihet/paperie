@@ -466,6 +466,9 @@
 .bg-selected {
   background-color: var(--color-background-selected);
 }
+.bg-selected-text {
+  background-color: var(--color-background-selected-text);
+}
 .bg-icon-selected {
   background-color: var(--color-background-icon-selected);
 }

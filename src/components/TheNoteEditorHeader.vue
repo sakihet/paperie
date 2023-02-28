@@ -1,36 +1,27 @@
 <script setup lang="ts">
 import { currentNote, store } from '../store'
+import { NoteType } from '../types/noteType';
 
-const handleChange = () => {
-  store.actions.note.updateNoteType(store)
+const handleClick = (e: Event, noteType: NoteType) => {
+  store.actions.note.updateNoteType(store, noteType)
 }
 </script>
 
 <template>
   <div class="text-secondary flex-row">
     <div class="f-1">
-      <label>
-        <input
-          class="m-0"
-          type="radio"
-          value="plain"
-          name="type"
-          v-model="store.editor.noteType"
-          @change=handleChange
-        />
-          <span class="p-2">Plain</span>
-      </label>
-      <label>
-        <input
-          class="m-0"
-          type="radio"
-          value="markdown"
-          name="type"
-          v-model="store.editor.noteType"
-          @change="handleChange"
-        />
-          <span class="p-2">Markdown</span>
-      </label>
+      <div class="">
+        <button
+          class="h-6 border-none text-secondary hover px-2"
+          :class="store.editor.noteType === 'plain' ? 'bg-selected-text' : 'bg-transparent'"
+          @click="handleClick($event, 'plain')"
+        >Plain</button>
+        <button
+          class="h-6 border-none text-secondary hover px-2"
+          :class="store.editor.noteType === 'markdown' ? 'bg-selected-text' : 'bg-transparent'"
+          @click="handleClick($event, 'markdown')"
+        >Markdown</button>
+      </div>
     </div>
     <div>
       <span class="text-small text-secondary">

@@ -37,6 +37,7 @@ body {
   --color-background: var(--color-white);
   --color-background-secondary: var(--color-gray-100);
   --color-background-selected: var(--color-gray-300);
+  --color-background-selected-text: var(--color-gray-200);
   --color-background-icon-selected: var(--color-gray-300);
   --color-code-background: var(--color-blue-50);
   --color-text-primary: var(--color-gray-900);
@@ -63,6 +64,7 @@ body {
   --color-background: var(--color-gray-800);
   --color-background-secondary: var(--color-gray-900);
   --color-background-selected: var(--color-gray-700);
+  --color-background-selected-text: var(--color-gray-800);
   --color-background-icon-selected: var(--color-gray-700);
   --color-code-background: var(--color-blue-200);
   --color-text-primary: var(--color-white);
