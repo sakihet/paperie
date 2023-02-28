@@ -134,14 +134,14 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
       class="f-1 flex-column"
     >
       <div class="f-1 layout-stack-2 flex-column">
-        <div class="h-4 text-secondary">
+        <div class="h-6 text-secondary">
           <TheNoteEditorHeader />
         </div>
         <div class="f-1 flex-row divide-x-2 divide-solid divide-color-secondary">
-          <div class="f-1 flex-column layout-stack-2">
-            <div class="">
+          <div class="f-1 flex-column layout-stack-4">
+            <div class="h-6">
               <input
-                class="w-full h-8 border-none focus:outline-none text-large font-bold bg-primary"
+                class="w-full border-none focus:outline-none text-large font-bold bg-primary"
                 type="text"
                 ref="refEditorTitle"
                 v-model="store.editor.noteTitle"

@@ -7,7 +7,7 @@ const handleChange = () => {
 </script>
 
 <template>
-  <div class="h-8 text-secondary flex-row">
+  <div class="text-secondary flex-row">
     <div class="f-1">
       <label>
         <input
