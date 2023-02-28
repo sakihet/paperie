@@ -99,7 +99,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         :open="store.editorDialogOpen"
         @close="handleClose"
       >
-        <div class="p-4 border-1 border-color-default border-solid shadow rounded layout-stack-1 bg-primary h-192 w-196 flex-column">
+        <div class="border-1 border-color-default border-solid shadow rounded layout-stack-1 bg-primary h-192 w-196 flex-column">
           <TheNoteEditor
             v-if="store.isAdding || store.isEditing"
             @input-note="handleInputNote"

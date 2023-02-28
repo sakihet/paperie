@@ -84,7 +84,7 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
 </script>
 
 <template>
-  <div class="bg-primary flex-column f-1">
+  <div class="bg-primary flex-column f-1 p-8">
     <div
       v-if="store.notesLayout === 'grid'"
       class="f-1 flex-column"
@@ -133,7 +133,7 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
       v-else-if="store.notesLayout === 'list'"
       class="f-1 flex-column"
     >
-      <div class="f-1 p-4 layout-stack-2 flex-column">
+      <div class="f-1 layout-stack-2 flex-column">
         <div class="h-4 text-secondary">
           <TheNoteEditorHeader />
         </div>
@@ -173,9 +173,7 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
               <div class="h-8">
                 <span class="text-small text-secondary">Preview</span>
               </div>
-              <div
-                class=""
-                v-html="outputMarkdown">
+              <div v-html="outputMarkdown">
               </div>
             </div>
           </div>
