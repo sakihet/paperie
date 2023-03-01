@@ -144,7 +144,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
       @mouseup="handleMouseup"
     >
       <div
-        class="p-4 flex-column overflow-y-scroll pattern-scrollbar-thin"
+        class="py-4 pl-4 flex-column"
         style="height: calc(100vh - 4.5rem);"
         :style="{ width: `${store.sidebarWidth}px` }"
       >

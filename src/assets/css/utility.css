@@ -138,6 +138,15 @@
 .mt-1 {
   margin-top: 0.25rem;
 }
+.mr-0 {
+  margin-right: 0;
+}
+.mr-2 {
+  margin-right: 0.25rem;
+}
+.mr-2 {
+  margin-right: 0.5rem;
+}
 .mt-2 {
   margin-top: 0.5rem;
 }
@@ -222,6 +231,21 @@
 }
 .pl-0 {
   padding-left: 0;
+}
+.pl-2 {
+  padding-left: 0.5rem;
+}
+.pl-4 {
+  padding-left: 1rem;
+}
+.pr-0 {
+  padding-right: 0;
+}
+.pr-2 {
+  padding-right: 0.5rem;
+}
+.pr-4 {
+  padding-right: 1rem;
 }
 /* sizing */
 .h-4 {

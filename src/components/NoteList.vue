@@ -33,7 +33,7 @@ const handleToggle = (e: Event) => {
 </script>
 
 <template>
-  <div>
+  <div class="overflow-y-hidden flex-column">
     <div :class="classObjectHeader">
       <div class="layout-stack-2">
         <div class="flex-row h-6">
@@ -85,7 +85,10 @@ const handleToggle = (e: Event) => {
         </div>
       </div>
     </div>
-    <div :class="classObjectContent">
+    <div
+      :class="classObjectContent"
+      class="overflow-y-scroll pattern-scrollbar-thin pr-2"
+    >
       <div
         class="bg-primary"
         v-for="note in notesResult"
