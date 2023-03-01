@@ -460,6 +460,9 @@
 .bg-primary {
   background-color: var(--color-background);
 }
+.bg-scrollbar {
+  background-color: var(--color-scrollbar-bg);
+}
 .bg-secondary {
   background-color: var(--color-background-secondary);
 }
@@ -535,6 +538,9 @@
 }
 .cursor-pointer {
   cursor: pointer;
+}
+.cursor-ew-resize {
+  cursor: ew-resize;
 }
 .nowrap {
   white-space: nowrap;

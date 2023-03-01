@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { watch } from 'vue'
+import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { store } from '../store'
 import NoteList from '../components/NoteList.vue'
@@ -26,6 +26,31 @@ const handleCloseEditorDialog = () => {
 const handleEditConfirm = () => {
   store.actions.note.update(store)
   router.push({})
+}
+const resizeBarDowned = ref(false)
+const resizePosX = ref(0)
+const sidebarWidthMin = 200
+const sidebarWidthMax = 500
+const handleMousedown = (e: Event) => {
+  if (!resizeBarDowned.value) {
+    resizeBarDowned.value = true
+    const target = (e.target as HTMLButtonElement)
+    resizePosX.value = target.getBoundingClientRect().x
+  }
+}
+const handleMousemove = (e: Event) => {
+  if (resizeBarDowned.value) {
+    const mouseEvent = e as MouseEvent
+    const clientX = mouseEvent.clientX
+    if (sidebarWidthMin <= clientX && clientX <= sidebarWidthMax) {
+      store.sidebarWidth = mouseEvent.clientX
+    }
+  }
+}
+const handleMouseup = (e: Event) => {
+  if (resizeBarDowned.value) {
+    resizeBarDowned.value = false
+  }
 }
 const handleInputNote = () => {
   store.actions.createOrUpdateNote(store)
@@ -113,12 +138,23 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
     v-else-if="store.notesLayout === 'list'"
     class="f-1 flex-column"
   >
-    <div class="f-1 flex-row">
+    <div
+      class="f-1 flex-row"
+      @mousemove="handleMousemove"
+      @mouseup="handleMouseup"
+    >
       <div
-        class="w-64 p-4 flex-column overflow-y-scroll pattern-scrollbar-thin"
+        class="p-4 flex-column overflow-y-scroll pattern-scrollbar-thin"
         style="height: calc(100vh - 4.5rem);"
+        :style="{ width: `${store.sidebarWidth}px` }"
       >
         <NoteList />
+      </div>
+      <div>
+        <button
+          class="h-full w-4 bg-transparent border-none text-secondary cursor-ew-resize"
+          @mousedown="handleMousedown"
+        >|</button>
       </div>
       <div class="f-1 flex-column">
         <TheNoteEditor

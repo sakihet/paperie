@@ -50,6 +50,7 @@ interface Store {
   notesLayout: LayoutType,
   pressingModifier: boolean,
   searchQuery: string,
+  sidebarWidth: number,
   sortKey: SortKey,
   theme: string,
   actions: {
@@ -90,6 +91,7 @@ export const store: Store = reactive<Store>({
   notesLayout: 'list',
   pressingModifier: false,
   searchQuery: '',
+  sidebarWidth: 296,
   sortKey : 'updated',
   theme: 'light',
   actions: {

@@ -49,7 +49,7 @@ body {
   --color-border-divider: var(--color-gray-200);
   --color-hover: var(--color-gray-200);
   --color-hover-icon: var(--color-gray-300);
-  --color-scrollbar-bg: var(--color-gray-200);
+  --color-scrollbar-bg: var(--color-gray-100);
   --color-scrollbar-thumb-bg: var(--color-gray-400);
   background-color: var(--color-background-secondary);
   color: var(--color-text-primary);
@@ -75,7 +75,7 @@ body {
   --color-border-divider: var(--color-gray-700);
   --color-hover: var(--color-gray-700);
   --color-hover-icon: var(--color-gray-600);
-  --color-scrollbar-bg: var(--color-gray-700);
+  --color-scrollbar-bg: var(--color-gray-800);
   --color-scrollbar-thumb-bg: var(--color-gray-500);
   background-color: var(--color-background-secondary);
   color: var(--color-text-primary);
