@@ -46,7 +46,14 @@ const isHovered = ref(false)
               :cols="16"
             />
           </div>
-          <div class="h-4 text-small text-secondary">{{ note.updatedAt.toISOString().split('T')[0] }}</div>
+          <div class="h-4 flex-row">
+            <div class="text-small text-secondary f-1">
+              {{ note.updatedAt.toISOString().split('T')[0] }}
+            </div>
+            <div class="text-small text-secondary text-right border-1 border-solid border-color-default px-1">
+              {{ note.noteType }}
+            </div>
+          </div>
         </div>
       </div>
       <div
@@ -68,7 +75,14 @@ const isHovered = ref(false)
           <div class="h-8 overflow-hidden text-secondary">
             <div class="text-small">{{ note.content }}</div>
           </div>
-          <div class="h-4 text-small text-secondary">{{ note.updatedAt.toISOString().split('T')[0] }}</div>
+          <div class="h-4 flex-row">
+            <div class="text-small text-secondary f-1">
+              {{ note.updatedAt.toISOString().split('T')[0] }}
+            </div>
+            <div class="text-small text-secondary text-right border-1 border-solid border-color-default px-1">
+              {{ note.noteType }}
+            </div>
+          </div>
         </div>
       </div>
     </div>
