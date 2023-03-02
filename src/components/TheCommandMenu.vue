@@ -23,17 +23,16 @@ onUpdated(() => {
       class="border-none shadow rounded"
       :open="store.commandMenuDialogOpen"
     >
-      <div>
+      <div class="layout-stack-4">
         <div class="h-8">
           <input
-            class="w-full border-color-default"
+            class="h-8 w-full border-solid border-1 border-color-default rounded px-2"
             type="text"
             placeholder="Under constrcution..."
             ref="refCommandMenuInput"
           />
         </div>
         <div>
-          <hr />
           <ul class="list-style-none pl-0 my-2">
             <li
               class="h-8"
@@ -48,39 +47,38 @@ onUpdated(() => {
               </router-link>
             </li>
           </ul>
-          <hr />
           <ul class="list-style-none pl-0 my-2">
             <li
-              class="h-8"
+              class="h-8 hover"
             >
               <router-link
                 class="text-decoration-none"
                 :to="{ path: '/' }"
                 @click="store.commandMenuDialogOpen = false"
               >
-                /
+                <div class="h-8 p-2">/</div>
               </router-link>
             </li>
             <li
-              class="h-8"
+              class="h-8 hover"
             >
               <router-link
                 class="text-decoration-none"
                 :to="{ path: '/new' }"
                 @click="store.commandMenuDialogOpen = false"
               >
-                /new
+               <div class="h-8 p-2">/new</div>
               </router-link>
             </li>
             <li
-              class="h-8"
+              class="h-8 hover"
             >
               <router-link
                 class="text-decoration-none"
                 :to="{ path: '/about' }"
                 @click="store.commandMenuDialogOpen = false"
               >
-                About
+                <div class="h-8 p-2">About</div>
               </router-link>
             </li>
           </ul>
