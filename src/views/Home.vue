@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
-import { store } from '../store'
+import { sidebarWidthDefault, store } from '../store'
 import NoteList from '../components/NoteList.vue'
 import TheNoteEditor from '../components/TheNoteEditor.vue'
 
@@ -22,15 +22,17 @@ const handleCloseEditorDialog = () => {
   }
   router.push({ path: '/'})
 }
-
+const handleDblclick = (e: Event) => {
+  store.sidebarWidth = sidebarWidthDefault
+}
 const handleEditConfirm = () => {
   store.actions.note.update(store)
   router.push({})
 }
 const resizeBarDowned = ref(false)
 const resizePosX = ref(0)
-const sidebarWidthMin = 200
-const sidebarWidthMax = 500
+const sidebarWidthMin = 160
+const sidebarWidthMax = 480
 const handleMousedown = (e: Event) => {
   if (!resizeBarDowned.value) {
     resizeBarDowned.value = true
@@ -154,6 +156,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
         <button
           class="h-full w-4 bg-transparent border-none text-tertiary cursor-ew-resize"
           @mousedown="handleMousedown"
+          @dblclick="handleDblclick"
         >|</button>
       </div>
       <div class="f-1 flex-column">

@@ -32,6 +32,8 @@ const noteApplicationService = new NoteApplicationService(
   new NoteRepository()
 )
 
+export const sidebarWidthDefault = 240
+
 interface Store {
   commandMenuDialogOpen: boolean,
   composing: boolean,
@@ -91,7 +93,7 @@ export const store: Store = reactive<Store>({
   notesLayout: 'list',
   pressingModifier: false,
   searchQuery: '',
-  sidebarWidth: 296,
+  sidebarWidth: sidebarWidthDefault,
   sortKey : 'updated',
   theme: 'light',
   actions: {
