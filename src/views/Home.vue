@@ -152,7 +152,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
       </div>
       <div>
         <button
-          class="h-full w-4 bg-transparent border-none text-secondary cursor-ew-resize"
+          class="h-full w-4 bg-transparent border-none text-tertiary cursor-ew-resize"
           @mousedown="handleMousedown"
         >|</button>
       </div>

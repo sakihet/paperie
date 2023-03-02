@@ -368,6 +368,9 @@
 .text-secondary {
   color: var(--color-text-secondary);
 }
+.text-tertiary {
+  color: var(--color-text-tertiary);
+}
 /* text weight */
 .font-medium {
   font-weight: 500;
