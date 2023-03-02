@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Note } from '../entities/note'
+import { formatDate } from '../utils'
 import AppTextarea from '../components/AppTextarea.vue'
 import NoteDropdown from './NoteDropdown.vue'
 
@@ -48,7 +49,7 @@ const isHovered = ref(false)
           </div>
           <div class="h-4 flex-row">
             <div class="text-small text-secondary f-1">
-              {{ note.updatedAt.toISOString().split('T')[0] }}
+              {{ formatDate(note.updatedAt) }}
             </div>
             <div class="text-small text-secondary text-right border-1 border-solid border-color-default px-1">
               {{ note.noteType }}
@@ -77,7 +78,7 @@ const isHovered = ref(false)
           </div>
           <div class="h-4 flex-row">
             <div class="text-small text-secondary f-1">
-              {{ note.updatedAt.toISOString().split('T')[0] }}
+              {{ formatDate(note.updatedAt) }}
             </div>
             <div class="text-small text-secondary text-right border-1 border-solid border-color-default px-1">
               {{ note.noteType }}

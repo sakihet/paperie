@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { currentNote, store } from '../store'
-import { NoteType } from '../types/noteType';
+import { NoteType } from '../types/noteType'
+import { formatDate } from '../utils'
 
 const handleClick = (e: Event, noteType: NoteType) => {
   store.actions.note.updateNoteType(store, noteType)
@@ -25,7 +26,7 @@ const handleClick = (e: Event, noteType: NoteType) => {
       <div class="h-6 flex-row">
         <div class="m-auto">
           <span class="text-small text-secondary text-overflow-ellipsis">
-            {{ currentNote?.updatedAt.toISOString().split('.')[0] }}
+            updated: {{ formatDate(currentNote?.updatedAt!) }}
           </span>
         </div>
       </div>
