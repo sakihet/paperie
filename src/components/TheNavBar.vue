@@ -51,7 +51,7 @@ const handleChangeLayout = (layout: LayoutType) => {
       </div>
     </div>
     <div class="f-1"></div>
-    <div class="flex-column h-12">
+    <div class="flex-column h-12 mx-3">
       <div class="m-auto">
         <div class="">
           <button
@@ -71,8 +71,8 @@ const handleChangeLayout = (layout: LayoutType) => {
         </div>
       </div>
     </div>
-    <div class="flex-column">
-      <div class="m-auto mx-2">
+    <div class="flex-column mx-3">
+      <div class="m-auto">
         <button class="border-none bg-transparent p-0">
           <IconDarkMode
             class="text-secondary"
