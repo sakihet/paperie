@@ -23,7 +23,7 @@ const handleCloseEditorDialog = () => {
   router.push({ path: '/'})
 }
 const handleDblclick = (e: Event) => {
-  store.sidebarWidth = sidebarWidthDefault
+  store.actions.updateSettings(store, {...store.settings, sidebarWidth: sidebarWidthDefault})
 }
 const handleEditConfirm = () => {
   store.actions.note.update(store)
@@ -45,13 +45,14 @@ const handleMousemove = (e: Event) => {
     const mouseEvent = e as MouseEvent
     const clientX = mouseEvent.clientX
     if (sidebarWidthMin <= clientX && clientX <= sidebarWidthMax) {
-      store.sidebarWidth = mouseEvent.clientX
+      store.settings.sidebarWidth = mouseEvent.clientX
     }
   }
 }
 const handleMouseup = (e: Event) => {
   if (resizeBarDowned.value) {
     resizeBarDowned.value = false
+    store.actions.updateSettings(store, store.settings)
   }
 }
 const handleInputNote = () => {
@@ -148,7 +149,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
       <div
         class="py-4 pl-4 flex-column"
         style="height: calc(100vh - 4.5rem);"
-        :style="{ width: `${store.sidebarWidth}px` }"
+        :style="{ width: `${store.settings.sidebarWidth}px` }"
       >
         <NoteList />
       </div>

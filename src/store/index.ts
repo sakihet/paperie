@@ -20,6 +20,13 @@ const getLayout = (): LayoutType => {
   const value = localStorage.getItem(storageKey)
   return value === 'grid' ? 'grid' : 'list'
 }
+const getSettings = () => {
+  const key = 'settings'
+  const item = localStorage.getItem(key)
+  if (item) {
+    return item
+  }
+}
 const getTheme = () => {
   const key = 'theme'
   if (localStorage.getItem(key)) {
@@ -33,6 +40,14 @@ const noteApplicationService = new NoteApplicationService(
 )
 
 export const sidebarWidthDefault = 240
+
+type Settings = {
+  sidebarWidth: number
+}
+
+const settingsDefault: Settings = {
+  sidebarWidth: sidebarWidthDefault
+}
 
 interface Store {
   commandMenuDialogOpen: boolean,
@@ -52,7 +67,7 @@ interface Store {
   notesLayout: LayoutType,
   pressingModifier: boolean,
   searchQuery: string,
-  sidebarWidth: number,
+  settings: Settings,
   sortKey: SortKey,
   theme: string,
   actions: {
@@ -63,6 +78,7 @@ interface Store {
     openEditorForEdit: (store: Store, note: Note) => void,
     saveLayout: (store: Store) => void,
     toggleTheme: (store: Store) => void,
+    updateSettings: (store: Store, settings: Settings) => void,
     note: {
       create: (store: Store) => void,
       delete: (store: Store, id: string) => void,
@@ -93,7 +109,7 @@ export const store: Store = reactive<Store>({
   notesLayout: 'list',
   pressingModifier: false,
   searchQuery: '',
-  sidebarWidth: sidebarWidthDefault,
+  settings: settingsDefault,
   sortKey : 'updated',
   theme: 'light',
   actions: {
@@ -109,6 +125,10 @@ export const store: Store = reactive<Store>({
       if (theme) {
         store.theme = theme
         applyTheme(theme)
+      }
+      const settings = getSettings()
+      if (settings) {
+        store.settings = JSON.parse(settings)
       }
     },
     async load (store) {
@@ -155,6 +175,10 @@ export const store: Store = reactive<Store>({
       }
       applyTheme(store.theme)
       localStorage.setItem('theme', store.theme)
+    },
+    updateSettings (store: Store, settings: Settings) {
+      store.settings = settings
+      localStorage.setItem('settings', JSON.stringify(settings))
     },
     note: {
       create (store) {
