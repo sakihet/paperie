@@ -25,7 +25,10 @@ const handleClick = (e: Event, noteType: NoteType) => {
     <div class="nowrap">
       <div class="h-6 flex-row">
         <div class="m-auto">
-          <span class="text-small text-secondary text-overflow-ellipsis">
+          <span
+            class="text-small text-secondary text-overflow-ellipsis"
+            v-if="currentNote?.updatedAt"
+          >
             updated: {{ formatDate(currentNote?.updatedAt!) }}
           </span>
         </div>
