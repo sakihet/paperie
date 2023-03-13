@@ -43,3 +43,6 @@ details[open].pattern-dropdown > summary:before {
     display: none;
   }
 }
+.pattern-markdown-preview > pre > code {
+  white-space: pre-wrap;
+}

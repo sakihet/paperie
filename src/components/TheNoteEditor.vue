@@ -173,7 +173,10 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
               <div class="h-8">
                 <span class="text-small text-secondary">Preview</span>
               </div>
-              <div v-html="outputMarkdown">
+              <div
+                v-html="outputMarkdown"
+                class="pattern-markdown-preview"
+              >
               </div>
             </div>
           </div>
