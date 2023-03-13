@@ -10,13 +10,5 @@ import AppCode from '../components/AppCode.vue'
       <p class="my-2">You don't need to create any account to start using it. Just open the url.</p>
       <p class="my-2">Your notes data is only stored on your browser's IndexedDB storage, so there is no risk of unexpected information leakage. <a href="https://github.com/sakihet/paperie" target="_blank">The code</a> is open source and implementation can be verified.</p>
     </div>
-    <h2 class="my-8">Keyboard shortcuts (WIP)</h2>
-    <div>
-      <ul class="list-style-none pl-0 text-secondary">
-        <li>
-          <AppCode>Command + k</AppCode>: Open the command menu
-        </li>
-      </ul>
-    </div>
 </div>
 </template>
