@@ -131,7 +131,7 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
     </div>
     <div
       v-else-if="store.notesLayout === 'list'"
-      class="f-1 flex-column"
+      class="f-1 flex-column overflow-hidden"
     >
       <div class="f-1 layout-stack-2 flex-column">
         <div class="h-6 text-secondary">
@@ -152,7 +152,7 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
                 @input="handleInput"
               />
             </div>
-            <div class="f-1">
+            <div class="f-1 overflow-y-hidden">
               <textarea
                 class="border-color-default focus:outline-none text-medium border-none font-sans w-full bg-primary h-full pattern-scrollbar-thin resize-none text-primary"
                 v-model="store.editor.noteContent"

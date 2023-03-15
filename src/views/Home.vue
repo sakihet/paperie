@@ -160,10 +160,14 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
           @dblclick="handleDblclick"
         >|</button>
       </div>
-      <div class="f-1 flex-column">
+      <div
+        class="f-1 flex-column overflow-hidden"
+        style="height: calc(100vh - 4.5rem);"
+      >
         <TheNoteEditor
           v-if="store.isAdding || store.isEditing"
           @input-note="handleInputNote"
+          class="overflow-hidden"
         />
       </div>
     </div>

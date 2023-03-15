@@ -23,14 +23,9 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div
-    id="app-page"
-    class="flex-column"
-  >
-    <TheNavBar />
-    <router-view />
-    <TheFooter />
-  </div>
+  <TheNavBar />
+  <router-view />
+  <TheFooter />
 </template>
 
 <style>
