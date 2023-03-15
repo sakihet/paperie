@@ -169,14 +169,19 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
             class="f-1"
             v-if="store.editor.noteType === 'markdown'"
           >
-            <div class="p-4 flex-column">
+            <div class="flex-column">
               <div class="h-8">
                 <span class="text-small text-secondary">Preview</span>
               </div>
               <div
-                v-html="outputMarkdown"
-                class="pattern-markdown-preview"
+                class="f-1 ml-4"
               >
+                <div
+                  v-html="outputMarkdown"
+                  style="height: calc(100vh - 11.5rem);"
+                  class="pattern-markdown-preview overflow-y-scroll pattern-scrollbar-thin"
+                >
+                </div>
               </div>
             </div>
           </div>
