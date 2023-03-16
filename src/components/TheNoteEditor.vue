@@ -171,7 +171,7 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
           >
             <div class="flex-column">
               <div class="h-8">
-                <span class="text-small text-secondary">Preview</span>
+                <span class="text-small text-secondary px-4">Preview</span>
               </div>
               <div
                 class="f-1 ml-4"
