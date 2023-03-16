@@ -91,6 +91,7 @@ input {
 }
 #app {
   font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  min-height: 100vh;
 }
 svg {
   fill: currentColor;
