@@ -288,6 +288,8 @@ export const store: Store = reactive<Store>({
         }
         if (store.isEditing) {
           handler()
+        } else if (store.isAdding) {
+          handler()
         }
       }
     }
