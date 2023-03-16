@@ -8,7 +8,15 @@ import { NoteType } from '../types/noteType'
 import { LayoutType } from '../types/layoutType'
 import { SortKey } from '../types/sortKey'
 
+type Settings = { sidebarWidth: number }
+export const sidebarWidthDefault = 240
+const settingsDefault: Settings = {
+  sidebarWidth: sidebarWidthDefault
+}
 const storageKey = 'layout'
+const noteApplicationService = new NoteApplicationService(
+  new NoteRepository()
+)
 const applyTheme = (theme: string) => {
   if (theme === 'dark') {
     document.firstElementChild?.classList.add('dark')
@@ -35,24 +43,9 @@ const getTheme = () => {
     return window.matchMedia('(preferes-color-scheme: dark)').matches ? 'dark' : 'light'
   }
 }
-const noteApplicationService = new NoteApplicationService(
-  new NoteRepository()
-)
-
-export const sidebarWidthDefault = 240
-
-type Settings = {
-  sidebarWidth: number
-}
-
-const settingsDefault: Settings = {
-  sidebarWidth: sidebarWidthDefault
-}
 
 interface Store {
-  commandMenuDialogOpen: boolean,
   composing: boolean,
-  dialogKeyboardShortcutsOpen: boolean,
   editor: {
     noteContent: string
     noteId: string,
@@ -92,9 +85,7 @@ interface Store {
 }
 
 export const store: Store = reactive<Store>({
-  commandMenuDialogOpen: false,
   composing: false,
-  dialogKeyboardShortcutsOpen: false,
   editor: {
     noteContent: '',
     noteId: '',
@@ -149,7 +140,6 @@ export const store: Store = reactive<Store>({
     openEditorForAdd (store) {
       store.isAdding = true
       store.editorDialogOpen = true
-      store.commandMenuDialogOpen = false
       store.editor.noteId = ''
       store.editor.noteType = 'plain'
       store.editor.noteTitle = ''
@@ -158,7 +148,6 @@ export const store: Store = reactive<Store>({
     openEditorForEdit (store:Store, note: Note) {
       store.isEditing = true
       store.editorDialogOpen = true
-      store.commandMenuDialogOpen = false
       store.editor.noteId = note.id
       store.editor.noteTitle = note.title
       store.editor.noteContent = note.content

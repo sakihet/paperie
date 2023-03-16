@@ -77,12 +77,10 @@ watch (() => store.isLoaded, async (after, before) => {
   }
 })
 watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
-  if (store.commandMenuDialogOpen) store.commandMenuDialogOpen = false
   if (noteIdAfter) {
     if (noteIdAfter !== noteIdBefore) {
       const noteId = noteIdAfter?.toString()
       if (noteId) {
-        store.commandMenuDialogOpen = false
         store.editorDialogOpen = true
         store.isEditing = true
         const note = store.notes.find(x => x.id === noteId)
