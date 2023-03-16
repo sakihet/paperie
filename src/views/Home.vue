@@ -32,7 +32,7 @@ const handleEditConfirm = () => {
 const resizeBarDowned = ref(false)
 const resizePosX = ref(0)
 const sidebarWidthMin = 160
-const sidebarWidthMax = 480
+const sidebarWidthMax = 560
 const handleMousedown = (e: Event) => {
   if (!resizeBarDowned.value) {
     resizeBarDowned.value = true
