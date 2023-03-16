@@ -14,7 +14,7 @@ const props = defineProps<{
 const isHovered = ref(false)
 const classObject = computed(() => ({
   'w-48 h-48': store.notesLayout === 'grid',
-  'h-24': store.notesLayout === 'list',
+  'h-20': store.notesLayout === 'list',
   'border-t-2 border-color-blue border-solid': props.note.isPinned && store.notesLayout === 'grid',
   'border-l-2 border-color-blue border-solid': props.note.isPinned && store.notesLayout === 'list',
   'bg-selected': props.note.id === props.selectedNoteId
@@ -56,7 +56,7 @@ const classObject = computed(() => ({
           </div>
           <div
             v-else-if="props.layout === 'list'"
-            class="h-8 overflow-hidden text-secondary"
+            class="h-4 overflow-hidden text-secondary"
           >
             <div class="text-small">{{ note.content }}</div>
           </div>
