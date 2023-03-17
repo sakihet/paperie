@@ -47,7 +47,7 @@ const handleInput = (e: Event) => {
 }
 const handleKeydown = (e: KeyboardEvent) => {
 }
-const handleKeydownEnter = (e: KeyboardEvent) => {
+const handleKeyupEnter = (e: KeyboardEvent) => {
   const command: Command = commands.value[refCommandMenuIndex.value]
   router.push(command.to.path)
   store.commandMenuOpen = false
@@ -94,7 +94,7 @@ onUpdated(() => {
             v-model="refCommandMenuQuery"
             @input="handleInput"
             @keydown="handleKeydown"
-            @keydown.enter="handleKeydownEnter"
+            @keyup.enter="handleKeyupEnter"
             @keydown.down="handleKeydownDown"
             @keydown.up="handleKeydownUp"
           />
@@ -105,11 +105,12 @@ onUpdated(() => {
             class="h-8"
           >
             <router-link
-              :to="command.to"
+              :to="command.to.path"
               class="text-decoration-none text-secondary"
+              @click="store.commandMenuOpen = false"
             >
               <div
-                class="h-8 p-2"
+                class="h-8 p-2 hover"
                 :class="{ 'bg-command-menu text-command-menu': index === refCommandMenuIndex}"
               >
                 {{ command.name }}
