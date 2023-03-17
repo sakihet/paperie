@@ -351,6 +351,9 @@
 .w-64 {
   width: 16rem;
 }
+.w-96 {
+  width: 24rem;
+}
 .w-128 {
   width: 32rem;
 }
@@ -385,6 +388,9 @@
 }
 .text-tertiary {
   color: var(--color-text-tertiary);
+}
+.text-command-menu {
+  color: var(--color-text-command-menu);
 }
 /* text weight */
 .font-medium {
@@ -500,6 +506,9 @@
   border-bottom-width: 0;
 }
 /* background color */
+.bg-command-menu {
+  background-color: var(--color-background-command-menu);
+}
 .bg-white {
   background-color: var(--color-white);
 }

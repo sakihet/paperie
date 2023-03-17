@@ -51,6 +51,16 @@ const handleChangeLayout = (layout: LayoutType) => {
       </div>
     </div>
     <div class="f-1"></div>
+    <div class="flex-column mx-3">
+      <div class="m-auto">
+        <button
+          class="h-6 border-solid border-1 border-color-default bg-transparent px-2 py-1 rounded text-secondary font-mono cursor-pointer"
+          @click="store.commandMenuOpen = !store.commandMenuOpen"
+        >
+          ⌘K
+        </button>
+      </div>
+    </div>
     <div class="flex-column h-12 mx-3">
       <div class="m-auto">
         <div class="">

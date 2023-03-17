@@ -9,6 +9,7 @@ import { LayoutType } from '../types/layoutType'
 import { SortKey } from '../types/sortKey'
 
 type Settings = { sidebarWidth: number }
+export const commandMenuModifiler = 'Meta'
 export const sidebarWidthDefault = 240
 const settingsDefault: Settings = {
   sidebarWidth: sidebarWidthDefault
@@ -45,6 +46,7 @@ const getTheme = () => {
 }
 
 interface Store {
+  commandMenuOpen: boolean,
   composing: boolean,
   editor: {
     noteContent: string
@@ -58,6 +60,7 @@ interface Store {
   isLoaded: boolean,
   notes: Array<Note>,
   notesLayout: LayoutType,
+  pressingCommandMenuModifier: boolean,
   searchQuery: string,
   settings: Settings,
   sortKey: SortKey,
@@ -84,6 +87,7 @@ interface Store {
 }
 
 export const store: Store = reactive<Store>({
+  commandMenuOpen: false,
   composing: false,
   editor: {
     noteContent: '',
@@ -97,6 +101,7 @@ export const store: Store = reactive<Store>({
   isLoaded: false,
   notes: [],
   notesLayout: 'list',
+  pressingCommandMenuModifier: false,
   searchQuery: '',
   settings: settingsDefault,
   sortKey : 'updated',
