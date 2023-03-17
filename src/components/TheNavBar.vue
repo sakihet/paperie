@@ -54,14 +54,14 @@ const handleChangeLayout = (layout: LayoutType) => {
     <div class="flex-column mx-3">
       <div class="m-auto">
         <button
-          class="h-6 border-solid border-1 border-color-default bg-transparent px-2 py-1 rounded text-secondary font-mono cursor-pointer"
+          class="h-6 border-solid border-1 border-color-default bg-transparent px-2 py-1 rounded text-secondary font-mono cursor-pointer hover"
           @click="store.commandMenuOpen = !store.commandMenuOpen"
         >
           ⌘K
         </button>
       </div>
     </div>
-    <div class="flex-column h-12 mx-3">
+    <div class="flex-column h-12 mx-2">
       <div class="m-auto">
         <div class="">
           <button
@@ -81,9 +81,9 @@ const handleChangeLayout = (layout: LayoutType) => {
         </div>
       </div>
     </div>
-    <div class="flex-column mx-3">
+    <div class="flex-column mx-2">
       <div class="m-auto">
-        <button class="border-none bg-transparent p-0">
+        <button class="h-8 w-8 border-none bg-transparent p-0 cursor-pointer hover rounded">
           <IconDarkMode
             class="text-secondary"
             v-if="store.theme === 'light'"
