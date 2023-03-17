@@ -12,12 +12,12 @@ const handleClick = (e: Event, noteType: NoteType) => {
   <div class="text-secondary flex-row">
     <div class="nowrap f-1">
       <button
-        class="h-6 border-none text-secondary hover px-2"
+        class="h-6 border-none text-secondary hover px-2 cursor-pointer"
         :class="store.editor.noteType === 'plain' ? 'bg-selected-text' : 'bg-transparent'"
         @click="handleClick($event, 'plain')"
       >Plain</button>
       <button
-        class="h-6 border-none text-secondary hover px-2"
+        class="h-6 border-none text-secondary hover px-2 cursor-pointer"
         :class="store.editor.noteType === 'markdown' ? 'bg-selected-text' : 'bg-transparent'"
         @click="handleClick($event, 'markdown')"
       >Markdown</button>
@@ -29,7 +29,7 @@ const handleClick = (e: Event, noteType: NoteType) => {
             class="text-small text-secondary text-overflow-ellipsis"
             v-if="currentNote?.updatedAt"
           >
-            updated: {{ formatDate(currentNote?.updatedAt!) }}
+            Updated: {{ formatDate(currentNote?.updatedAt!) }}
           </span>
         </div>
       </div>
