@@ -1,20 +1,20 @@
 <script setup lang="ts">
-import { computed, onUpdated, ref, watch } from 'vue';
-import router from '../router';
+import { computed, onUpdated, ref, watch } from 'vue'
+import router from '../router'
 import { store } from '../store'
 
 const refCommandMenuIndex = ref<number>(0)
 const refCommandMenuInput = ref<HTMLElement | null>(null)
 const refCommandMenuQuery = ref<string>("")
 
-type Command = {
+type CommandItem = {
   name: string,
   to: {
     path: string
   }
 }
 
-const staticCommands: Command[] = [
+const staticCommands: CommandItem[] = [
   {
     name: 'Index',
     to: { path: '/' }
@@ -32,7 +32,7 @@ const staticCommands: Command[] = [
 const commands = computed(() => {
   return [
     ...staticCommands,
-    ...store.notes.map(note => { return <Command>{ name: note.title, to: { path: `/?noteId=${note.id}` } } })
+    ...store.notes.map(note => { return <CommandItem>{ name: `Note: ${note.title}`, to: { path: `/?noteId=${note.id}` } } })
   ].filter(c => c.name.includes(refCommandMenuQuery.value))
 })
 
@@ -48,7 +48,7 @@ const handleInput = (e: Event) => {
 const handleKeydown = (e: KeyboardEvent) => {
 }
 const handleKeyupEnter = (e: KeyboardEvent) => {
-  const command: Command = commands.value[refCommandMenuIndex.value]
+  const command: CommandItem = commands.value[refCommandMenuIndex.value]
   router.push(command.to.path)
   store.commandMenuOpen = false
 }
