@@ -35,13 +35,13 @@ p {
 
 body {
   --color-background: var(--color-white);
-  --color-background-command-menu: var(--color-gray-900);
+  --color-background-command-menu: var(--color-gray-300);
   --color-background-secondary: var(--color-gray-100);
   --color-background-selected: var(--color-gray-300);
   --color-background-selected-text: var(--color-gray-200);
   --color-background-icon-selected: var(--color-gray-300);
   --color-code-background: var(--color-blue-50);
-  --color-text-command-menu: var(--color-white);
+  --color-text-command-menu: var(--color-gray-900);
   --color-text-primary: var(--color-gray-900);
   --color-text-secondary: var(--color-gray-600);
   --color-text-tertiary: var(--color-gray-400);
@@ -65,13 +65,13 @@ body {
 .dark > * {
   color-scheme: dark;
   --color-background: var(--color-gray-800);
-  --color-background-command-menu: var(--color-white);
+  --color-background-command-menu: var(--color-gray-700);
   --color-background-secondary: var(--color-gray-900);
   --color-background-selected: var(--color-gray-700);
   --color-background-selected-text: var(--color-gray-700);
   --color-background-icon-selected: var(--color-gray-700);
   --color-code-background: var(--color-blue-200);
-  --color-text-command-menu: var(--color-gray-900);
+  --color-text-command-menu: var(--color-white);
   --color-text-primary: var(--color-white);
   --color-text-secondary: var(--color-gray-300);
   --color-text-tertiary: var(--color-gray-500);

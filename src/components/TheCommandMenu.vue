@@ -82,14 +82,14 @@ onUpdated(() => {
       @click="store.commandMenuOpen = false"
     ></div>
     <dialog
-      class="rounded border-1 border-solid border-color-default"
+      class="rounded-2 border-1 border-solid border-color-default bg-secondary p-6"
       :open="store.commandMenuOpen"
     >
       <div class="w-96 layout-stack-4">
         <div>
           <input
             type="text"
-            class="h-8 w-full border-none"
+            class="h-8 w-full border-none px-2 rounded"
             ref="refCommandMenuInput"
             v-model="refCommandMenuQuery"
             @input="handleInput"
@@ -110,7 +110,7 @@ onUpdated(() => {
               @click="store.commandMenuOpen = false"
             >
               <div
-                class="h-8 p-2 hover"
+                class="h-8 p-2 hover nowrap overflow-hidden text-overflow-ellipsis"
                 :class="{ 'bg-command-menu text-command-menu': index === refCommandMenuIndex}"
               >
                 {{ command.name }}
