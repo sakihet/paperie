@@ -26,7 +26,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
 const emit = defineEmits<{
   (e: 'inputNote'): void
 }>()
-const md = new markdownIt()
+const md = new markdownIt({ breaks: true, linkify: true })
 const handleComposingStart = () => store.composing = true
 const handleComposingEnd = () => store.composing = false
 const handleKeyDownOnContent = (e: KeyboardEvent) => {
@@ -123,7 +123,7 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
           v-if="store.editor.noteType === 'markdown'"
         >
           <div
-            class="mx-4"
+            class="mx-4 line-height-default"
             v-html="outputMarkdown"
           ></div>
         </div>
@@ -179,7 +179,7 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
                 <div
                   v-html="outputMarkdown"
                   style="height: calc(100vh - 11.5rem);"
-                  class="pattern-markdown-preview overflow-y-scroll pattern-scrollbar-thin"
+                  class="pattern-markdown-preview overflow-y-scroll pattern-scrollbar-thin line-height-default"
                 >
                 </div>
               </div>
