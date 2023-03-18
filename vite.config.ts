@@ -11,7 +11,8 @@ export default defineConfig({
       manifest: {
         name: 'Paperie',
         short_name: 'Paperie',
-        description: '',
+        description: 'Paparie is a simplicity first note-taking PWA for individuals. You can use it just by opening the url. Your notes data is only stored on your browser.',
+        display: 'standalone',
         theme_color: '#ffffff',
         icons: [
           {
