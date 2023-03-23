@@ -110,7 +110,7 @@ onUpdated(() => {
               @click="store.commandMenuOpen = false"
             >
               <div
-                class="h-8 p-2 hover nowrap overflow-hidden text-overflow-ellipsis"
+                class="h-8 px-2 py-1 text-medium hover nowrap overflow-hidden text-overflow-ellipsis"
                 :class="{ 'bg-command-menu text-command-menu': index === refCommandMenuIndex}"
               >
                 {{ command.name }}
