@@ -1,6 +1,6 @@
 # Paperie
 
-A local-first oriented note-taking app for individuals build with PWA.
+Paperie is a simplicity first note-taking PWA for individuals.
 
 ![paperie-light](screenshots/light.png)
 ![paperie-dark](screenshots/dark.png)
@@ -12,6 +12,7 @@ A local-first oriented note-taking app for individuals build with PWA.
 ## Tech
 
 - Tooling: [Vite](https://vitejs.dev/)
+- PWA: [PWA Vite Plugin](https://vite-pwa-org.netlify.app/)
 - View: [Vue](https://vuejs.org/)
 - Router: [Vue Router](https://router.vuejs.org/)
 - State management: [Reactivity API](https://vuejs.org/guide/scaling-up/state-management.html#simple-state-management-with-reactivity-api)
@@ -21,7 +22,21 @@ A local-first oriented note-taking app for individuals build with PWA.
 
 ## Icons
 
-https://fonts.google.com/icons?icon.set=Material+Symbols
+- [Material Symbols](https://fonts.google.com/icons?icon.set=Material+Symbols)
+
+## Contributing
+
+### New features
+
+Please [open a new issue](https://github.com/sakihet/paperie/issues).
+
+### Bug fixes
+
+Please [open a new pull request](https://github.com/sakihet/paperie/pulls) for the given fix.
+
+## LICENSE
+
+MIT
 
 ## Development
 
