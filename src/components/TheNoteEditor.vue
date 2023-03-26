@@ -138,7 +138,7 @@ const outputMarkdown = computed(() => md.render(store.editor.noteContent) )
           <TheNoteEditorHeader />
         </div>
         <div class="f-1 flex-row divide-x-2 divide-solid divide-color-secondary">
-          <div class="f-1 flex-column layout-stack-4">
+          <div class="f-1 flex-column layout-stack-2">
             <div class="h-6">
               <input
                 class="w-full border-none focus:outline-none text-large font-bold bg-primary"
