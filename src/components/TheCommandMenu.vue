@@ -42,10 +42,24 @@ watch (() => store.commandMenuOpen, async (after, before) => {
   }
 })
 
+const pressingControlKey = ref(false)
+
 const handleInput = (e: Event) => {
   refCommandMenuIndex.value = 0
 }
 const handleKeydown = (e: KeyboardEvent) => {
+  if (e.key === 'Control') {
+    pressingControlKey.value = true
+  }
+}
+const handleKeyup = (e: KeyboardEvent) => {
+  if (e.key === 'Control') {
+    pressingControlKey.value = false
+  } else if (e.key === 'p' && pressingControlKey.value) {
+    handleKeydownUp(e)
+  } else if (e.key === 'n' && pressingControlKey.value) {
+    handleKeydownDown(e)
+  }
 }
 const handleKeyupEnter = (e: KeyboardEvent) => {
   const command: CommandItem = commands.value[refCommandMenuIndex.value]
@@ -94,6 +108,7 @@ onUpdated(() => {
             v-model="refCommandMenuQuery"
             @input="handleInput"
             @keydown="handleKeydown"
+            @keyup="handleKeyup"
             @keyup.enter="handleKeyupEnter"
             @keydown.down="handleKeydownDown"
             @keydown.up="handleKeydownUp"
