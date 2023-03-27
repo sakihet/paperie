@@ -6,6 +6,7 @@ import IconLightMode from '../components/IconLightMode.vue'
 import IconGrid from '../components/IconGrid.vue'
 import IconList from '../components/IconList.vue'
 import { LayoutType } from '../types/layoutType'
+import { getPlatform, getBrowser } from '../utils'
 
 const capitalize = (str: string) => {
   return str[0].toUpperCase() + str.slice(1)
@@ -57,7 +58,7 @@ const handleChangeLayout = (layout: LayoutType) => {
           class="h-6 border-solid border-1 border-color-default bg-transparent px-2 py-1 rounded text-secondary font-mono cursor-pointer hover"
           @click="store.commandMenuOpen = !store.commandMenuOpen"
         >
-          ⌘K
+          {{ getPlatform() === 'macOS' && ['Chrome', 'Safari'].includes(getBrowser()) ? '⌘K' : 'Ctrl-K' }}
         </button>
       </div>
     </div>

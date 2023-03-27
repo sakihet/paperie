@@ -7,9 +7,10 @@ import { Note } from '../entities/note'
 import { NoteType } from '../types/noteType'
 import { LayoutType } from '../types/layoutType'
 import { SortKey } from '../types/sortKey'
+import { getBrowser, getPlatform } from '../utils'
 
 type Settings = { sidebarWidth: number }
-export const commandMenuModifiler = 'Meta'
+export const commandMenuModifiler = getPlatform() === 'macOS' && ['Chrome', 'Safari'].includes(getBrowser()) ? 'Meta' : 'Control'
 export const sidebarWidthDefault = 240
 const settingsDefault: Settings = {
   sidebarWidth: sidebarWidthDefault
