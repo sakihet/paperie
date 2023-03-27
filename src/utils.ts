@@ -1,3 +1,10 @@
+interface Navigator {
+  userAgent: string,
+  userAgentData: any
+}
+
+declare var navigator: Navigator
+
 export const formatDate = (date: Date) => {
   return date.toISOString().split('T')[0]
 }
