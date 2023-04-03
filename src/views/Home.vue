@@ -153,7 +153,7 @@ watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
       </div>
       <div>
         <button
-          class="h-full w-4 bg-transparent border-none text-tertiary cursor-ew-resize"
+          class="h-full w-4 bg-transparent border-none text-tertiary cursor-ew-resize pattern-hover-resize-bar"
           @mousedown="handleMousedown"
           @dblclick="handleDblclick"
         >|</button>
