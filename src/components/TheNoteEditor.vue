@@ -23,6 +23,11 @@ watch (() => store.isAdding, async (after, before) => {
 watch (() => route.query.noteId, async (noteIdAfter, noteIdBefore) => {
   if (noteIdAfter && (noteIdAfter !== noteIdBefore)) focusEditorContent()
 })
+watch (() => store.commandMenuOpen, async (after, before) => {
+  if (!after) {
+    focusEditorContent()
+  }
+})
 const emit = defineEmits<{
   (e: 'inputNote'): void
 }>()
