@@ -16,23 +16,25 @@ type CommandItem = {
 
 const staticCommands: CommandItem[] = [
   {
-    name: 'Index',
-    to: { path: '/' }
-  },
-  {
-    name: 'Add',
+    name: 'Create new note',
     to: { path: '/new' }
   },
   {
-    name: 'About',
+    name: 'Go to Index',
+    to: { path: '/' }
+  },
+  {
+    name: 'Go to About',
     to: { path: '/about' }
-  }
+  },
 ]
 
 const commands = computed(() => {
   return [
     ...staticCommands,
-    ...store.notes.map(note => { return <CommandItem>{ name: `Note: ${note.title}`, to: { path: `/?noteId=${note.id}` } } })
+    ...store.notes.map(note => {
+      return <CommandItem>{ name: `Open note: ${note.title}`, to: { path: `/?noteId=${note.id}` } }
+    })
   ].filter(c => c.name.includes(refCommandMenuQuery.value))
 })
 
@@ -102,8 +104,9 @@ onUpdated(() => {
       <div class="w-96 layout-stack-4">
         <div>
           <input
-            type="text"
             class="h-8 w-full border-none px-2 rounded"
+            placeholder="Type a command"
+            type="text"
             ref="refCommandMenuInput"
             v-model="refCommandMenuQuery"
             @input="handleInput"
@@ -133,8 +136,12 @@ onUpdated(() => {
             </router-link>
           </div>
         </div>
-        <div class="text-secondary text-small h-4 text-center">
-          <pre>enter: select | ↑↓: navigate | ⌘+k: close</pre>
+        <div class="h-10 font-mono text-secondary text-small">
+          <ul class="p-0 list-style-none text-left">
+            <li>enter: select</li>
+            <li>↑↓, control+n,p: navigate</li>
+            <li>⌘+k: close</li>
+          </ul>
         </div>
       </div>
     </dialog>
