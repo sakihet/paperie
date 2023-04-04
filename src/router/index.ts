@@ -10,9 +10,13 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-    beforeEnter: () => {
-      store.isAdding = false // TODO
-      store.isEditing = false // TODO
+    beforeEnter: (to: { query: { noteId: any } }, from: any) => {
+      store.isAdding = false
+      if (to.query.noteId) {
+        store.isEditing = true
+      } else {
+        store.isEditing = false
+      }
       store.editorDialogOpen = false
     }
   },
