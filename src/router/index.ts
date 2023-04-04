@@ -2,7 +2,7 @@ import About from '../views/About.vue'
 import Home from '../views/Home.vue'
 import Sandbox from '../views/Sandbox.vue'
 import Settings from '../views/Settings.vue'
-import { createRouter, createWebHistory } from 'vue-router'
+import { createRouter, createWebHistory, RouteLocationNormalized } from 'vue-router'
 import { store } from '../store'
 
 const routes = [
@@ -10,7 +10,7 @@ const routes = [
     path: '/',
     name: 'Home',
     component: Home,
-    beforeEnter: (to: { query: { noteId: any } }, from: any) => {
+    beforeEnter: (to: RouteLocationNormalized, from: RouteLocationNormalized) => {
       store.isAdding = false
       if (to.query.noteId) {
         store.isEditing = true
