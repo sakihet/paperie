@@ -64,7 +64,7 @@ const handleChangeLayout = (layout: LayoutType) => {
     </div>
     <div class="flex-column h-12 mx-2">
       <div class="m-auto">
-        <div class="">
+        <div class="nowrap">
           <button
             class="border-none py-0 px-1 hover-icon cursor-pointer rounded h-6"
             :class="store.notesLayout === 'grid' ? 'bg-icon-selected' : 'bg-transparent'"
