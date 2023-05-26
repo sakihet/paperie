@@ -3,6 +3,7 @@ import { Ref, ref } from 'vue'
 import { currentNote, store } from '../store'
 import { NoteType } from '../types/noteType'
 import { formatDate } from '../utils'
+import NoteDropdown from './NoteDropdown.vue'
 
 type dateType = 'updated' | 'created'
 
@@ -33,6 +34,12 @@ const handleClickNoteType = (e: Event, noteType: NoteType) => {
         :class="store.editor.noteType === 'markdown' ? 'bg-selected-text' : 'bg-transparent'"
         @click="handleClickNoteType($event, 'markdown')"
       >Markdown</button>
+    </div>
+    <div class="nowrap">
+      <NoteDropdown
+        :note="currentNote"
+        v-if="currentNote"
+      />
     </div>
     <div class="nowrap">
       <div class="h-6 flex-row">
