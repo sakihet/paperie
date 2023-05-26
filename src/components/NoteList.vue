@@ -37,8 +37,12 @@ const handleToggle = (e: Event) => {
     <div :class="classObjectHeader">
       <div class="layout-stack-2">
         <div class="flex-row h-6">
-          <div class="f-1">Notes</div>
-          <div class="mx-2">{{ store.notes.length }}</div>
+          <div class="f-1">
+            <span class="text-small">Notes</span>
+          </div>
+          <div class="mx-2">
+            <span class="text-small font-mono">{{ store.notes.length }}</span>
+          </div>
           <div class="">
             <details
               class="pattern-dropdown"
