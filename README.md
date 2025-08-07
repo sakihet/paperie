@@ -7,7 +7,7 @@ Paperie is a simplicity first note-taking PWA for individuals.
 
 ## Try it now
 
-[Paperie](https://paperie.app/)
+[Paperie](https://paperie.sakih.net/)
 
 ## Tech
 
