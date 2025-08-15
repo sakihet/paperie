@@ -10,9 +10,9 @@
     "coverage": "vitest run --coverage"
   },
   "dependencies": {
-    "markdown-it": "^13.0.1",
-    "vue": "^3.3.1",
-    "vue-router": "^4.2.0"
+    "markdown-it": "14.1.0",
+    "vue": "3.5.18",
+    "vue-router": "4.5.1"
   },
   "devDependencies": {
     "@types/markdown-it": "^12.2.3",
